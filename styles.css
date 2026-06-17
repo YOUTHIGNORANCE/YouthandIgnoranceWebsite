@@ -1,0 +1,249 @@
+/* Base Reset & Variables */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --bg-color: #030303;
+    --text-color: #ffffff;
+    --input-bg: #1a1a1a;
+    --padding-page: 2.5rem;
+    --font-main: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: var(--font-main);
+    padding: var(--padding-page);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ==============================
+   Header Styling
+   ============================== */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 5rem;
+}
+
+.logo-container {
+    font-weight: 800;
+    font-size: 5.5vw; /* Scales smoothly with screen size */
+    line-height: 0.85;
+    letter-spacing: -2px;
+    text-transform: uppercase;
+    display: inline-block;
+}
+
+.logo-top {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.plus-sign {
+    font-weight: 400;
+}
+
+nav {
+    display: flex;
+    gap: 3rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 1px;
+}
+
+nav a {
+    color: var(--text-color);
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
+nav a:hover {
+    opacity: 0.7;
+}
+
+/* ==============================
+   Gallery Layout (CSS Grid)
+   ============================== */
+.gallery {
+    display: grid;
+    /* Desktop: 4 Columns */
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 8rem;
+}
+
+.gallery-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.caption {
+    font-size: 0.55rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #a0a0a0;
+}
+
+.gallery-item img {
+    width: 100%;
+    aspect-ratio: 4 / 5; /* Keeps images uniform like the design */
+    object-fit: cover;
+    background-color: #222; /* Placeholder color while loading */
+    transition: transform 0.3s ease;
+}
+
+.gallery-item:hover img {
+    transform: scale(1.02);
+}
+
+/* ==============================
+   Footer / Contact Form
+   ============================== */
+footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+    gap: 4rem;
+    margin-top: auto;
+    padding-bottom: 2rem;
+}
+
+.contact-title {
+    font-size: 7vw;
+    font-weight: 800;
+    line-height: 0.8;
+    letter-spacing: -3px;
+    flex: 1;
+}
+
+.contact-form {
+    display: flex;
+    gap: 10px;
+    flex: 1;
+    max-width: 600px;
+}
+
+.form-inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    flex: 1;
+}
+
+.form-textarea {
+    flex: 1;
+    display: flex;
+    position: relative;
+}
+
+input, textarea {
+    background-color: var(--input-bg);
+    border: none;
+    color: var(--text-color);
+    font-family: var(--font-main);
+    padding: 1rem;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    outline: none;
+}
+
+input::placeholder, textarea::placeholder {
+    color: #666;
+}
+
+input {
+    width: 100%;
+}
+
+textarea {
+    width: 100%;
+    resize: none;
+    height: 100%;
+}
+
+.submit-btn {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    color: var(--text-color);
+    cursor: pointer;
+    padding: 5px;
+    transition: transform 0.2s ease;
+}
+
+.submit-btn:hover {
+    transform: translateX(3px);
+}
+
+/* ==============================
+   Animation Utilities
+   ============================== */
+.fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ==============================
+   Responsive Queries
+   ============================== */
+@media (max-width: 900px) {
+    .gallery {
+        /* Mobile/Tablet: 2 Columns */
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    footer {
+        flex-direction: column;
+        gap: 2rem;
+    }
+
+    .contact-form {
+        max-width: 100%;
+    }
+    
+    .logo-container {
+        font-size: 3rem;
+    }
+    
+    .contact-title {
+        font-size: 4rem;
+    }
+}
+
+@media (max-width: 480px) {
+    header {
+        flex-direction: column;
+        gap: 2rem;
+    }
+    
+    nav {
+        width: 100%;
+        justify-content: flex-start;
+    }
+    
+    .contact-form {
+        flex-direction: column;
+    }
+    
+    .form-textarea {
+        height: 150px; /* Give textarea fixed height on mobile */
+    }
+}
