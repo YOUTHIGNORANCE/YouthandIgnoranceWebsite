@@ -35,7 +35,7 @@ header {
 
 .logo-container {
     font-weight: 800;
-    font-size: 5.5vw; /* Scales smoothly with screen size */
+    font-size: 5.5vw;
     line-height: 0.85;
     letter-spacing: -2px;
     text-transform: uppercase;
@@ -75,7 +75,6 @@ nav a:hover {
    ============================== */
 .gallery {
     display: grid;
-    /* Desktop: 4 Columns */
     grid-template-columns: repeat(4, 1fr);
     gap: 1.5rem;
     margin-bottom: 8rem;
@@ -96,12 +95,13 @@ nav a:hover {
 
 .gallery-item img {
     width: 100%;
-    aspect-ratio: 4 / 5; /* Keeps images uniform like the design */
+    aspect-ratio: 4 / 5;
     object-fit: cover;
-    background-color: #222; /* Placeholder color while loading */
-    transition: transform 0.3s ease;
+    background-color: #222;
+    transition: transform 0.3s ease; /* Smooth transition for the hover */
 }
 
+/* The single slight hover effect requested */
 .gallery-item:hover img {
     transform: scale(1.02);
 }
@@ -180,25 +180,10 @@ textarea {
     color: var(--text-color);
     cursor: pointer;
     padding: 5px;
-    transition: transform 0.2s ease;
 }
 
 .submit-btn:hover {
-    transform: translateX(3px);
-}
-
-/* ==============================
-   Animation Utilities
-   ============================== */
-.fade-in {
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-}
-
-.fade-in.visible {
-    opacity: 1;
-    transform: translateY(0);
+    opacity: 0.7; /* Replaced the slide animation with a basic opacity shift */
 }
 
 /* ==============================
@@ -206,7 +191,6 @@ textarea {
    ============================== */
 @media (max-width: 900px) {
     .gallery {
-        /* Mobile/Tablet: 2 Columns */
         grid-template-columns: repeat(2, 1fr);
     }
     
@@ -244,6 +228,6 @@ textarea {
     }
     
     .form-textarea {
-        height: 150px; /* Give textarea fixed height on mobile */
+        height: 150px;
     }
 }
