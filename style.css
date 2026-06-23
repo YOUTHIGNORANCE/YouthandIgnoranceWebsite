@@ -10,6 +10,7 @@ body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     width: 100vw;
     height: 100vh;
+    height: 100dvh; 
     overflow: hidden; 
     display: flex;
     flex-direction: column;
@@ -32,24 +33,34 @@ footer {
     align-items: flex-end;
 }
 
-/* Top-right "CONTACT" (Starts at 100% white, dims to 50% on hover) */
 .nav-link {
     color: #ffffff;
     text-decoration: none;
-    font-size: 11px;
+    font-size: 11px; /* Base set to 11px */
     letter-spacing: 0.08em;
     text-transform: uppercase;
     transition: opacity 0.25s ease;
+    position: relative; /* Anchor for the invisible touch target */
+}
+
+/* THE INVISIBLE TOUCH-TARGET FORCEFIELD */
+.nav-link::after {
+    content: '';
+    position: absolute;
+    /* Reaches 16px left/right, but only 5px up/down so stacked links don't swallow each other */
+    top: -5px;
+    right: -16px;
+    bottom: -5px;
+    left: -16px;
 }
 
 .nav-link:hover {
     opacity: 0.5; 
 }
 
-/* Middle info text: Changed to pure #ffffff */
 .footer-center {
     text-align: left; 
-    font-size: 10px;
+    font-size: 11px; /* Base set to 11px */
     line-height: 1.4;
     letter-spacing: 0.04em;
     color: #ffffff; 
@@ -59,15 +70,13 @@ footer {
     display: flex;
     flex-direction: column;
     text-align: right;
-    gap: 6px;
+    gap: 3px; /* Tightened from 6px down to 3px */
 }
 
-/* Imprint & Privacy Policy: Forced to 50% white */
 .footer-right .nav-link {
     opacity: 0.5;
 }
 
-/* Imprint & Privacy Policy Hover: Snaps UP to 100% white */
 .footer-right .nav-link:hover {
     opacity: 1;
 }
@@ -104,7 +113,6 @@ footer {
     transition: opacity 0.4s ease-in-out;
 }
 
-/* Vector Logotype */
 .brand-title {
     width: 72vw; 
     max-width: 1150px;
@@ -119,16 +127,28 @@ footer {
         padding: 25px 20px; 
     }
     
-    .brand-title { 
-        width: 88vw; 
-    }
+    .brand-title { width: 88vw; }
+    .image-wrapper { width: 85vw; height: 42vh; }
     
-    .image-wrapper { 
-        width: 85vw; 
-        height: 42vh; 
+    /* 1. Force both the text and the links down to 10px */
+    .footer-center, .nav-link {
+        font-size: 10px;
     }
-    
-    .footer-center { 
+
+    /* 2. Delete the left spacer entirely */
+    .footer-left {
         display: none; 
-    } 
+    }
+
+    /* 3. With the left div gone, 'space-between' automatically locks Text to the Left, and Links to the Right */
+    footer {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: flex-end;
+    }
+
+    /* Safety boundary: forces the studio bio to line-break before it can physically collide with the Imprint link */
+    .footer-center {
+        max-width: 65%; 
+    }
 }
