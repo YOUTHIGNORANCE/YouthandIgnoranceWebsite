@@ -152,3 +152,54 @@ footer {
         max-width: 65%; 
     }
 }
+
+/* --- SUB-PAGE OVERRIDES (Imprint & Privacy) --- */
+body.legal-doc {
+    overflow-y: auto; 
+    height: auto;
+    min-height: 100dvh;
+    display: block; /* Overrides the flex-box lock of the home page */
+    padding: 40px 50px 100px 50px;
+}
+
+.legal-wrapper {
+    max-width: 680px;
+    margin: 60px auto 0 auto;
+    font-size: 12px;
+    line-height: 1.65;
+    color: #a3a3a3;
+}
+
+.legal-wrapper h1 {
+    font-family: "Times New Roman", Times, serif;
+    font-size: 32px;
+    color: #ffffff;
+    margin-bottom: 40px;
+    font-weight: 400;
+}
+
+.legal-wrapper h2 {
+    font-size: 12px;
+    color: #ffffff;
+    margin: 35px 0 10px 0;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+.legal-wrapper p, .legal-wrapper ul {
+    margin-bottom: 16px;
+}
+
+.legal-wrapper ul {
+    padding-left: 20px;
+}
+
+.legal-wrapper a {
+    color: #ffffff;
+}
+
+@media (max-width: 768px) {
+    body.legal-doc { padding: 25px 20px 80px 20px; }
+    .legal-wrapper { margin-top: 40px; }
+    .legal-wrapper h1 { font-size: 26px; }
+}
