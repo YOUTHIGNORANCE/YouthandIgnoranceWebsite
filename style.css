@@ -7,10 +7,10 @@
 body {
     background-color: #000000;
     color: #ffffff;
-    font-family: 'Inter', Helvetica, Arial, sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     width: 100vw;
     height: 100vh;
-    overflow: hidden; /* Strictly kills all scrolling */
+    overflow: hidden; 
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -19,7 +19,7 @@ body {
     -webkit-font-smoothing: antialiased;
 }
 
-/* --- THE FRAME (Header & Footer) --- */
+/* --- THE FRAME --- */
 header, footer {
     display: flex;
     justify-content: space-between;
@@ -32,6 +32,7 @@ footer {
     align-items: flex-end;
 }
 
+/* Top-right "CONTACT" (Starts at 100% white, dims to 50% on hover) */
 .nav-link {
     color: #ffffff;
     text-decoration: none;
@@ -42,15 +43,16 @@ footer {
 }
 
 .nav-link:hover {
-    opacity: 0.5; /* The requested "very slight" hover */
+    opacity: 0.5; 
 }
 
+/* Middle info text: Changed to pure #ffffff */
 .footer-center {
-    text-align: center;
+    text-align: left; 
     font-size: 10px;
     line-height: 1.4;
     letter-spacing: 0.04em;
-    color: #b3b3b3; 
+    color: #ffffff; 
 }
 
 .footer-right {
@@ -58,6 +60,16 @@ footer {
     flex-direction: column;
     text-align: right;
     gap: 6px;
+}
+
+/* Imprint & Privacy Policy: Forced to 50% white */
+.footer-right .nav-link {
+    opacity: 0.5;
+}
+
+/* Imprint & Privacy Policy Hover: Snaps UP to 100% white */
+.footer-right .nav-link:hover {
+    opacity: 1;
 }
 
 /* --- THE CENTERPIECE --- */
@@ -71,7 +83,7 @@ footer {
     display: flex;
     justify-content: center;
     align-items: center;
-    pointer-events: none; /* Allows user to click 'through' the text if necessary */
+    pointer-events: none; 
 }
 
 .image-wrapper {
@@ -79,7 +91,7 @@ footer {
     width: 50vw;
     max-width: 800px;
     height: 55vh;
-    z-index: 1; /* Puts image Behind the text */
+    z-index: 1; 
     display: flex;
     justify-content: center;
     align-items: center;
@@ -88,31 +100,35 @@ footer {
 #stage-image {
     width: 100%;
     height: 100%;
-    object-fit: contain; /* Ensures 16:9s and Squares both fit without getting cropped */
+    object-fit: contain; 
     transition: opacity 0.4s ease-in-out;
 }
 
+/* Vector Logotype */
 .brand-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-weight: 300;
-    font-size: 8.2vw;
-    letter-spacing: -0.01em;
-    white-space: nowrap;
-    z-index: 2; /* Puts text In Front of the image */
-    
-    /* Invisible safety net: ensures text stays readable even if a pure white image loads behind it */
-    text-shadow: 0px 4px 25px rgba(0, 0, 0, 0.85); 
+    width: 72vw; 
+    max-width: 1150px;
+    height: auto;
+    z-index: 2; 
+    user-select: none; 
 }
 
-.plus {
-    font-weight: 200;
-    margin: 0 0.08em;
-}
-
-/* Responsive safety catch for mobile viewports */
+/* --- MOBILE RESPONSIVENESS --- */
 @media (max-width: 768px) {
-    body { padding: 25px; }
-    .brand-title { font-size: 11vw; }
-    .image-wrapper { width: 85vw; height: 40vh; }
-    .footer-center { display: none; } /* Hides Stuttgart copy on tiny screens to avoid text-collisions */
+    body { 
+        padding: 25px 20px; 
+    }
+    
+    .brand-title { 
+        width: 88vw; 
+    }
+    
+    .image-wrapper { 
+        width: 85vw; 
+        height: 42vh; 
+    }
+    
+    .footer-center { 
+        display: none; 
+    } 
 }
