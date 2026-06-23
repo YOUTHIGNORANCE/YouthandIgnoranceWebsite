@@ -1,0 +1,118 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #000000;
+    color: #ffffff;
+    font-family: 'Inter', Helvetica, Arial, sans-serif;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden; /* Strictly kills all scrolling */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 40px 50px;
+    position: relative;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* --- THE FRAME (Header & Footer) --- */
+header, footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    z-index: 10;
+    position: relative;
+}
+
+footer {
+    align-items: flex-end;
+}
+
+.nav-link {
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: opacity 0.25s ease;
+}
+
+.nav-link:hover {
+    opacity: 0.5; /* The requested "very slight" hover */
+}
+
+.footer-center {
+    text-align: center;
+    font-size: 10px;
+    line-height: 1.4;
+    letter-spacing: 0.04em;
+    color: #b3b3b3; 
+}
+
+.footer-right {
+    display: flex;
+    flex-direction: column;
+    text-align: right;
+    gap: 6px;
+}
+
+/* --- THE CENTERPIECE --- */
+.stage {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    pointer-events: none; /* Allows user to click 'through' the text if necessary */
+}
+
+.image-wrapper {
+    position: absolute;
+    width: 50vw;
+    max-width: 800px;
+    height: 55vh;
+    z-index: 1; /* Puts image Behind the text */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#stage-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* Ensures 16:9s and Squares both fit without getting cropped */
+    transition: opacity 0.4s ease-in-out;
+}
+
+.brand-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: 8.2vw;
+    letter-spacing: -0.01em;
+    white-space: nowrap;
+    z-index: 2; /* Puts text In Front of the image */
+    
+    /* Invisible safety net: ensures text stays readable even if a pure white image loads behind it */
+    text-shadow: 0px 4px 25px rgba(0, 0, 0, 0.85); 
+}
+
+.plus {
+    font-weight: 200;
+    margin: 0 0.08em;
+}
+
+/* Responsive safety catch for mobile viewports */
+@media (max-width: 768px) {
+    body { padding: 25px; }
+    .brand-title { font-size: 11vw; }
+    .image-wrapper { width: 85vw; height: 40vh; }
+    .footer-center { display: none; } /* Hides Stuttgart copy on tiny screens to avoid text-collisions */
+}
