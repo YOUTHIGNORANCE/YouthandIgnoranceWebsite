@@ -1,89 +1,256 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>YOUTH + IGNORANCE</title>
-
-    <meta name="description" content="Youth + Ignorance is a creative studio focused on direction, CGI, and motion. Based in Stuttgart.">
-    <meta property="og:title" content="YOUTH + IGNORANCE">
-    <meta property="og:description" content="Direction, CGI + Motion. Based in Stuttgart.">
-    <meta property="og:image" content="https://www.youthandignorance.com/images/og-share.jpg">
-    <meta property="og:url" content="https://www.youthandignorance.com">
-    <meta name="twitter:card" content="summary_large_image">
-
-    <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
-    <link rel="apple-touch-icon" href="images/apple-icon.png">
-
-    <link rel="stylesheet" href="style.css">
-
-    <script type="application/ld+json">
-        {
-          "@context": "https://schema.org",
-          "@type": "ProfessionalService",
-          "name": "Youth + Ignorance",
-          "legalName": "Böttner, Eisler, Seemann & Wagner GbR",
-          "url": "https://www.youthandignorance.com",
-          "logo": "https://www.youthandignorance.com/images/favicon.svg",
-          "image": "https://www.youthandignorance.com/images/1.svg",
-          "description": "Professionel creative studio based in Stuttgart specializing in creative direction, CGI with and without AI, and 3D Motion + Design.",
-          "address": {
-            "@type": "PostalAddress",
-            "streetAddress": "Untere Höhbergstraße 19",
-            "addressLocality": "Tübingen",
-            "postalCode": "72074",
-            "addressCountry": "DE"
-          },
-          "geo": {
-            "@type": "GeoCoordinates",
-            "latitude": "48.5321",
-            "longitude": "9.0645"
-          },
-          "areaServed": ["Stuttgart", "Tübingen", "Germany", "Europe", "Worldwide"],
-          "knowsAbout": [
-            "CGI", 
-            "3D Animation", 
-            "Motion Design", 
-            "Creative Direction", 
-            "Digital Art", 
-            "Branding", 
-            "Houdini",
-            "Touch Designer"
-          ],
-          "sameAs": [
-            "https://www.instagram.com/youthandignorance/",
-            "https://www.linkedin.com/company/youthandignorance/"
-          ]
-        }
-        </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Y+I | Direction, CGI + Motion | Stuttgart</title>
+  <meta name="description" content="YOUTH + IGNORANCE is a creative studio focused on Direction, CGI + Motion. Based in Stuttgart, Germany.">
+  <link rel="stylesheet" href="app.css?v=10">
 </head>
 <body>
 
-    <header>
-        <div class="header-left"></div>
-        <div class="header-right">
-            <a href="mailto:studio@youthandignorance.com" class="nav-link">CONTACT</a>
-        </div>
-    </header>
+  <!-- Site Header -->
+  <header class="site-header">
+    <div class="logo">
+      <a href="index.html" class="logo-link">
+        <img src="assets/YouthandIgnorance_Typologo_Short.png" alt="Youth & Ignorance" class="logo-image-mobile">
+        <img src="assets/YouthandIgnorance_Typologo_Long.png" alt="Youth & Ignorance" class="logo-image">
+      </a>
+    </div>
+    
+    <a href="mailto:studio@youthandignorance.com" class="desktop-contact-link" id="contactBtn">CONTACT<img src="assets/Arrow.png" alt="" class="arrow-icon"></a>
+    
+    <!-- Mobile Burger Trigger -->
+    <button class="mobile-menu-trigger" id="menuTrigger" aria-label="Open menu">
+      <span class="bar"></span>
+      <span class="bar"></span>
+    </button>
+  </header>
 
-    <main class="stage">
-        <div class="image-wrapper">
-            <img id="stage-image" src="images/1.svg" alt="Youth + Ignorance Archive">
-        </div>
-        <img class="brand-title" src="images/name.svg" alt="YOUTH + IGNORANCE">
-    </main>
+  <!-- Project Hover Background Preview -->
+  <div class="project-bg-preview" id="projectBgPreview"></div>
 
-    <footer>
-        <div class="footer-left"></div>
-        <div class="footer-center">
-            <p>IS A CREATIVE STUDIO FOCUSED ON DIRECTION, CGI + MOTION.<br>BASED IN STUTTGART, ©2026.</p>
+  <!-- Keyvisual Background Container -->
+  <div class="keyvisual-container" id="keyvisualContainer">
+    <video autoplay loop muted playsinline poster="assets/Coin_Start.png" class="keyvisual-mask" id="keyvisualMask">
+      <source src="assets/Coin_Rotating.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+  </div>
+
+  <!-- Desktop Main Content Grid -->
+  <main class="desktop-content">
+    <div class="grid-container">
+      
+      <!-- About Row -->
+      <section class="desktop-row about-row">
+        <div class="row-label">ABOUT</div>
+        <div class="row-content">
+          <p class="about-text">
+            CREATIVE STUDIO FOCUSED<br>
+            ON DIRECTION, CGI + MOTION.<br>
+            BASED IN STUTTGART.
+          </p>
         </div>
-        <div class="footer-right">
-            <a href="imprint.html" class="nav-link">IMPRINT</a>
-            <a href="privacy-policy.html" class="nav-link">PRIVACY POLICY</a>
+      </section>
+      
+      <!-- Socials Row -->
+      <section class="desktop-row socials-row">
+        <div class="row-label">SOCIALS</div>
+        <div class="row-content">
+          <ul class="socials-list">
+            <li><a href="https://www.instagram.com/youthandignorance/" target="_blank" rel="noopener">INSTAGRAM<img src="assets/Arrow.png" alt="" class="arrow-icon"></a></li>
+            <li><a href="https://youtube.com" target="_blank" rel="noopener">YOUTUBE<img src="assets/Arrow.png" alt="" class="arrow-icon"></a></li>
+            <li><a href="https://are.na" target="_blank" rel="noopener">ARE.NA<img src="assets/Arrow.png" alt="" class="arrow-icon"></a></li>
+          </ul>
         </div>
+      </section>
+      
+      <!-- Work Section (Full Width) -->
+      <section class="work-section-full">
+        <div class="work-table">
+          <!-- Table Headers -->
+          <div class="work-table-header">
+            <div class="work-hdr-title">WORK</div>
+            <div class="work-hdr-category">CATEGORY</div>
+            <div class="work-hdr-year">YEAR</div>
+          </div>
+          
+          <!-- Table Rows -->
+          <div class="work-rows-list">
+            
+            <div class="work-row" data-bg="assets/Background_Project_Hover.png" data-id="birdshot">
+              <span class="project-title">BIRDSHOT</span>
+              <span class="project-category">ANIMATION</span>
+              <span class="project-year">2026</span>
+            </div>
+            
+            <div class="work-row" data-bg="Statues.png" data-id="sentient-shore">
+              <span class="project-title">SENTIENT SHORE</span>
+              <span class="project-category">ANIMATION</span>
+              <span class="project-year">2026</span>
+            </div>
+            
+            <div class="work-row" data-bg="assets/Cape.png" data-id="perfect-hue">
+              <span class="project-title">PERFECT HUE</span>
+              <span class="project-category">ANIMATION</span>
+              <span class="project-year">2025</span>
+            </div>
+            
+            <div class="work-row" data-bg="assets/Eye.png" data-id="prototype">
+              <span class="project-title">PROTOTYPE</span>
+              <span class="project-category">DIRECTION</span>
+              <span class="project-year">2025</span>
+            </div>
+            
+            <div class="work-row" data-bg="Statues.png" data-id="lorem-ipsum-dolor">
+              <span class="project-title">LOREM IPSUM DOLOR</span>
+              <span class="project-category">MOTION</span>
+              <span class="project-year">2025</span>
+            </div>
+            
+          </div>
+        </div>
+      </section>
+      
+    </div>
+
+    <!-- Desktop Footer -->
+    <footer class="desktop-footer">
+      <a href="#imprint" class="imprint-link">IMPRINT</a>
     </footer>
+  </main>
 
-    <script src="script.js"></script>
+  <!-- Mobile Main Content Grid -->
+  <main class="mobile-content">
+    <div class="mobile-work-table">
+      <!-- Headers -->
+      <div class="mobile-table-header">
+        <span class="mob-hdr-year">YEAR</span>
+        <span class="mob-hdr-work">WORK</span>
+        <span class="mob-hdr-category">CATEGORY</span>
+      </div>
+      
+      <!-- List -->
+      <div class="mobile-work-list">
+        
+        <div class="mobile-work-row" data-bg="assets/Background_Project_Hover.png" data-id="birdshot">
+          <span class="mob-project-year">2026</span>
+          <span class="mob-project-title">BIRDSHOT</span>
+          <span class="mob-project-category">ANIMATION</span>
+        </div>
+        
+        <div class="mobile-work-row" data-bg="Statues.png" data-id="sentient-shore">
+          <span class="mob-project-year">2026</span>
+          <span class="mob-project-title">SENTIENT SHORE</span>
+          <span class="mob-project-category">ANIMATION</span>
+        </div>
+        
+        <div class="mobile-work-row" data-bg="assets/Cape.png" data-id="perfect-hue">
+          <span class="mob-project-year">2025</span>
+          <span class="mob-project-title">PERFECT HUE</span>
+          <span class="mob-project-category">ANIMATION</span>
+        </div>
+        
+        <div class="mobile-work-row" data-bg="assets/Eye.png" data-id="prototype">
+          <span class="mob-project-year">2025</span>
+          <span class="mob-project-title">PROTOTYPE</span>
+          <span class="mob-project-category">DIRECTION</span>
+        </div>
+        
+        <div class="mobile-work-row" data-bg="Statues.png" data-id="lorem-ipsum-dolor">
+          <span class="mob-project-year">2025</span>
+          <span class="mob-project-title">LOREM IPSUM DOLOR</span>
+          <span class="mob-project-category">MOTION</span>
+        </div>
+        
+      </div>
+    </div>
+  </main>
+
+  <!-- Mobile Burger Menu Overlay -->
+  <div class="mobile-menu-overlay" id="mobileMenu">
+    <!-- Close trigger -->
+    <button class="mobile-menu-close" id="menuClose" aria-label="Close menu">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <line x1="18" y1="6" x2="6" y2="18"></line>
+        <line x1="6" y1="6" x2="18" y2="18"></line>
+      </svg>
+    </button>
+    
+    <!-- Menu Grid -->
+    <div class="menu-overlay-grid">
+      
+      <!-- About Row -->
+      <div class="menu-overlay-row overlay-about-row">
+        <div class="overlay-label">ABOUT</div>
+        <div class="overlay-value">
+          <p class="overlay-paragraph highlight-text">
+            YOUTH + IGNORANCE IS A<br>
+            CREATIVE STUDIO FOCUSED<br>
+            ON DIRECTION, CGI + MOTION.
+          </p>
+          <p class="overlay-paragraph highlight-text">
+            YOUTH + IGNORANCE IS A<br>
+            CREATIVE STUDIO FOCUSED<br>
+            ON DIRECTION, CGI + MOTION.
+          </p>
+          <p class="overlay-paragraph subtitle-text">
+            BASED IN STUTTGART, GERMANY.
+          </p>
+        </div>
+      </div>
+      
+      <!-- Services Row -->
+      <div class="menu-overlay-row overlay-services-row">
+        <div class="overlay-label">SERVICES</div>
+        <div class="overlay-value">
+          <ul class="overlay-list">
+            <li>CGI</li>
+            <li>MOTION DESIGN</li>
+            <li>AI IMAGE + VIDEO</li>
+            <li>CREATIVE DIRECTION</li>
+          </ul>
+        </div>
+      </div>
+      
+      <!-- Socials Row -->
+      <div class="menu-overlay-row overlay-socials-row">
+        <div class="overlay-label">SOCIALS</div>
+        <div class="overlay-value">
+          <ul class="overlay-list links-list">
+            <li><a href="https://www.instagram.com/youthandignorance/" target="_blank" rel="noopener">INSTAGRAM<img src="assets/Arrow.png" alt="" class="arrow-icon"></a></li>
+            <li><a href="https://linkedin.com" target="_blank" rel="noopener">LINKEDIN<img src="assets/Arrow.png" alt="" class="arrow-icon"></a></li>
+            <li><a href="https://behance.net" target="_blank" rel="noopener">BEHANCE<img src="assets/Arrow.png" alt="" class="arrow-icon"></a></li>
+            <li><a href="https://vimeo.com" target="_blank" rel="noopener">VIMEO<img src="assets/Arrow.png" alt="" class="arrow-icon"></a></li>
+            <li><a href="https://youtube.com" target="_blank" rel="noopener">YOUTUBE<img src="assets/Arrow.png" alt="" class="arrow-icon"></a></li>
+          </ul>
+        </div>
+      </div>
+      
+      <!-- Contact Row -->
+      <div class="menu-overlay-row overlay-contact-row">
+        <div class="overlay-label">CONTACT</div>
+        <div class="overlay-value">
+          <p class="overlay-contact-studio">STUDIO</p>
+          <p><a href="mailto:studio@youthandignorance.com" class="overlay-email">@YOUTHANDIGNORANCE.COM<img src="assets/Arrow.png" alt="" class="arrow-icon"></a></p>
+        </div>
+      </div>
+      
+    </div>
+    
+    <!-- Mobile Menu Overlay Footer -->
+    <footer class="menu-overlay-footer">
+      <div class="menu-footer-left">
+        <span class="copyright-sign">&copy;</span> YOUTH + IGNORANCE, 2026
+      </div>
+      <div class="menu-footer-right">
+        <a href="#imprint" class="overlay-footer-link">IMPRINT</a>
+        <a href="#privacy" class="overlay-footer-link">PRIVACY POLICY</a>
+      </div>
+    </footer>
+  </div>
+
+  <script src="main.js?v=9"></script>
 </body>
 </html>
