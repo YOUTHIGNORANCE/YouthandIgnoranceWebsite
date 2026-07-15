@@ -51,6 +51,8 @@ try {
                 }
 
                 $response.ContentType = $contentType
+                $response.Headers.Add("Cache-Control", "no-store, no-cache, must-revalidate")
+                $response.Headers.Add("Pragma", "no-cache")
                 $response.ContentLength64 = $bytes.Length
 
                 # Only write body if the request method is not HEAD

@@ -204,4 +204,97 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
   });
+
+  // --- SCROLL REVEAL ANIMATION (PURE SCROLL-BOUND OPACITY & TRANSLATE) ---
+  let revealItems = [];
+
+  function measureRevealElements() {
+    revealItems = Array.from(document.querySelectorAll('.reveal-on-scroll')).map(el => {
+      let elTop = 0;
+      let tempEl = el;
+      while (tempEl) {
+        elTop += tempEl.offsetTop;
+        tempEl = tempEl.offsetParent;
+      }
+      return {
+        element: el,
+        offsetTop: elTop,
+        height: el.offsetHeight
+      };
+    });
+  }
+
+  // Easing functions for a organic, premium non-linear feel
+  function easeOutCubic(x) {
+    return 1 - Math.pow(1 - x, 3);
+  }
+  function easeOutQuad(x) {
+    return 1 - (1 - x) * (1 - x);
+  }
+
+  function updateRevealOpacities() {
+    const viewportHeight = window.innerHeight;
+    const fadeLimit = viewportHeight * 0.35; // fade zone width (35% of viewport height)
+    const maxTranslateY = 120; // maximum slide translation in pixels (increased for dramatic movement)
+    const scrollY = window.scrollY;
+
+    revealItems.forEach(item => {
+      // Calculate layout coordinates relative to the viewport top
+      const relativeTop = item.offsetTop - scrollY;
+      const relativeBottom = relativeTop + item.height;
+
+      // Bottom Entry progress (0 below viewport bottom, 1 at/above fade boundary)
+      const progressBottom = (viewportHeight - relativeTop) / fadeLimit;
+      const clampedBottom = Math.max(0, Math.min(1, progressBottom));
+      
+      // Top Exit progress (1 below top fade boundary, 0 at/above viewport top)
+      const progressTop = relativeBottom / fadeLimit;
+      const clampedTop = Math.max(0, Math.min(1, progressTop));
+
+      // Map progress to distinct easing curves (quadratic for opacity, cubic for movement)
+      const opacityBottom = easeOutQuad(clampedBottom);
+      const opacityTop = easeOutQuad(clampedTop);
+      
+      const translateProgressBottom = easeOutCubic(clampedBottom);
+      const translateProgressTop = easeOutCubic(clampedTop);
+
+      const translateYBottom = (1 - translateProgressBottom) * maxTranslateY; // slides up from 120px to 0px
+      const translateYTop = (translateProgressTop - 1) * maxTranslateY; // slides up from 0px to -120px
+      
+      // Combined opacity and translation values
+      const opacity = Math.min(opacityBottom, opacityTop);
+      const translateY = translateYBottom + translateYTop;
+      
+      // Apply inline styles directly for instant, scroll-bound response
+      item.element.style.opacity = opacity;
+      item.element.style.transform = `translateY(${translateY}px)`;
+    });
+  }
+
+  // Measure once initially
+  measureRevealElements();
+  updateRevealOpacities();
+
+  // Run on scroll and resize, optimized with requestAnimationFrame
+  let tick = false;
+  window.addEventListener('scroll', () => {
+    if (!tick) {
+      window.requestAnimationFrame(() => {
+        updateRevealOpacities();
+        tick = false;
+      });
+      tick = true;
+    }
+  });
+
+  // Re-measure layout values when window changes size or completes loading all assets
+  window.addEventListener('resize', () => {
+    measureRevealElements();
+    updateRevealOpacities();
+  });
+
+  window.addEventListener('load', () => {
+    measureRevealElements();
+    updateRevealOpacities();
+  });
 });

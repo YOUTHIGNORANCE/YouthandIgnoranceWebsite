@@ -8,7 +8,8 @@ document.addEventListener('DOMContentLoaded', () => {
   if (menuTrigger && mobileMenu) {
     menuTrigger.addEventListener('click', () => {
       mobileMenu.classList.add('active');
-      document.body.style.overflow = 'hidden';
+      document.body.classList.add('menu-open');
+      document.documentElement.classList.add('menu-open');
       if (typeof stopMobileCycle === 'function') {
         stopMobileCycle();
       }
@@ -18,6 +19,8 @@ document.addEventListener('DOMContentLoaded', () => {
   if (menuClose && mobileMenu) {
     menuClose.addEventListener('click', () => {
       mobileMenu.classList.remove('active');
+      document.body.classList.remove('menu-open');
+      document.documentElement.classList.remove('menu-open');
       if (window.innerWidth <= 768) {
         if (typeof startMobileCycle === 'function') {
           startMobileCycle();
@@ -30,6 +33,8 @@ document.addEventListener('DOMContentLoaded', () => {
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && mobileMenu && mobileMenu.classList.contains('active')) {
       mobileMenu.classList.remove('active');
+      document.body.classList.remove('menu-open');
+      document.documentElement.classList.remove('menu-open');
       if (window.innerWidth <= 768) {
         if (typeof startMobileCycle === 'function') {
           startMobileCycle();
@@ -41,10 +46,10 @@ document.addEventListener('DOMContentLoaded', () => {
   // Handle window resizing (reset overflow if resizing to desktop)
   window.addEventListener('resize', () => {
     if (window.innerWidth > 768) {
-      document.body.style.overflow = 'hidden';
+      document.body.style.overflow = '';
     } else {
       if (mobileMenu && !mobileMenu.classList.contains('active')) {
-        document.body.style.overflow = 'auto';
+        document.body.style.overflow = '';
       }
     }
   });
@@ -54,9 +59,33 @@ document.addEventListener('DOMContentLoaded', () => {
     keyvisualMask.style.transform = 'rotateY(0deg) rotateX(0deg) translate3d(0, 0, 0)';
   }
 
+  // --- BACKGROUND CROSSFADE TRANSITION ---
+  let activeBg = document.getElementById('projectBgPreview');
+  let inactiveBg = document.getElementById('projectBgPreviewTemp');
+
+  function transitionToBackground(bg) {
+    if (!activeBg || !inactiveBg) return;
+    
+    if (!bg) {
+      activeBg.classList.remove('active');
+      inactiveBg.classList.remove('active');
+      return;
+    }
+    
+    inactiveBg.style.backgroundImage = `url('${bg}')`;
+    inactiveBg.style.zIndex = 2;
+    activeBg.style.zIndex = 1;
+    
+    inactiveBg.classList.add('active');
+    activeBg.classList.remove('active');
+    
+    const temp = activeBg;
+    activeBg = inactiveBg;
+    inactiveBg = temp;
+  }
+
   // --- ADD HOVER ANIMATION FOR WORK ROW ITEMS ---
   const workRows = document.querySelectorAll('.work-row');
-  const projectBgPreview = document.getElementById('projectBgPreview');
 
   workRows.forEach(row => {
     // Background Preview Hover Trigger
@@ -67,9 +96,8 @@ document.addEventListener('DOMContentLoaded', () => {
       // Clear hover lock from all rows
       workRows.forEach(r => r.classList.remove('hover-lock'));
       
-      if (bg && projectBgPreview) {
-        projectBgPreview.style.backgroundImage = `url('${bg}')`;
-        projectBgPreview.classList.add('active');
+      if (bg) {
+        transitionToBackground(bg);
       }
       if (keyvisualMask) {
         keyvisualMask.classList.add('hidden');
@@ -80,9 +108,7 @@ document.addEventListener('DOMContentLoaded', () => {
       console.log(`Mouse left row: ${row.querySelector('.project-title').textContent}`);
       // Only revert if this row is not locked
       if (!row.classList.contains('hover-lock')) {
-        if (projectBgPreview) {
-          projectBgPreview.classList.remove('active');
-        }
+        transitionToBackground('');
         if (keyvisualMask) {
           keyvisualMask.classList.remove('hidden');
         }
@@ -98,9 +124,8 @@ document.addEventListener('DOMContentLoaded', () => {
       if (!isLocked) {
         row.classList.add('hover-lock');
         const bg = row.getAttribute('data-bg');
-        if (bg && projectBgPreview) {
-          projectBgPreview.style.backgroundImage = `url('${bg}')`;
-          projectBgPreview.classList.add('active');
+        if (bg) {
+          transitionToBackground(bg);
         }
         if (keyvisualMask) {
           keyvisualMask.classList.add('hidden');
@@ -108,9 +133,7 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log(`Navigating/Locking project: ${row.querySelector('.project-title').textContent}`);
       } else {
         row.classList.remove('hover-lock');
-        if (projectBgPreview) {
-          projectBgPreview.classList.remove('active');
-        }
+        transitionToBackground('');
         if (keyvisualMask) {
           keyvisualMask.classList.remove('hidden');
         }
@@ -148,9 +171,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
       // Update preview background image
       const bg = activeRow.getAttribute('data-bg');
-      if (bg && projectBgPreview) {
-        projectBgPreview.style.backgroundImage = `url('${bg}')`;
-        projectBgPreview.classList.add('active');
+      if (bg) {
+        transitionToBackground(bg);
       }
       if (keyvisualMask) {
         keyvisualMask.classList.add('hidden');
