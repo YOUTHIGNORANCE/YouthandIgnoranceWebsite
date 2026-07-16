@@ -62,11 +62,70 @@ body {
   vertical-align: middle;
   transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
-
 a {
   color: inherit;
   text-decoration: none;
-  transition: color 0.3s ease, border-color 0.3s ease;
+  transition: color 0.3s ease, border-color 0.3s ease, transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), background-color 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), opacity 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+}
+
+/* Explicit Transition rule for all UI interactive buttons/links */
+.imprint-link,
+.desktop-contact-link,
+.subpage-nav-link,
+.footer-contact-link,
+.footer-socials-list a,
+.overlay-footer-link,
+.overlay-list a,
+.overlay-email,
+.socials-list a {
+  transition: color 0.3s ease, border-color 0.3s ease, transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), background-color 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), opacity 0.3s ease !important;
+  padding: 2px 6px !important;
+  margin: -2px -6px !important;
+}
+
+/* Explicit Green Background and translate hover rules */
+.imprint-link:hover,
+.desktop-contact-link:hover,
+.subpage-nav-link:hover,
+.footer-contact-link:hover,
+.footer-socials-list a:hover,
+.overlay-footer-link:hover,
+.overlay-list a:hover,
+.overlay-email:hover,
+.socials-list a:hover {
+  background-color: var(--hover-green) !important;
+  color: #000000 !important;
+  transform: translateY(-4px) !important;
+  border-bottom: none !important;
+  opacity: 1 !important;
+  padding: 2px 6px !important;
+  margin: -2px -6px !important;
+}
+
+/* Specific Arrow color transformation inside hovered links */
+.imprint-link:hover .arrow-icon,
+.desktop-contact-link:hover .arrow-icon,
+.subpage-nav-link:hover .arrow-icon,
+.footer-contact-link:hover .arrow-icon,
+.footer-socials-list a:hover .arrow-icon,
+.overlay-footer-link:hover .arrow-icon,
+.overlay-list a:hover .arrow-icon,
+.overlay-email:hover .arrow-icon,
+.socials-list a:hover .arrow-icon {
+  filter: brightness(0) !important; /* Turn white arrow black */
+}
+
+.logo-link {
+  padding: 0 !important;
+  margin: 0 !important;
+  display: inline-flex !important;
+}
+
+.logo-link:hover {
+  background-color: transparent !important;
+  transform: none !important;
 }
 
 /* --- HEADER --- */
@@ -156,7 +215,8 @@ a {
   font-size: 16px;
   font-weight: 300;
   color: var(--text-color);
-  padding: 8px 0;
+  padding: 2px 6px;
+  margin: -2px -6px;
   display: flex;
   align-items: center;
 }
@@ -428,9 +488,9 @@ a {
 .desktop-footer {
   width: 100%;
   display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  height: 24px;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
 }
 
 .imprint-link {
@@ -564,6 +624,15 @@ a {
   .mobile-work-row.active-highlight .mob-project-title {
     transform: translateX(8px);
   }
+}
+
+/* Scroll lock when mobile menu is active */
+body.menu-open,
+html.menu-open {
+  overflow: hidden !important;
+  height: 100vh !important;
+  position: fixed !important;
+  width: 100% !important;
 }
 
 /* --- MOBILE MENU OVERLAY --- */
@@ -972,14 +1041,18 @@ a {
   margin-bottom: 96px;
 }
 
+.subpage-desc-row .about-text {
+  max-width: 66.6%;
+}
+
 /* 3-Column Grid Footer */
 .subpage-footer {
   display: grid;
-  grid-template-columns: 1fr auto 1fr; /* Copyright on left, cohesive group in middle, Imprint on right */
+  grid-template-columns: 1fr auto 2.2fr; /* Shift middle cohesive group way to the left */
   gap: 32px;
   margin: 0 -32px;
   padding: 58px 32px 200px 32px; /* 58px padding-top below the line */
-  border-top: 1px solid #D3D7DA; /* Bring back the separating line with hex color D3D7DA */
+  border-top: 1px solid rgba(211, 215, 218, 0.5); /* Same color/opacity as imprint */
   margin-top: 96px; /* 96px margin + 64px last media row margin = 160px spacing below last image */
   font-size: 16px;
   font-weight: 300;
@@ -1511,6 +1584,7 @@ a {
   .footer-cohesive-group {
     display: contents !important;
   }
+}
 
 /* --- MOBILE HOMEPAGE FOOTER (IMPRINT / PRIVACY) --- */
 .mobile-homepage-footer {
@@ -1549,4 +1623,88 @@ a {
 .reveal-on-scroll {
   opacity: 0;
   will-change: opacity;
+}
+
+/* --- LEGAL DOCUMENTS STYLING (IMPRINT & PRIVACY POLICY) --- */
+body.legal-doc {
+  overflow-y: auto !important; 
+  height: auto !important;
+  min-height: 100dvh !important;
+  display: block !important; /* Overrides the flex-box lock of the home page */
+  padding: 160px 50px 100px 50px !important; /* Clears the 96px fixed header on desktop */
+}
+
+.legal-wrapper {
+  max-width: 720px !important;
+  margin: 0 auto !important; /* Clears top margin to delegate to body padding */
+  text-align: center !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+}
+
+.legal-wrapper h1 {
+  font-family: var(--font-sans) !important;
+  font-size: 36px !important;
+  font-weight: 500 !important;
+  color: #ffffff !important;
+  margin-bottom: 40px !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.05em !important;
+}
+
+.legal-wrapper h2 {
+  font-family: var(--font-sans) !important;
+  font-size: 16px !important;
+  font-weight: 400 !important;
+  color: #ffffff !important;
+  margin: 48px 0 16px 0 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.05em !important;
+}
+
+.legal-wrapper p, .legal-wrapper ul {
+  font-size: 14px !important;
+  line-height: 1.6 !important;
+  color: rgba(211, 215, 218, 0.8) !important;
+  margin-bottom: 20px !important;
+  text-align: center !important;
+  max-width: 580px !important;
+}
+
+.legal-wrapper ul {
+  list-style-position: inside !important;
+  padding-left: 0 !important;
+}
+
+.legal-wrapper a {
+  color: var(--hover-green) !important;
+  text-decoration: none !important;
+  border-bottom: 1px solid rgba(98, 226, 158, 0.2) !important;
+  transition: color 0.3s ease, border-color 0.3s ease !important;
+}
+
+.legal-wrapper a:hover {
+  color: #ffffff !important;
+  border-bottom-color: #ffffff !important;
+}
+
+@media (max-width: 768px) {
+  body.legal-doc { 
+    padding: 110px 20px 80px 20px !important; /* Clears mobile header */
+  }
+  .legal-wrapper { 
+    margin-top: 0 !important; 
+  }
+  .legal-wrapper h1 { 
+    font-size: 26px !important; 
+  }
+  .legal-wrapper h2 { 
+    font-size: 14px !important; 
+    margin-top: 36px !important;
+  }
+  .legal-wrapper p, .legal-wrapper ul { 
+    font-size: 12px !important; 
+    line-height: 1.5 !important;
+  }
 }
