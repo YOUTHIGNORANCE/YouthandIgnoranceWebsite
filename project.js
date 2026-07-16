@@ -234,36 +234,43 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function updateRevealOpacities() {
     const viewportHeight = window.innerHeight;
-    const fadeLimit = viewportHeight * 0.35; // fade zone width (35% of viewport height)
-    const maxTranslateY = 120; // maximum slide translation in pixels (increased for dramatic movement)
+    const fadeLimitBottom = viewportHeight * 0.35; // Bottom entry zone (35% of screen)
+    const fadeLimitTop = viewportHeight * 0.35; // Top exit zone (35% of screen)
+    const maxTranslateY = 120; // Symmetrical translation (120px)
     const scrollY = window.scrollY;
 
     revealItems.forEach(item => {
       // Calculate layout coordinates relative to the viewport top
       const relativeTop = item.offsetTop - scrollY;
-      const relativeBottom = relativeTop + item.height;
 
-      // Bottom Entry progress (0 below viewport bottom, 1 at/above fade boundary)
-      const progressBottom = (viewportHeight - relativeTop) / fadeLimit;
-      const clampedBottom = Math.max(0, Math.min(1, progressBottom));
+      // Bottom Entry progress (forced to 1 if scroll is 0 and element starts on-screen)
+      let clampedBottom = 1;
+      if (scrollY > 0 || item.offsetTop >= viewportHeight) {
+        const progressBottom = (viewportHeight - relativeTop) / fadeLimitBottom;
+        clampedBottom = Math.max(0, Math.min(1, progressBottom));
+      }
       
-      // Top Exit progress (1 below top fade boundary, 0 at/above viewport top)
-      const progressTop = relativeBottom / fadeLimit;
+      // Top Exit progress (fades out as top approaches 0, using min offsetTop to prevent load-time fading)
+      const limitTop = Math.min(fadeLimitTop, item.offsetTop);
+      const progressTop = limitTop > 0 ? relativeTop / limitTop : 1;
       const clampedTop = Math.max(0, Math.min(1, progressTop));
 
-      // Map progress to distinct easing curves (quadratic for opacity, cubic for movement)
+      // Quadratic easing curves for smooth opacity transitions
       const opacityBottom = easeOutQuad(clampedBottom);
       const opacityTop = easeOutQuad(clampedTop);
-      
-      const translateProgressBottom = easeOutCubic(clampedBottom);
-      const translateProgressTop = easeOutCubic(clampedTop);
-
-      const translateYBottom = (1 - translateProgressBottom) * maxTranslateY; // slides up from 120px to 0px
-      const translateYTop = (translateProgressTop - 1) * maxTranslateY; // slides up from 0px to -120px
-      
-      // Combined opacity and translation values
       const opacity = Math.min(opacityBottom, opacityTop);
-      const translateY = translateYBottom + translateYTop;
+
+      // Mutually exclusive translation calculations to prevent conflicting up/down offsets
+      let translateY = 0;
+      if (clampedBottom < 1) {
+        // Entering from bottom: slides up from maxTranslateY to 0
+        const progress = easeOutCubic(clampedBottom);
+        translateY = (1 - progress) * maxTranslateY;
+      } else if (clampedTop < 1) {
+        // Exiting from top: slides up from 0 to -maxTranslateY
+        const progress = easeOutCubic(clampedTop);
+        translateY = (progress - 1) * maxTranslateY;
+      }
       
       // Apply inline styles directly for instant, scroll-bound response
       item.element.style.opacity = opacity;

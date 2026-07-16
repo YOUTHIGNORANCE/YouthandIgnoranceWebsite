@@ -1637,10 +1637,10 @@ body.legal-doc {
 .legal-wrapper {
   max-width: 720px !important;
   margin: 0 auto !important; /* Clears top margin to delegate to body padding */
-  text-align: center !important;
+  text-align: right !important;
   display: flex !important;
   flex-direction: column !important;
-  align-items: center !important;
+  align-items: flex-end !important;
 }
 
 .legal-wrapper h1 {
@@ -1668,7 +1668,7 @@ body.legal-doc {
   line-height: 1.6 !important;
   color: rgba(211, 215, 218, 0.8) !important;
   margin-bottom: 20px !important;
-  text-align: center !important;
+  text-align: right !important;
   max-width: 580px !important;
 }
 
