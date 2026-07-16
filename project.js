@@ -205,8 +205,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // --- SCROLL REVEAL ANIMATION (PURE SCROLL-BOUND OPACITY & TRANSLATE) ---
+  // --- SCROLL REVEAL ANIMATION (SMOOTH INTERPOLATED SCROLL-BOUND) ---
   let revealItems = [];
+  let isAnimating = false;
 
   function measureRevealElements() {
     revealItems = Array.from(document.querySelectorAll('.reveal-on-scroll')).map(el => {
@@ -219,7 +220,11 @@ document.addEventListener('DOMContentLoaded', () => {
       return {
         element: el,
         offsetTop: elTop,
-        height: el.offsetHeight
+        height: el.offsetHeight,
+        targetOpacity: 0,
+        targetTranslateY: 60,
+        currentOpacity: 0,
+        currentTranslateY: 60
       };
     });
   }
@@ -232,11 +237,13 @@ document.addEventListener('DOMContentLoaded', () => {
     return 1 - (1 - x) * (1 - x);
   }
 
-  function updateRevealOpacities() {
+  function updateTargetStates() {
     const viewportHeight = window.innerHeight;
-    const fadeLimitBottom = viewportHeight * 0.25; // Bottom entry zone (25% of screen, fades in later)
-    const fadeLimitTop = viewportHeight * 0.60; // Top exit zone (60% of screen, fades out a good bit earlier)
-    const maxTranslateY = 120; // Symmetrical translation (120px)
+    const fadeLimitBottom = Math.max(200, Math.min(300, viewportHeight * 0.25)); // Smooth bottom entry boundary
+    const header = document.querySelector('.site-header');
+    const headerHeight = header ? header.offsetHeight : 96;
+    const fadeLimitTop = viewportHeight * 0.45; // Starts fading out when bottom of element enters top 45% of screen
+    const maxTranslateY = 60; // Symmetrical slide-up translation (60px)
     const scrollY = window.scrollY;
 
     revealItems.forEach(item => {
@@ -250,60 +257,101 @@ document.addEventListener('DOMContentLoaded', () => {
         const progressBottom = (viewportHeight - relativeTop) / fadeLimitBottom;
         clampedBottom = Math.max(0, Math.min(1, progressBottom));
       }
-      
-      // Top Exit progress (fades out as bottom approaches 0, using initial bottom to prevent load-time fading)
+
+      // Top Exit progress (fades out as bottom approaches headerHeight, using initial bottom to prevent load-time fading)
       const initialBottom = item.offsetTop + item.height;
       const limitTop = Math.min(fadeLimitTop, initialBottom);
-      const progressTop = limitTop > 0 ? relativeBottom / limitTop : 1;
-      const clampedTop = Math.max(0, Math.min(1, progressTop));
+      let clampedTop = 1;
+      if (limitTop > headerHeight) {
+        const progressTop = (relativeBottom - headerHeight) / (limitTop - headerHeight);
+        clampedTop = Math.max(0, Math.min(1, progressTop));
+      }
 
-      // Quadratic easing curves for smooth opacity transitions
+      // Symmetrical logic: opacity depends on both bottom entry and top exit
       const opacityBottom = easeOutQuad(clampedBottom);
       const opacityTop = easeOutQuad(clampedTop);
-      const opacity = Math.min(opacityBottom, opacityTop);
+      item.targetOpacity = Math.min(opacityBottom, opacityTop);
 
-      // Mutually exclusive translation calculations to prevent conflicting up/down offsets
-      let translateY = 0;
+      // Symmetrical translation logic
       if (clampedBottom < 1) {
         // Entering from bottom: slides up from maxTranslateY to 0
-        const progress = easeOutCubic(clampedBottom);
-        translateY = (1 - progress) * maxTranslateY;
+        const progressTranslate = easeOutCubic(clampedBottom);
+        item.targetTranslateY = (1 - progressTranslate) * maxTranslateY;
       } else if (clampedTop < 1) {
         // Exiting from top: slides up from 0 to -maxTranslateY
-        const progress = easeOutCubic(clampedTop);
-        translateY = (progress - 1) * maxTranslateY;
+        const progressTranslate = easeOutCubic(clampedTop);
+        item.targetTranslateY = (progressTranslate - 1) * maxTranslateY;
+      } else {
+        item.targetTranslateY = 0;
       }
-      
-      // Apply inline styles directly for instant, scroll-bound response
-      item.element.style.opacity = opacity;
-      item.element.style.transform = `translateY(${translateY}px)`;
     });
+  }
+
+  function animateLoop() {
+    let needsMoreFrames = false;
+    const lerpFactor = 0.08; // Super smooth interpolation factor
+
+    revealItems.forEach(item => {
+      // Smoothly interpolate opacity
+      const diffOpacity = item.targetOpacity - item.currentOpacity;
+      if (Math.abs(diffOpacity) > 0.001) {
+        item.currentOpacity += diffOpacity * lerpFactor;
+        needsMoreFrames = true;
+      } else {
+        item.currentOpacity = item.targetOpacity;
+      }
+
+      // Smoothly interpolate transform
+      const diffTranslate = item.targetTranslateY - item.currentTranslateY;
+      if (Math.abs(diffTranslate) > 0.05) {
+        item.currentTranslateY += diffTranslate * lerpFactor;
+        needsMoreFrames = true;
+      } else {
+        item.currentTranslateY = item.targetTranslateY;
+      }
+
+      // Apply inline styles directly for high performance
+      item.element.style.opacity = item.currentOpacity;
+      item.element.style.transform = `translateY(${item.currentTranslateY}px)`;
+    });
+
+    if (needsMoreFrames) {
+      requestAnimationFrame(animateLoop);
+    } else {
+      isAnimating = false;
+    }
+  }
+
+  function onScroll() {
+    updateTargetStates();
+    if (!isAnimating) {
+      isAnimating = true;
+      requestAnimationFrame(animateLoop);
+    }
   }
 
   // Measure once initially
   measureRevealElements();
-  updateRevealOpacities();
-
-  // Run on scroll and resize, optimized with requestAnimationFrame
-  let tick = false;
-  window.addEventListener('scroll', () => {
-    if (!tick) {
-      window.requestAnimationFrame(() => {
-        updateRevealOpacities();
-        tick = false;
-      });
-      tick = true;
-    }
+  updateTargetStates();
+  
+  // Align current state to targets immediately to avoid layout flashes on load
+  revealItems.forEach(item => {
+    item.currentOpacity = item.targetOpacity;
+    item.currentTranslateY = item.targetTranslateY;
+    item.element.style.opacity = item.currentOpacity;
+    item.element.style.transform = `translateY(${item.currentTranslateY}px)`;
   });
 
-  // Re-measure layout values when window changes size or completes loading all assets
+  // Attach event listeners
+  window.addEventListener('scroll', onScroll, { passive: true });
+
   window.addEventListener('resize', () => {
     measureRevealElements();
-    updateRevealOpacities();
+    onScroll();
   });
 
   window.addEventListener('load', () => {
     measureRevealElements();
-    updateRevealOpacities();
+    onScroll();
   });
 });
