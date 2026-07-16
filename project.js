@@ -244,10 +244,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function updateTargetStates() {
     const viewportHeight = window.innerHeight;
-    const fadeLimitBottom = Math.max(200, Math.min(300, viewportHeight * 0.25)); // Smooth bottom entry boundary
     const header = document.querySelector('.site-header');
     const headerHeight = header ? header.offsetHeight : 96;
-    const fadeLimitTop = viewportHeight * 0.45; // Starts fading out when bottom of element enters top 45% of screen
+    
+    // Binary trigger limits
+    const bottomTrigger = viewportHeight - 120; // Triggers reveal when element enters screen by 120px
+    const topTrigger = headerHeight + 80;        // Triggers exit when element bottom is within 80px of header
+
     const maxTranslateY = 60; // Symmetrical slide-up translation (60px)
     const scrollY = window.scrollY;
 
@@ -265,37 +268,17 @@ document.addEventListener('DOMContentLoaded', () => {
       const relativeTop = item.offsetTop - scrollY;
       const relativeBottom = relativeTop + item.height;
 
-      // Bottom Entry progress (forced to 1 if scroll is 0 and element starts on-screen)
-      let clampedBottom = 1;
-      if (scrollY > 0 || item.offsetTop >= viewportHeight) {
-        const progressBottom = (viewportHeight - relativeTop) / fadeLimitBottom;
-        clampedBottom = Math.max(0, Math.min(1, progressBottom));
-      }
-
-      // Top Exit progress (fades out as bottom approaches headerHeight, using initial bottom to prevent load-time fading)
-      const initialBottom = item.offsetTop + item.height;
-      const limitTop = Math.min(fadeLimitTop, initialBottom);
-      let clampedTop = 1;
-      if (limitTop > headerHeight) {
-        const progressTop = (relativeBottom - headerHeight) / (limitTop - headerHeight);
-        clampedTop = Math.max(0, Math.min(1, progressTop));
-      }
-
-      // Symmetrical logic: opacity depends on both bottom entry and top exit
-      const opacityBottom = easeOutQuad(clampedBottom);
-      const opacityTop = easeOutQuad(clampedTop);
-      item.targetOpacity = Math.min(opacityBottom, opacityTop);
-
-      // Symmetrical translation logic
-      if (clampedBottom < 1) {
-        // Entering from bottom: slides up from maxTranslateY to 0
-        const progressTranslate = easeOutCubic(clampedBottom);
-        item.targetTranslateY = (1 - progressTranslate) * maxTranslateY;
-      } else if (clampedTop < 1) {
-        // Exiting from top: slides up from 0 to -maxTranslateY
-        const progressTranslate = easeOutCubic(clampedTop);
-        item.targetTranslateY = (progressTranslate - 1) * maxTranslateY;
+      if (relativeTop >= bottomTrigger) {
+        // Hidden at the bottom (below the trigger zone)
+        item.targetOpacity = 0;
+        item.targetTranslateY = maxTranslateY;
+      } else if (relativeBottom <= topTrigger) {
+        // Hidden at the top (exited)
+        item.targetOpacity = 0;
+        item.targetTranslateY = -maxTranslateY;
       } else {
+        // Fully visible in the active viewport region
+        item.targetOpacity = 1;
         item.targetTranslateY = 0;
       }
     });
@@ -429,11 +412,15 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
       // Offscreen items start at standard scroll reveal target
       const relativeTop = item.offsetTop;
-      const progressBottom = (viewportHeight - relativeTop) / Math.max(200, Math.min(300, viewportHeight * 0.25));
-      const clampedBottom = Math.max(0, Math.min(1, progressBottom));
+      const bottomTrigger = viewportHeight - 120;
       
-      item.targetOpacity = easeOutQuad(clampedBottom);
-      item.targetTranslateY = (1 - easeOutCubic(clampedBottom)) * 60;
+      if (relativeTop >= bottomTrigger) {
+        item.targetOpacity = 0;
+        item.targetTranslateY = 60;
+      } else {
+        item.targetOpacity = 1;
+        item.targetTranslateY = 0;
+      }
       item.currentOpacity = item.targetOpacity;
       item.currentTranslateY = item.targetTranslateY;
     }
