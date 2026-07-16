@@ -208,18 +208,23 @@ document.addEventListener('DOMContentLoaded', () => {
   // --- SCROLL REVEAL ANIMATION (SMOOTH INTERPOLATED SCROLL-BOUND) ---
   let revealItems = [];
   let isAnimating = false;
+  let introCompleted = false;
+  const staggerQueue = [];
 
   function measureRevealElements() {
     revealItems = Array.from(document.querySelectorAll('.reveal-on-scroll')).map(el => {
       let elTop = 0;
+      let elLeft = 0;
       let tempEl = el;
       while (tempEl) {
         elTop += tempEl.offsetTop;
+        elLeft += tempEl.offsetLeft;
         tempEl = tempEl.offsetParent;
       }
       return {
         element: el,
         offsetTop: elTop,
+        offsetLeft: elLeft,
         height: el.offsetHeight,
         targetOpacity: 0,
         targetTranslateY: 60,
@@ -247,6 +252,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const scrollY = window.scrollY;
 
     revealItems.forEach(item => {
+      // If we are still playing the onload stagger and the user hasn't scrolled,
+      // do not overwrite the target states of items that are queued to reveal later!
+      if (!introCompleted && !hasScrolled) {
+        const isInQueue = staggerQueue.some(entry => entry.type === 'reveal-el' && entry.element === item.element);
+        if (isInQueue && item.targetOpacity === 0) {
+          return;
+        }
+      }
+
       // Calculate layout coordinates relative to the viewport top
       const relativeTop = item.offsetTop - scrollY;
       const relativeBottom = relativeTop + item.height;
@@ -322,7 +336,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+  let hasScrolled = false;
+
   function onScroll() {
+    hasScrolled = true;
     updateTargetStates();
     if (!isAnimating) {
       isAnimating = true;
@@ -332,26 +349,170 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Measure once initially
   measureRevealElements();
-  updateTargetStates();
   
-  // Align current state to targets immediately to avoid layout flashes on load
+  // Set up staggered intro for elements initially in the viewport
+  const viewportHeight = window.innerHeight;
+  
+  // Prepare header elements initially hidden with CSS transitions
+  const headerLogo = document.querySelector('.logo');
+  const headerContact = document.querySelector('.desktop-contact-link');
+  const headerTrigger = document.querySelector('.mobile-menu-trigger');
+
+  if (headerLogo) {
+    headerLogo.style.opacity = '0';
+    headerLogo.style.transform = 'translateY(6px)';
+    headerLogo.style.transition = 'opacity 0.6s cubic-bezier(0.25, 1, 0.5, 1), transform 0.6s cubic-bezier(0.25, 1, 0.5, 1)';
+  }
+  if (headerContact) {
+    headerContact.style.opacity = '0';
+    headerContact.style.transform = 'translateY(6px)';
+    headerContact.style.transition = 'opacity 0.6s cubic-bezier(0.25, 1, 0.5, 1), transform 0.6s cubic-bezier(0.25, 1, 0.5, 1)';
+  }
+  if (headerTrigger) {
+    headerTrigger.style.opacity = '0';
+    headerTrigger.style.transform = 'translateY(6px)';
+    headerTrigger.style.transition = 'opacity 0.6s cubic-bezier(0.25, 1, 0.5, 1), transform 0.6s cubic-bezier(0.25, 1, 0.5, 1)';
+  }
+
+  // Build a manual layout sequence to bypass dynamic image loading offset shifts
+  staggerQueue.length = 0;
+
+  // 1. Logo
+  if (headerLogo) staggerQueue.push({ type: 'header', element: headerLogo });
+
+  // 2. Contact button / Burger trigger
+  if (headerContact || headerTrigger) {
+    staggerQueue.push({
+      type: 'header-group',
+      elements: [headerContact, headerTrigger].filter(Boolean)
+    });
+  }
+
+  // 3. Project title
+  const titleEl = document.querySelector('.subpage-title-col');
+  if (titleEl) staggerQueue.push({ type: 'reveal-el', element: titleEl });
+
+  // 4. Category column
+  const categoryEl = document.querySelector('.subpage-category-col');
+  if (categoryEl) staggerQueue.push({ type: 'reveal-el', element: categoryEl });
+
+  // 5. Year column
+  const yearEl = document.querySelector('.subpage-year-col');
+  if (yearEl) staggerQueue.push({ type: 'reveal-el', element: yearEl });
+
+  // 6. About column
+  const aboutEl = document.querySelector('.subpage-about-col');
+  if (aboutEl) staggerQueue.push({ type: 'reveal-el', element: aboutEl });
+
+  // 7. Navigation bar
+  const navEl = document.querySelector('.subpage-nav-bar');
+  if (navEl) staggerQueue.push({ type: 'reveal-el', element: navEl });
+
+  // 8 & 9. First row images
+  const mediaRows = document.querySelectorAll('.subpage-media-row');
+  if (mediaRows.length > 0) {
+    const firstRowCols = mediaRows[0].querySelectorAll('.media-col');
+    if (firstRowCols.length > 0) staggerQueue.push({ type: 'reveal-el', element: firstRowCols[0] });
+    if (firstRowCols.length > 1) staggerQueue.push({ type: 'reveal-el', element: firstRowCols[1] });
+  }
+
+  // Pre-set target & current states for all reveal items
   revealItems.forEach(item => {
-    item.currentOpacity = item.targetOpacity;
-    item.currentTranslateY = item.targetTranslateY;
+    const isInQueue = staggerQueue.some(entry => entry.type === 'reveal-el' && entry.element === item.element);
+    
+    if (isInQueue) {
+      // Staggered intro items start at 0 opacity and 15px translation offset
+      item.targetOpacity = 0;
+      item.targetTranslateY = 15;
+      item.currentOpacity = 0;
+      item.currentTranslateY = 15;
+    } else {
+      // Offscreen items start at standard scroll reveal target
+      const relativeTop = item.offsetTop;
+      const progressBottom = (viewportHeight - relativeTop) / Math.max(200, Math.min(300, viewportHeight * 0.25));
+      const clampedBottom = Math.max(0, Math.min(1, progressBottom));
+      
+      item.targetOpacity = easeOutQuad(clampedBottom);
+      item.targetTranslateY = (1 - easeOutCubic(clampedBottom)) * 60;
+      item.currentOpacity = item.targetOpacity;
+      item.currentTranslateY = item.targetTranslateY;
+    }
+    
+    // Apply initial styling to DOM to prevent flashes
     item.element.style.opacity = item.currentOpacity;
     item.element.style.transform = `translateY(${item.currentTranslateY}px)`;
   });
+
+  // Stagger reveal of all queued elements, offsetting each step by exactly 120ms
+  staggerQueue.forEach((entry, index) => {
+    setTimeout(() => {
+      if (hasScrolled) return;
+
+      if (entry.type === 'header') {
+        entry.element.style.opacity = '1';
+        entry.element.style.transform = 'translateY(0)';
+      } else if (entry.type === 'header-group') {
+        entry.elements.forEach(el => {
+          el.style.opacity = '1';
+          el.style.transform = 'translateY(0)';
+        });
+      } else if (entry.type === 'reveal-el') {
+        const item = revealItems.find(x => x.element === entry.element);
+        if (item) {
+          item.targetOpacity = 1;
+          item.targetTranslateY = 0;
+          if (!isAnimating) {
+            isAnimating = true;
+            requestAnimationFrame(animateLoop);
+          }
+        }
+      }
+
+      // Mark intro as completed once the final item is reached
+      if (index === staggerQueue.length - 1) {
+        introCompleted = true;
+      }
+    }, index * 120); // Snappy 120ms stagger step
+  });
+
+  // Clear transition/transform styles from header elements after animation finishes
+  // to avoid interfering with hover styles
+  setTimeout(() => {
+    if (headerLogo) {
+      headerLogo.style.opacity = '';
+      headerLogo.style.transform = '';
+      headerLogo.style.transition = '';
+    }
+    if (headerContact) {
+      headerContact.style.opacity = '';
+      headerContact.style.transform = '';
+      headerContact.style.transition = '';
+    }
+    if (headerTrigger) {
+      headerTrigger.style.opacity = '';
+      headerTrigger.style.transform = '';
+      headerTrigger.style.transition = '';
+    }
+  }, staggerQueue.length * 120 + 800);
 
   // Attach event listeners
   window.addEventListener('scroll', onScroll, { passive: true });
 
   window.addEventListener('resize', () => {
     measureRevealElements();
-    onScroll();
+    updateTargetStates();
+    if (!isAnimating) {
+      isAnimating = true;
+      requestAnimationFrame(animateLoop);
+    }
   });
 
   window.addEventListener('load', () => {
     measureRevealElements();
-    onScroll();
+    updateTargetStates();
+    if (!isAnimating) {
+      isAnimating = true;
+      requestAnimationFrame(animateLoop);
+    }
   });
 });
