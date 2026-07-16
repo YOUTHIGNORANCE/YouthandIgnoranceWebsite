@@ -234,14 +234,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function updateRevealOpacities() {
     const viewportHeight = window.innerHeight;
-    const fadeLimitBottom = viewportHeight * 0.35; // Bottom entry zone (35% of screen)
-    const fadeLimitTop = viewportHeight * 0.35; // Top exit zone (35% of screen)
+    const fadeLimitBottom = viewportHeight * 0.25; // Bottom entry zone (25% of screen, fades in later)
+    const fadeLimitTop = viewportHeight * 0.60; // Top exit zone (60% of screen, fades out a good bit earlier)
     const maxTranslateY = 120; // Symmetrical translation (120px)
     const scrollY = window.scrollY;
 
     revealItems.forEach(item => {
       // Calculate layout coordinates relative to the viewport top
       const relativeTop = item.offsetTop - scrollY;
+      const relativeBottom = relativeTop + item.height;
 
       // Bottom Entry progress (forced to 1 if scroll is 0 and element starts on-screen)
       let clampedBottom = 1;
@@ -250,9 +251,10 @@ document.addEventListener('DOMContentLoaded', () => {
         clampedBottom = Math.max(0, Math.min(1, progressBottom));
       }
       
-      // Top Exit progress (fades out as top approaches 0, using min offsetTop to prevent load-time fading)
-      const limitTop = Math.min(fadeLimitTop, item.offsetTop);
-      const progressTop = limitTop > 0 ? relativeTop / limitTop : 1;
+      // Top Exit progress (fades out as bottom approaches 0, using initial bottom to prevent load-time fading)
+      const initialBottom = item.offsetTop + item.height;
+      const limitTop = Math.min(fadeLimitTop, initialBottom);
+      const progressTop = limitTop > 0 ? relativeBottom / limitTop : 1;
       const clampedTop = Math.max(0, Math.min(1, progressTop));
 
       // Quadratic easing curves for smooth opacity transitions
