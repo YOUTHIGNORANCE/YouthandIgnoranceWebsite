@@ -150,23 +150,38 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // --- MOBILE AUTO-CYCLING PREVIEW ---
-  let mobileCycleInterval = null;
-  let currentMobileIndex = -1;
+  let mobileCycleTimeout = null;
+  let currentMobileIndex = -1; // -1 represents the initial keyvisual video play
   const mobileRows = document.querySelectorAll('.mobile-work-row');
 
-  function startMobileCycle() {
-    if (mobileRows.length === 0) return;
-    if (mobileCycleInterval) return;
-    console.log("Starting mobile auto-cycling...");
+  function showMobileSlide() {
+    // Clear any pending transition timeout
+    if (mobileCycleTimeout) {
+      clearTimeout(mobileCycleTimeout);
+      mobileCycleTimeout = null;
+    }
 
-    mobileCycleInterval = setInterval(() => {
-      currentMobileIndex = (currentMobileIndex + 1) % mobileRows.length;
+    // Wrap around to start if index overflows past the coin video slot
+    if (currentMobileIndex > mobileRows.length) {
+      currentMobileIndex = 0;
+    }
+
+    if (currentMobileIndex === -1 || currentMobileIndex === mobileRows.length) {
+      // Show keyvisual coin video
+      mobileRows.forEach(r => r.classList.remove('active-highlight'));
+      transitionToBackground('');
+      if (keyvisualMask) {
+        keyvisualMask.classList.remove('hidden');
+        keyvisualMask.currentTime = 0;
+        keyvisualMask.play().catch(err => console.log("Video play interrupted or blocked:", err));
+      }
+      console.log("Mobile cycle: showing keyvisual coin video");
+    } else {
+      // Show project at currentMobileIndex
       const activeRow = mobileRows[currentMobileIndex];
 
-      // Remove active-highlight from all mobile rows
-      mobileRows.forEach(r => r.classList.remove('active-highlight'));
-
       // Highlight current row
+      mobileRows.forEach(r => r.classList.remove('active-highlight'));
       activeRow.classList.add('active-highlight');
 
       // Update preview background image
@@ -177,15 +192,30 @@ document.addEventListener('DOMContentLoaded', () => {
       if (keyvisualMask) {
         keyvisualMask.classList.add('hidden');
       }
-      console.log(`Mobile cycled to index: ${currentMobileIndex}`);
+      console.log(`Mobile cycle: showing project index ${currentMobileIndex}`);
+    }
+
+    // Schedule next slide after exactly 4000ms for all states (including the coin video)
+    mobileCycleTimeout = setTimeout(() => {
+      if (currentMobileIndex === -1) {
+        currentMobileIndex = 0;
+      } else {
+        currentMobileIndex++;
+      }
+      showMobileSlide();
     }, 4000);
   }
 
+  function startMobileCycle() {
+    if (mobileRows.length === 0) return;
+    console.log("Starting mobile auto-cycling...");
+    showMobileSlide();
+  }
+
   function stopMobileCycle() {
-    if (mobileCycleInterval) {
-      clearInterval(mobileCycleInterval);
-      mobileCycleInterval = null;
-      console.log("Stopped mobile auto-cycling (paused).");
+    if (mobileCycleTimeout) {
+      clearTimeout(mobileCycleTimeout);
+      mobileCycleTimeout = null;
     }
   }
 

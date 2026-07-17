@@ -207,9 +207,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // --- SCROLL REVEAL ANIMATION (SMOOTH INTERPOLATED SCROLL-BOUND) ---
   let revealItems = [];
+  let revealGroups = [];
   let isAnimating = false;
   let introCompleted = false;
   const staggerQueue = [];
+  let lastRevealTime = 0;
 
   function measureRevealElements() {
     revealItems = Array.from(document.querySelectorAll('.reveal-on-scroll')).map(el => {
@@ -229,8 +231,44 @@ document.addEventListener('DOMContentLoaded', () => {
         targetOpacity: 0,
         targetTranslateY: 60,
         currentOpacity: 0,
-        currentTranslateY: 60
+        currentTranslateY: 60,
+        revealed: false
       };
+    });
+
+    // Group revealItems by vertical proximity (within 50px of offsetTop)
+    revealGroups = [];
+    const sorted = [...revealItems].sort((a, b) => a.offsetTop - b.offsetTop);
+    let currentGroup = [];
+
+    sorted.forEach(item => {
+      if (currentGroup.length === 0) {
+        currentGroup.push(item);
+      } else {
+        const first = currentGroup[0];
+        if (Math.abs(item.offsetTop - first.offsetTop) < 50) {
+          currentGroup.push(item);
+        } else {
+          revealGroups.push({
+            items: currentGroup,
+            revealed: false
+          });
+          currentGroup = [item];
+        }
+      }
+    });
+    if (currentGroup.length > 0) {
+      revealGroups.push({
+        items: currentGroup,
+        revealed: false
+      });
+    }
+
+    // Link each item back to its group reference
+    revealGroups.forEach(group => {
+      group.items.forEach(item => {
+        item.group = group;
+      });
     });
   }
 
@@ -254,6 +292,49 @@ document.addEventListener('DOMContentLoaded', () => {
     const maxTranslateY = 60; // Symmetrical slide-up translation (60px)
     const scrollY = window.scrollY;
 
+    // 1. Group trigger phase: reveal entire horizontal rows together in perfect left-to-right sequence
+    revealGroups.forEach(group => {
+      if (!group.revealed) {
+        const shouldTrigger = group.items.some(item => {
+          const relativeTop = item.offsetTop - scrollY;
+          return relativeTop < bottomTrigger;
+        });
+
+        if (shouldTrigger) {
+          group.revealed = true;
+          
+          // Sort items in this group left-to-right
+          const sortedItems = [...group.items].sort((a, b) => a.offsetLeft - b.offsetLeft);
+          
+          const now = Date.now();
+          sortedItems.forEach(item => {
+            item.revealed = true;
+            
+            let delay = 0;
+            if (now < lastRevealTime + 120) {
+              lastRevealTime = lastRevealTime + 120;
+              delay = lastRevealTime - now;
+            } else {
+              lastRevealTime = now;
+              delay = 0;
+            }
+
+            setTimeout(() => {
+              if (item.revealed) {
+                item.targetOpacity = 1;
+                item.targetTranslateY = 0;
+                if (!isAnimating) {
+                  isAnimating = true;
+                  requestAnimationFrame(animateLoop);
+                }
+              }
+            }, delay);
+          });
+        }
+      }
+    });
+
+    // 2. State assignment phase: set opacity & position targets based on current state
     revealItems.forEach(item => {
       // If we are still playing the onload stagger and the user hasn't scrolled,
       // do not overwrite the target states of items that are queued to reveal later!
@@ -269,17 +350,23 @@ document.addEventListener('DOMContentLoaded', () => {
       const relativeBottom = relativeTop + item.height;
 
       if (relativeTop >= bottomTrigger) {
-        // Hidden at the bottom (below the trigger zone)
+        // Reset item and group states when scrolled back below trigger zone
         item.targetOpacity = 0;
         item.targetTranslateY = maxTranslateY;
+        item.revealed = false;
+        if (item.group) {
+          item.group.revealed = false;
+        }
       } else if (relativeBottom <= topTrigger) {
         // Hidden at the top (exited)
         item.targetOpacity = 0;
         item.targetTranslateY = -maxTranslateY;
       } else {
-        // Fully visible in the active viewport region
-        item.targetOpacity = 1;
-        item.targetTranslateY = 0;
+        // In the active viewport region
+        if (item.revealed) {
+          item.targetOpacity = 1;
+          item.targetTranslateY = 0;
+        }
       }
     });
   }
@@ -409,6 +496,7 @@ document.addEventListener('DOMContentLoaded', () => {
       item.targetTranslateY = 15;
       item.currentOpacity = 0;
       item.currentTranslateY = 15;
+      item.revealed = false;
     } else {
       // Offscreen items start at standard scroll reveal target
       const relativeTop = item.offsetTop;
@@ -417,9 +505,14 @@ document.addEventListener('DOMContentLoaded', () => {
       if (relativeTop >= bottomTrigger) {
         item.targetOpacity = 0;
         item.targetTranslateY = 60;
+        item.revealed = false;
       } else {
         item.targetOpacity = 1;
         item.targetTranslateY = 0;
+        item.revealed = true;
+        if (item.group) {
+          item.group.revealed = true;
+        }
       }
       item.currentOpacity = item.targetOpacity;
       item.currentTranslateY = item.targetTranslateY;
@@ -446,6 +539,10 @@ document.addEventListener('DOMContentLoaded', () => {
       } else if (entry.type === 'reveal-el') {
         const item = revealItems.find(x => x.element === entry.element);
         if (item) {
+          item.revealed = true; // Mark as revealed so it does not trigger again
+          if (item.group) {
+            item.group.revealed = true;
+          }
           item.targetOpacity = 1;
           item.targetTranslateY = 0;
           if (!isAnimating) {
@@ -501,5 +598,13 @@ document.addEventListener('DOMContentLoaded', () => {
       isAnimating = true;
       requestAnimationFrame(animateLoop);
     }
+  });
+
+  // Re-measure after each project image successfully loads and updates layout flow
+  document.querySelectorAll('.subpage-media-container img').forEach(img => {
+    img.addEventListener('load', () => {
+      measureRevealElements();
+      updateTargetStates();
+    });
   });
 });
