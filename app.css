@@ -339,7 +339,8 @@ a {
   flex-direction: column;
   justify-content: flex-end;
   flex-grow: 1;
-  height: calc(100vh - 200px); /* Leave room for header and footer */
+  min-height: calc(100vh - 200px); /* Leave room for header and footer and prevent overflow */
+  height: auto;
   padding-bottom: 0;
 }
 
@@ -351,15 +352,15 @@ a {
 }
 
 .about-row {
-  margin-bottom: 96px;
+  margin-bottom: 6vh;
 }
 
 .socials-row {
-  margin-bottom: 96px;
+  margin-bottom: 6vh;
 }
 
 .row-label {
-  font-size: 16px;
+  font-size: clamp(14px, 0.85rem + 0.15vw, 16px);
   font-weight: 300;
   color: var(--text-color);
 }
@@ -373,7 +374,7 @@ a {
 }
 
 .about-text {
-  font-size: 16px;
+  font-size: clamp(14px, 0.85rem + 0.15vw, 16px);
   font-weight: 300;
   line-height: 1.5;
   color: var(--text-color);
@@ -389,7 +390,7 @@ a {
 .socials-list a {
   display: inline-flex;
   align-items: center;
-  font-size: 16px;
+  font-size: clamp(14px, 0.85rem + 0.15vw, 16px);
   font-weight: 300;
   color: var(--text-color);
 }
@@ -897,11 +898,11 @@ html.menu-open {
   gap: 32px;
   align-items: start;
   margin-top: 0;
-  margin-bottom: 96px;
+  margin-bottom: 6vh;
 }
 
 .project-detail-title {
-  font-size: 80px;
+  font-size: clamp(48px, 3.5rem + 1.5vw, 80px);
   font-weight: 500;
   line-height: 1.0;
   color: var(--text-color);
@@ -932,14 +933,14 @@ html.menu-open {
 }
 
 .subpage-detail-value {
-  font-size: 16px;
+  font-size: clamp(14px, 0.85rem + 0.15vw, 16px);
   font-weight: 300;
   color: var(--text-color);
   line-height: 1.5;
 }
 
 .subpage-about-text {
-  font-size: 16px;
+  font-size: clamp(14px, 0.85rem + 0.15vw, 16px);
   font-weight: 300;
   color: var(--text-color);
   line-height: 1.5;
@@ -998,7 +999,7 @@ html.menu-open {
 
 .subpage-media-row {
   width: 100%;
-  margin-bottom: 64px;
+  margin-bottom: 4vh;
 }
 
 .subpage-media-row img {
@@ -1037,8 +1038,8 @@ html.menu-open {
 }
 
 .subpage-desc-row {
-  margin-top: 64px;
-  margin-bottom: 96px;
+  margin-top: 4vh;
+  margin-bottom: 6vh;
 }
 
 .subpage-desc-row .about-text {
@@ -1053,7 +1054,7 @@ html.menu-open {
   margin: 0 -32px;
   padding: 58px 32px 200px 32px; /* 58px padding-top below the line */
   border-top: 1px solid rgba(211, 215, 218, 0.5); /* Same color/opacity as imprint */
-  margin-top: 96px; /* 96px margin + 64px last media row margin = 160px spacing below last image */
+  margin-top: 6vh; /* margin + last media row margin = spacing below last image */
   font-size: 16px;
   font-weight: 300;
   color: var(--text-color);
@@ -1107,7 +1108,7 @@ html.menu-open {
 }
 
 .subpage-footer .footer-hdr {
-  font-size: 16px;
+  font-size: clamp(14px, 0.85rem + 0.15vw, 16px);
   font-weight: 300;
   color: var(--text-color);
   margin-bottom: 64px; /* 64px space between title and content */
@@ -1131,7 +1132,7 @@ html.menu-open {
 .footer-socials-list a {
   display: inline-flex;
   align-items: center;
-  font-size: 16px;
+  font-size: clamp(14px, 0.85rem + 0.15vw, 16px);
   font-weight: 300;
   color: var(--text-color);
   transition: color 0.3s ease;
@@ -1145,7 +1146,7 @@ html.menu-open {
 .footer-imprint-list a {
   display: inline-flex;
   align-items: center;
-  font-size: 12px;
+  font-size: clamp(10px, 0.65rem + 0.1vw, 12px);
   font-weight: 300;
   color: var(--text-color);
   opacity: 0.5; /* 50% opacity grey */
@@ -1176,7 +1177,7 @@ html.menu-open {
 .footer-contact-link {
   display: inline-flex;
   align-items: center;
-  font-size: 16px;
+  font-size: clamp(14px, 0.85rem + 0.15vw, 16px);
   font-weight: 300;
   color: var(--text-color);
   transition: color 0.3s ease;
