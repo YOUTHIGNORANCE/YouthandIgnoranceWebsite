@@ -5,26 +5,92 @@ document.addEventListener('DOMContentLoaded', () => {
     {
       id: "birdshot",
       title: "BIRDSHOT",
-      category: ["LOREM IPSUM DOLOR SIT", "LOREM IPSUM DOLOR", "LOREM IPSUM", "LOREM IPSUM SIT"],
+      category: ["ANIMATION", "SHORT FILM", "CGI", "AI"],
       year: "2026",
       about: [
-        "LOREM IPSUM DOLOR SIT AMET, CONSETETUR SADIPSCING ELITR, SED DIAM NONUMY EIRMOD TEMPOR INVIDUNT UT LABORE ET DOLORE MAGNA ALIQUAM ERAT, SED DIAM VOLUPTUA. AT VERO EOS ET ACCUSAM ET JUSTO DUO DOLORES ET EA REBUM. STET CLITA KASD GUBERGEN, NO SEA TAKIMATA SANCTUS EST.",
-        "LOREM IPSUM DOLOR SIT AMET, CONSETETUR SADIPSCING ELITR, SED DIAM NONUMY EIRMOD TEMPOR INVIDUNT UT LABORE ET DOLORE MAGNA ALIQUAM ERAT, SED DIAM VOLUPTUA."
+        "WHEN WE ARE CONSTANTLY EXPOSED TO NEWS OF CRISES AND VIOLENCE, WE BEGIN TO LOSE OUR ABILITY TO CARE.",
+        "BIRDSHOT IS AN ANIMATED SHORT FILM THAT EXPLORES THIS GROWING NUMBNESS, SHOWN THROUGH THE TRAGIC AND MYSTERIOUS DEATH OF A FASHION MODEL RIGHT ON THE RUNWAY.",
+        "COMING SOON, CURRENTLY IN APPLICATION FOR FILM FESTIVALS."
       ],
-      description: [
-        "BIRDSHOT CAPTURES A POETIC CINEMATIC VISION FOCUSING ON MASS RENDERINGS OF ABSTRACT FORM AND WEIGHT. EACH SCENE COMBINES FLUID SIMULATIONS WITH THE SHARP DETAIL OF GEOMETRIC SCULPTURES UNDER CONVOLUTED STUDIO LIGHTING CONDITIONS.",
-        "THE PRODUCTION HIGHLIGHTS THE FLUID TENSION BETWEEN RIGID STATUE COMPOSITIONS AND ORGANIC ELEMENTAL FORCES, BRINGING FORTH A SENSE OF UNTAMED CREATIVITY AND DIRECTIONAL CLARITY.",
-        "DEVELOPED AND RENDERED IN GERMANY IN 2026, THIS PROJECT SERVES AS A CORNERSTONE REVEAL FOR THE STUDIO'S EXPERIMENTAL MOTION ARM."
+      blocks: [
+        // Block 1: Full-Width Eye
+        {
+          type: "full-width",
+          item: { type: "image", src: "assets/Projects/Birdshot/1.webp", alt: "Birdshot Eye Visual" }
+        },
+        // Block 2: 2-Cols (Back Torso & Runway Tunnel)
+        {
+          type: "2-cols",
+          items: [
+            { type: "image", src: "assets/Projects/Birdshot/2.webp", alt: "Back Torso Model" },
+            { type: "image", src: "assets/Projects/Birdshot/3.webp", alt: "Runway Tunnel Perspective" }
+          ]
+        },
+        // Block 3: Offset Text & Stacked Images (Blending Techniques + Red Wolf & White Dove)
+        {
+          type: "text-media-offset",
+          heading: "BLENDING TECHNIQUES",
+          paragraphs: [
+            "THIS PROJECT SERVED AS A PLAYGROUND FOR EXPERIMENTATION AND THE MIXING OF DIFFERENT FILMMAKING TECHNIQUES. COMBINING THE USE OF ARTIFICIAL INTELLIGENCE AND TRADITIONAL 3D ANIMATION SERVED THE DIFFERENT LEVELS OF ABSTRACTION WITHIN THE STORY OF THE FILM."
+          ],
+          items: [
+            { type: "image", src: "assets/Projects/Birdshot/4.webp", alt: "Red Wolf Visual" },
+            { type: "image", src: "assets/Projects/Birdshot/5.webp", alt: "White Dove Flying" }
+          ]
+        },
+        // Block 4: Full-Width Image 6 (Knight Figure in Red Cloak)
+        {
+          type: "full-width",
+          item: { type: "image", src: "assets/Projects/Birdshot/6.webp", alt: "Knight Figure Visual" }
+        },
+        // Block 5: 3-Cols (Model, Flower Mouth, Reaching Hand)
+        {
+          type: "3-cols",
+          items: [
+            { type: "image", src: "assets/Projects/Birdshot/7.webp", alt: "Hallway Model" },
+            { type: "image", src: "assets/Projects/Birdshot/8.webp", alt: "Flower in Mouth" },
+            { type: "image", src: "assets/Projects/Birdshot/9.webp", alt: "Reaching Hand" }
+          ]
+        },
+        // Block 6: Full-Width Image 10 (Veiled Statues Stand)
+        {
+          type: "full-width",
+          item: { type: "image", src: "assets/Projects/Birdshot/10.webp", alt: "Veiled Statues Stand" }
+        },
+        // Block 7: 4-Grid (2x2 Grid of Videos 11, 12, 13, 14)
+        {
+          type: "4-grid",
+          items: [
+            { type: "vimeo", vimeoId: "1215410702", alt: "Video 11 Motion" },
+            { type: "vimeo", vimeoId: "1215410700", alt: "Video 12 Motion" },
+            { type: "vimeo", vimeoId: "1215410704", alt: "Video 13 Motion" },
+            { type: "vimeo", vimeoId: "1215410701", alt: "Video 14 Motion" }
+          ]
+        },
+        // Block 8: Full-Width Video 15 Container (Large container under 4 smaller videos)
+        {
+          type: "full-width",
+          item: { type: "vimeo", vimeoId: "1215410704", alt: "Video 15 Full Width Motion" }
+        },
+        // Block 9: Full-Width Image 16 (Crowded Veiled Statues - Bottom Visual)
+        {
+          type: "full-width",
+          item: { type: "image", src: "assets/Projects/Birdshot/16.webp", alt: "Crowded Veiled Statues" }
+        }
       ],
-      images: {
-        img1: "assets/Eye.png",
-        img2: "assets/Cape.png",
-        imgFull: "assets/Background_Project_Hover.png",
-        img3: "assets/Cape.png",
-        img4: "assets/Eye.png",
-        img5: "Statues.png",
-        imgBottom: "Statues.png"
-      }
+      credits: [
+        { label: "DIRECTION, DESIGN, ANIMATION + SOUND", value: "YOUTH + IGNORANCE" }
+      ],
+      software: [
+        "UNREAL ENGINE 5",
+        "HOUDINI",
+        "REALLUSION SUITE",
+        "BLENDER",
+        "REDSHIFT",
+        "SUBSTANCE PAINTER",
+        "DAVINCI RESOLVE",
+        "FLORA AI"
+      ]
     },
     {
       id: "sentient-shore",
@@ -161,27 +227,222 @@ document.addEventListener('DOMContentLoaded', () => {
     const p1 = document.createElement('p');
     p1.textContent = paragraph;
     p1.style.marginBottom = '16px'; // multiples of 8 spacing
+    if (paragraph.toUpperCase().includes('COMING SOON')) {
+      p1.className = 'about-footnote';
+      p1.style.fontStyle = 'italic';
+      p1.style.color = '#6C7378';
+    }
     aboutContainer.appendChild(p1);
   });
 
-  // Set Middle Description text (longer, fuller)
-  const descContainer = document.getElementById('projDesc');
-  descContainer.innerHTML = '';
-  project.description.forEach(paragraph => {
-    const p2 = document.createElement('p');
-    p2.textContent = paragraph;
-    p2.style.marginBottom = '16px';
-    descContainer.appendChild(p2);
-  });
+  // --- MEDIA NODE CREATOR HELPER ---
+  function createMediaNode(item) {
+    if (item.type === 'vimeo') {
+      const container = document.createElement('div');
+      container.className = 'vimeo-embed-container';
+      container.innerHTML = `<iframe src="https://player.vimeo.com/video/${item.vimeoId}?autoplay=1&loop=1&muted=1&background=1&autopause=0&quality=1080p" frameborder="0" allow="autoplay; fullscreen" allowfullscreen title="${item.alt || ''}"></iframe>`;
+      return container;
+    } else if (item.type === 'video') {
+      const video = document.createElement('video');
+      video.src = item.src;
+      video.autoplay = true;
+      video.loop = true;
+      video.muted = true;
+      video.playsInline = true;
+      video.style.width = '100%';
+      video.style.display = 'block';
+      return video;
+    } else {
+      const img = document.createElement('img');
+      img.src = item.src;
+      img.alt = item.alt || '';
+      return img;
+    }
+  }
 
-  // Set Image Elements
-  document.getElementById('projImg1').src = project.images.img1;
-  document.getElementById('projImg2').src = project.images.img2;
-  document.getElementById('projImgFull').src = project.images.imgFull;
-  document.getElementById('projImg3').src = project.images.img3;
-  document.getElementById('projImg4').src = project.images.img4;
-  document.getElementById('projImg5').src = project.images.img5;
-  document.getElementById('projImgBottom').src = project.images.imgBottom;
+  // --- MODULAR BLOCK RENDERER ---
+  const mediaContainer = document.getElementById('subpageMediaContainer');
+  const creditsContainer = document.getElementById('subpageCreditsContainer');
+  mediaContainer.innerHTML = '';
+  if (creditsContainer) creditsContainer.innerHTML = '';
+
+  if (project.blocks && project.blocks.length > 0) {
+    // Render Modular Blocks
+    project.blocks.forEach(block => {
+      if (block.type === 'full-width') {
+        const row = document.createElement('div');
+        row.className = 'subpage-media-row media-row-full-width reveal-on-scroll';
+        row.appendChild(createMediaNode(block.item));
+        mediaContainer.appendChild(row);
+      } else if (block.type === '2-cols') {
+        const row = document.createElement('div');
+        row.className = 'subpage-media-row media-row-two-cols';
+        block.items.forEach(item => {
+          const col = document.createElement('div');
+          col.className = 'media-col reveal-on-scroll';
+          col.appendChild(createMediaNode(item));
+          row.appendChild(col);
+        });
+        mediaContainer.appendChild(row);
+      } else if (block.type === '3-cols') {
+        const row = document.createElement('div');
+        row.className = 'subpage-media-row media-row-three-cols';
+        block.items.forEach(item => {
+          const col = document.createElement('div');
+          col.className = 'media-col reveal-on-scroll';
+          col.appendChild(createMediaNode(item));
+          row.appendChild(col);
+        });
+        mediaContainer.appendChild(row);
+      } else if (block.type === '4-grid') {
+        const row = document.createElement('div');
+        row.className = 'subpage-media-row media-row-four-grid';
+        block.items.forEach(item => {
+          const col = document.createElement('div');
+          col.className = 'media-col reveal-on-scroll';
+          col.appendChild(createMediaNode(item));
+          row.appendChild(col);
+        });
+        mediaContainer.appendChild(row);
+      } else if (block.type === 'text-media-offset') {
+        const row = document.createElement('div');
+        row.className = 'subpage-media-row media-row-text-offset';
+
+        const textCol = document.createElement('div');
+        textCol.className = 'offset-text-col reveal-on-scroll';
+        
+        const label = document.createElement('div');
+        label.className = 'row-label';
+        label.textContent = block.heading;
+        textCol.appendChild(label);
+
+        block.paragraphs.forEach(p => {
+          const pEl = document.createElement('div');
+          pEl.className = 'about-text';
+          pEl.textContent = p;
+          textCol.appendChild(pEl);
+        });
+        row.appendChild(textCol);
+
+        const mediaCol = document.createElement('div');
+        mediaCol.className = 'offset-media-col';
+        block.items.forEach(item => {
+          const wrapper = document.createElement('div');
+          wrapper.className = 'reveal-on-scroll';
+          wrapper.appendChild(createMediaNode(item));
+          mediaCol.appendChild(wrapper);
+        });
+        row.appendChild(mediaCol);
+
+        mediaContainer.appendChild(row);
+      } else if (block.type === 'text-break') {
+        const row = document.createElement('div');
+        row.className = 'desktop-row subpage-desc-row reveal-on-scroll';
+        
+        const label = document.createElement('div');
+        label.className = 'row-label';
+        label.textContent = block.heading;
+        row.appendChild(label);
+
+        const content = document.createElement('div');
+        content.className = 'row-content';
+        const wrapper = document.createElement('div');
+        wrapper.className = 'about-text';
+        block.paragraphs.forEach(p => {
+          const pEl = document.createElement('p');
+          pEl.textContent = p;
+          pEl.style.marginBottom = '16px';
+          wrapper.appendChild(pEl);
+        });
+        content.appendChild(wrapper);
+        row.appendChild(content);
+
+        mediaContainer.appendChild(row);
+      }
+    });
+
+    // Render Credits & Software (if present)
+    if ((project.credits && project.credits.length > 0) || (project.software && project.software.length > 0)) {
+      const creditsRow = document.createElement('div');
+      creditsRow.className = 'subpage-credits-row reveal-on-scroll';
+
+      // Credits Col
+      if (project.credits && project.credits.length > 0) {
+        const creditsCol = document.createElement('div');
+        creditsCol.className = 'credits-col';
+        
+        const hdr = document.createElement('div');
+        hdr.className = 'row-label';
+        hdr.textContent = 'CREDITS';
+        creditsCol.appendChild(hdr);
+
+        const list = document.createElement('ul');
+        list.className = 'credits-list';
+        project.credits.forEach(c => {
+          const li = document.createElement('li');
+          li.innerHTML = `<span class="credits-item-label">${c.label}</span> ${c.value}`;
+          list.appendChild(li);
+        });
+        creditsCol.appendChild(list);
+        creditsRow.appendChild(creditsCol);
+      }
+
+      // Software Col
+      if (project.software && project.software.length > 0) {
+        const softwareCol = document.createElement('div');
+        softwareCol.className = 'software-col';
+        
+        const hdr = document.createElement('div');
+        hdr.className = 'row-label';
+        hdr.textContent = 'SOFTWARE USED';
+        softwareCol.appendChild(hdr);
+
+        const list = document.createElement('ul');
+        list.className = 'software-list';
+        project.software.forEach(s => {
+          const li = document.createElement('li');
+          li.textContent = s;
+          list.appendChild(li);
+        });
+        softwareCol.appendChild(list);
+        creditsRow.appendChild(softwareCol);
+      }
+
+      creditsContainer.appendChild(creditsRow);
+    }
+
+  } else if (project.images) {
+    // Legacy Fallback Renderer for projects without blocks
+    const b1 = document.createElement('div');
+    b1.className = 'subpage-media-row media-row-two-cols';
+    b1.innerHTML = `<div class="media-col reveal-on-scroll"><img src="${project.images.img1}" alt="Visual 1"></div><div class="media-col reveal-on-scroll"><img src="${project.images.img2}" alt="Visual 2"></div>`;
+    mediaContainer.appendChild(b1);
+
+    const b2 = document.createElement('div');
+    b2.className = 'subpage-media-row media-row-full-width reveal-on-scroll';
+    b2.innerHTML = `<img src="${project.images.imgFull}" alt="Full Width Visual">`;
+    mediaContainer.appendChild(b2);
+
+    if (project.description) {
+      const bDesc = document.createElement('div');
+      bDesc.className = 'desktop-row subpage-desc-row reveal-on-scroll';
+      let descHtml = '<div class="row-label">ABOUT</div><div class="row-content"><div class="about-text">';
+      project.description.forEach(p => { descHtml += `<p style="margin-bottom:16px;">${p}</p>`; });
+      descHtml += '</div></div>';
+      bDesc.innerHTML = descHtml;
+      mediaContainer.appendChild(bDesc);
+    }
+
+    const b3 = document.createElement('div');
+    b3.className = 'subpage-media-row media-row-three-cols';
+    b3.innerHTML = `<div class="media-col reveal-on-scroll"><img src="${project.images.img3}" alt="Visual 3"></div><div class="media-col reveal-on-scroll"><img src="${project.images.img4}" alt="Visual 4"></div><div class="media-col reveal-on-scroll"><img src="${project.images.img5}" alt="Visual 5"></div>`;
+    mediaContainer.appendChild(b3);
+
+    const b4 = document.createElement('div');
+    b4.className = 'subpage-media-row media-row-full-width bottom-media reveal-on-scroll';
+    b4.innerHTML = `<img src="${project.images.imgBottom}" alt="Bottom Visual">`;
+    mediaContainer.appendChild(b4);
+  }
 
   // --- NAVIGATION LINKS SETUP ---
   const prevIndex = (projectIndex - 1 + projects.length) % projects.length;

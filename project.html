@@ -18,7 +18,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="app.css?v=110">
+  <link rel="stylesheet" href="app.css?v=115">
 </head>
 <body class="subpage-body">
 
@@ -77,52 +77,12 @@
     </nav>
 
     <!-- Project Media Layout -->
-    <section class="subpage-media-container">
-      
-      <!-- Block 1: Two Images Side by Side -->
-      <div class="subpage-media-row media-row-two-cols">
-        <div class="media-col reveal-on-scroll">
-          <img id="projImg1" src="" alt="Project Visual 1">
-        </div>
-        <div class="media-col reveal-on-scroll">
-          <img id="projImg2" src="" alt="Project Visual 2">
-        </div>
-      </div>
-
-      <!-- Block 2: Full Width Image -->
-      <div class="subpage-media-row media-row-full-width reveal-on-scroll">
-        <img id="projImgFull" src="" alt="Project Full Width Visual">
-      </div>
-
-      <!-- Text Break Row -->
-      <div class="desktop-row subpage-desc-row reveal-on-scroll">
-        <div class="row-label">ABOUT</div>
-        <div class="row-content">
-          <div id="projDesc" class="about-text">
-            <!-- Populated dynamically -->
-          </div>
-        </div>
-      </div>
-
-      <!-- Block 3: Three Images Side by Side -->
-      <div class="subpage-media-row media-row-three-cols">
-        <div class="media-col reveal-on-scroll">
-          <img id="projImg3" src="" alt="Project Visual 3">
-        </div>
-        <div class="media-col reveal-on-scroll">
-          <img id="projImg4" src="" alt="Project Visual 4">
-        </div>
-        <div class="media-col reveal-on-scroll">
-          <img id="projImg5" src="" alt="Project Visual 5">
-        </div>
-      </div>
-
-      <!-- Block 4: Full Width Image (Bottom) -->
-      <div class="subpage-media-row media-row-full-width bottom-media reveal-on-scroll">
-        <img id="projImgBottom" src="" alt="Project Bottom Visual">
-      </div>
-
+    <section class="subpage-media-container" id="subpageMediaContainer">
+      <!-- Populated dynamically by project.js -->
     </section>
+
+    <!-- Project Credits & Software Container -->
+    <div id="subpageCreditsContainer"></div>
 
     <!-- Subpage Footer -->
     <footer class="subpage-footer reveal-on-scroll">
@@ -258,7 +218,7 @@
     </footer>
   </div>
 
-  <script src="main.js?v=110"></script>
-  <script src="project.js?v=110"></script>
+  <script src="main.js?v=115"></script>
+  <script src="project.js?v=115"></script>
 </body>
 </html>

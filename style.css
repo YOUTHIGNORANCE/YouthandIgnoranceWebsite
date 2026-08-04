@@ -1046,6 +1046,131 @@ html.menu-open {
   max-width: 66.6%;
 }
 
+/* Responsive Vimeo Embed Container */
+.vimeo-embed-container {
+  position: relative;
+  width: 100%;
+  padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+  height: 0;
+  overflow: hidden;
+  background-color: #000000;
+}
+
+.vimeo-embed-container iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  object-fit: cover;
+  pointer-events: auto;
+}
+
+/* Offset Text & Stacked Media Layout Block */
+.media-row-text-offset {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* 2 equal columns matching 2-cols grid above */
+  gap: 32px;
+  align-items: start;
+  width: 100%;
+  margin-bottom: 4vh;
+}
+
+.media-row-text-offset .offset-text-col {
+  grid-column: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 320px; /* ~10 words per line */
+}
+
+.media-row-text-offset .offset-text-col .about-text {
+  line-height: 1.18; /* Vertically condensed line spacing */
+  letter-spacing: -0.01em;
+}
+
+.media-row-text-offset .offset-media-col {
+  grid-column: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.media-row-text-offset .offset-media-col img {
+  width: 100%;
+  display: block;
+}
+
+/* 4-Grid Media Layout (2x2 Grid) */
+.media-row-four-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  width: 100%;
+  margin-bottom: 4vh;
+}
+
+/* Footnote Style in About Section */
+.about-footnote {
+  font-style: italic !important;
+  color: #6C7378 !important;
+}
+
+/* Subpage Credits & Software Section */
+.subpage-credits-row {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  margin-top: 6vh;
+  margin-bottom: 6vh;
+  padding-top: 4vh;
+  border-top: 1px solid rgba(211, 215, 218, 0.2);
+}
+
+.credits-col, .software-col {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.credits-list, .software-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: clamp(14px, 0.85rem + 0.15vw, 16px);
+  font-weight: 300;
+  color: var(--text-color);
+}
+
+.credits-item-label {
+  color: rgba(211, 215, 218, 0.5);
+  margin-right: 8px;
+}
+
+@media (max-width: 768px) {
+  .media-row-text-offset {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  .media-row-text-offset .offset-text-col {
+    grid-column: 1;
+    padding-right: 0;
+  }
+  .media-row-text-offset .offset-media-col {
+    grid-column: 1;
+    gap: 16px;
+  }
+  .subpage-credits-row {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+}
+
 /* 3-Column Grid Footer */
 .subpage-footer {
   display: grid;
