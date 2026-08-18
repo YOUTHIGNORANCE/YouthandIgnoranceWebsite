@@ -1111,6 +1111,102 @@ html.menu-open {
   margin-bottom: 4vh;
 }
 
+/* 4-Cols Media Layout (4 items side by side in 1 row) */
+.media-row-four-cols {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  width: 100%;
+  margin-bottom: 4vh;
+}
+
+/* Centered Medium Container (Used in Sentient Shore) */
+.media-row-centered-medium {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 4vh;
+}
+
+.media-row-centered-medium .centered-media-wrapper {
+  width: 58%;
+  max-width: 1100px;
+}
+
+.media-row-centered-medium .centered-media-wrapper img,
+.media-row-centered-medium .centered-media-wrapper video,
+.media-row-centered-medium .centered-media-wrapper iframe {
+  width: 100%;
+  display: block;
+}
+
+/* Offset Right Single Item Layout */
+.media-row-offset-right {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  width: 100%;
+  margin-bottom: 4vh;
+}
+
+.media-row-offset-right .offset-media-item {
+  grid-column: 2;
+  width: 100%;
+}
+
+.media-row-offset-right .offset-media-item img {
+  width: 100%;
+  display: block;
+}
+
+/* Offset Left Single Item Layout */
+.media-row-offset-left {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  width: 100%;
+  margin-bottom: 4vh;
+}
+
+.media-row-offset-left .offset-media-item {
+  grid-column: 1;
+  width: 100%;
+}
+
+.media-row-offset-left .offset-media-item img {
+  width: 100%;
+  display: block;
+}
+
+/* Text + 2x2 Grid Offset Layout */
+.media-row-text-offset-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  align-items: start;
+  width: 100%;
+  margin-bottom: 4vh;
+}
+
+.media-row-text-offset-grid .offset-text-col {
+  grid-column: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.media-row-text-offset-grid .offset-grid-col {
+  grid-column: 2;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.media-row-text-offset-grid .offset-grid-col img {
+  width: 100%;
+  display: block;
+}
+
 /* Footnote Style in About Section */
 .about-footnote {
   font-style: italic !important;

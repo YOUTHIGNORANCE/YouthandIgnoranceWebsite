@@ -95,26 +95,102 @@ document.addEventListener('DOMContentLoaded', () => {
     {
       id: "sentient-shore",
       title: "SENTIENT SHORE",
-      category: ["CGI & MOTION DESIGN", "DIRECTION", "VISUAL ART"],
+      category: ["ANIMATION", "SHORT FILM", "CGI", "AI"],
       year: "2026",
       about: [
-        "SENTIENT SHORE EXPLORES THE INTERSECTION OF NATURAL FORMS AND DIGITAL FLUIDITY. A SEAMLESS VOYAGE INTO ORGANIC RHYTHMS AND TEXTURES CAPTURED UNDER DRAMATIC RED STUDIOS.",
-        "DEVELOPED AND RENDERED IN GERMANY, FOCUSING ON MINIMALIST AESTHETICS AND HIGH CONTRAST CGI DIRECTION."
+        "SENTIENT SHORE IS AN EXPERIMENTAL ANIMATED SHORT FILM THAT EXPLORES ALIENATION AND DECAY"
       ],
-      description: [
-        "SENTIENT SHORE EXPLORES THE INTERSECTION OF NATURAL FORMS AND DIGITAL FLUIDITY. A SEAMLESS VOYAGE INTO ORGANIC RHYTHMS AND TEXTURES CAPTURED UNDER DRAMATIC RED STUDIOS.",
-        "DEVELOPED AND RENDERED IN GERMANY, FOCUSING ON MINIMALIST AESTHETICS AND HIGH CONTRAST CGI DIRECTION, THE NARRATIVE TRACES AN IMAGINED ARCHAEOLOGICAL FIND IN A SURREAL RED-HUED DESERT.",
-        "BY STRIPPING DOWN THE DETAIL AND FOCUSING ON LIGHT, SHADOW, AND DRAPED GEOMETRIC FORMS, THE EXPERIMENT STRADDLES THE LINE BETWEEN DESIGN AND SCULPTURAL ART."
+      credits: [
+        { label: "DIRECTION, DESIGN, ANIMATION + SOUND", value: "YOUTH + IGNORANCE" }
       ],
-      images: {
-        img1: "assets/Cape.png",
-        img2: "assets/Eye.png",
-        imgFull: "Statues.png",
-        img3: "assets/Eye.png",
-        img4: "assets/Cape.png",
-        img5: "assets/Background_Project_Hover.png",
-        imgBottom: "assets/Background_Project_Hover.png"
-      }
+      software: [
+        "UNREAL ENGINE 5",
+        "TOUCHDESIGNER",
+        "HOUDINI",
+        "REALLUSION SUITE",
+        "BLENDER",
+        "DAVINCI RESOLVE"
+      ],
+      blocks: [
+        // Block 1: Full-Width Hero Title Visual (Image 1)
+        {
+          type: "full-width",
+          item: { type: "image", src: "assets/Projects/25 Sentient Shore/1.png", alt: "Sentient Shore Hero Visual" }
+        },
+        // Block 2: 2-Cols (Images 2 & 3: Figure on Shore & Profile Silhouette)
+        {
+          type: "2-cols",
+          items: [
+            { type: "image", src: "assets/Projects/25 Sentient Shore/2.png", alt: "Figure on Shore Dusk" },
+            { type: "image", src: "assets/Projects/25 Sentient Shore/3.png", alt: "Profile Silhouette" }
+          ]
+        },
+        // Block 3: Text + 2x2 Grid Offset (Images 4, 5, 6, 7: Abstract B-Roll)
+        {
+          type: "text-media-offset-grid",
+          heading: "ABSTRACT B-ROLL",
+          subtext: "TOUCHDESIGNER JARE JARA",
+          items: [
+            { type: "image", src: "assets/Projects/25 Sentient Shore/4.png", alt: "Abstract Light 1" },
+            { type: "image", src: "assets/Projects/25 Sentient Shore/5.png", alt: "Abstract Starburst" },
+            { type: "image", src: "assets/Projects/25 Sentient Shore/6.png", alt: "Abstract Ray Lines" },
+            { type: "image", src: "assets/Projects/25 Sentient Shore/7.png", alt: "Abstract Burst Motion" }
+          ]
+        },
+        // Block 4: Centered Medium Image 8 (Glowing Visor Figure)
+        {
+          type: "centered-medium",
+          item: { type: "image", src: "assets/Projects/25 Sentient Shore/8.png", alt: "Glowing Visor Figure" }
+        },
+        // Block 5: Full-Width Image 9 (Dusk Water Figure)
+        {
+          type: "full-width",
+          item: { type: "image", src: "assets/Projects/25 Sentient Shore/9.png", alt: "Dusk Water Figure" }
+        },
+        // Block 6: 2-Cols (Images 10 & 11: Spotlight Figure & Overhead Crowd)
+        {
+          type: "2-cols",
+          items: [
+            { type: "image", src: "assets/Projects/25 Sentient Shore/10.png", alt: "Spotlight Figure" },
+            { type: "image", src: "assets/Projects/25 Sentient Shore/11.png", alt: "Overhead Crowd" }
+          ]
+        },
+        // Block 7: Centered Medium Image 12 (Two Red Figures Facing)
+        {
+          type: "centered-medium",
+          item: { type: "image", src: "assets/Projects/25 Sentient Shore/12.png", alt: "Two Red Figures Facing" }
+        },
+        // Block 8: Offset Right Image 13 (Red Figure Right Column)
+        {
+          type: "offset-right",
+          item: { type: "image", src: "assets/Projects/25 Sentient Shore/13.png", alt: "Red Figure Right" }
+        },
+        // Block 9: Offset Left Image 14 (Red Blurry Profile Left Column)
+        {
+          type: "offset-left",
+          item: { type: "image", src: "assets/Projects/25 Sentient Shore/14.png", alt: "Red Profile Left" }
+        },
+        // Block 10: 4-Cols Row (Images 15, 16, 17, 18: 4 images next to each other in 1 row)
+        {
+          type: "4-cols",
+          items: [
+            { type: "image", src: "assets/Projects/25 Sentient Shore/15.png", alt: "Red Abstract 1" },
+            { type: "image", src: "assets/Projects/25 Sentient Shore/16.png", alt: "Red Abstract 2" },
+            { type: "image", src: "assets/Projects/25 Sentient Shore/17.png", alt: "Red Abstract 3" },
+            { type: "image", src: "assets/Projects/25 Sentient Shore/18.png", alt: "Red Abstract 4" }
+          ]
+        },
+        // Block 11: Centered Medium Image 19 (Blue Figure in Water at Dusk)
+        {
+          type: "centered-medium",
+          item: { type: "image", src: "assets/Projects/25 Sentient Shore/19.png", alt: "Blue Figure Water Dusk" }
+        },
+        // Block 12: Full-Width Image 20 (Shattered Crystal Figure Visual)
+        {
+          type: "full-width",
+          item: { type: "image", src: "assets/Projects/25 Sentient Shore/20.png", alt: "Shattered Crystal Figure Visual" }
+        }
+      ]
     },
     {
       id: "perfect-hue",
@@ -357,6 +433,71 @@ document.addEventListener('DOMContentLoaded', () => {
         content.appendChild(wrapper);
         row.appendChild(content);
 
+        mediaContainer.appendChild(row);
+      } else if (block.type === 'centered-medium') {
+        const row = document.createElement('div');
+        row.className = 'subpage-media-row media-row-centered-medium reveal-on-scroll';
+        const wrapper = document.createElement('div');
+        wrapper.className = 'centered-media-wrapper';
+        wrapper.appendChild(createMediaNode(block.item));
+        row.appendChild(wrapper);
+        mediaContainer.appendChild(row);
+      } else if (block.type === 'offset-right') {
+        const row = document.createElement('div');
+        row.className = 'subpage-media-row media-row-offset-right reveal-on-scroll';
+        const col = document.createElement('div');
+        col.className = 'offset-media-item';
+        col.appendChild(createMediaNode(block.item));
+        row.appendChild(col);
+        mediaContainer.appendChild(row);
+      } else if (block.type === 'offset-left') {
+        const row = document.createElement('div');
+        row.className = 'subpage-media-row media-row-offset-left reveal-on-scroll';
+        const col = document.createElement('div');
+        col.className = 'offset-media-item';
+        col.appendChild(createMediaNode(block.item));
+        row.appendChild(col);
+        mediaContainer.appendChild(row);
+      } else if (block.type === 'text-media-offset-grid') {
+        const row = document.createElement('div');
+        row.className = 'subpage-media-row media-row-text-offset-grid';
+
+        const textCol = document.createElement('div');
+        textCol.className = 'offset-text-col reveal-on-scroll';
+        
+        const label = document.createElement('div');
+        label.className = 'row-label';
+        label.textContent = block.heading;
+        textCol.appendChild(label);
+
+        if (block.subtext) {
+          const sub = document.createElement('div');
+          sub.className = 'row-label';
+          sub.textContent = block.subtext;
+          textCol.appendChild(sub);
+        }
+        row.appendChild(textCol);
+
+        const gridCol = document.createElement('div');
+        gridCol.className = 'offset-grid-col';
+        block.items.forEach(item => {
+          const wrapper = document.createElement('div');
+          wrapper.className = 'reveal-on-scroll';
+          wrapper.appendChild(createMediaNode(item));
+          gridCol.appendChild(wrapper);
+        });
+        row.appendChild(gridCol);
+
+        mediaContainer.appendChild(row);
+      } else if (block.type === '4-cols') {
+        const row = document.createElement('div');
+        row.className = 'subpage-media-row media-row-four-cols';
+        block.items.forEach(item => {
+          const col = document.createElement('div');
+          col.className = 'media-col reveal-on-scroll';
+          col.appendChild(createMediaNode(item));
+          row.appendChild(col);
+        });
         mediaContainer.appendChild(row);
       }
     });
