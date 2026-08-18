@@ -1082,7 +1082,7 @@ html.menu-open {
   display: flex;
   flex-direction: column;
   gap: 16px;
-  max-width: 320px; /* ~10 words per line */
+  max-width: 580px; /* Produces exactly 4 lines of text */
 }
 
 .media-row-text-offset .offset-text-col .about-text {
@@ -1125,8 +1125,8 @@ html.menu-open {
   gap: 64px;
   margin-top: 6vh;
   margin-bottom: 6vh;
-  padding-top: 4vh;
-  border-top: 1px solid rgba(211, 215, 218, 0.2);
+  padding-top: 0;
+  border-top: none; /* Removed line under last image */
 }
 
 .credits-col, .software-col {
