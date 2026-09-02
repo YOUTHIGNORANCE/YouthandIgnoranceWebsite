@@ -1195,6 +1195,12 @@ html.menu-open {
   gap: 8px;
 }
 
+.media-row-text-offset-grid .offset-text-col .about-text {
+  max-width: 580px;
+  line-height: 1.18;
+  letter-spacing: -0.01em;
+}
+
 .media-row-text-offset-grid .offset-grid-col {
   grid-column: 2;
   display: grid;
@@ -1205,6 +1211,49 @@ html.menu-open {
 .media-row-text-offset-grid .offset-grid-col img {
   width: 100%;
   display: block;
+}
+
+/* Character design studies with supporting text in the third column */
+.media-row-character-design {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr 1fr;
+  gap: 32px;
+  align-items: start;
+}
+
+.media-row-character-design img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+.character-design-text {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  text-align: right;
+}
+
+.character-design-text .about-text {
+  line-height: 1.18;
+}
+
+/* Perfect Hue uses wide cinematic stills rather than the cropped gallery treatment. */
+.project-perfect-hue .media-row-two-cols img,
+.project-perfect-hue .media-row-three-cols img {
+  height: auto;
+  max-height: none;
+  object-fit: contain;
+}
+
+.project-perfect-hue .media-row-text-offset-grid .offset-grid-col > div {
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+}
+
+.project-perfect-hue .media-row-text-offset-grid .offset-grid-col img {
+  height: 100%;
+  object-fit: cover;
 }
 
 /* Footnote Style in About Section */
@@ -1248,6 +1297,25 @@ html.menu-open {
   margin-right: 8px;
 }
 
+.credits-list li {
+  display: grid;
+  grid-template-columns: minmax(150px, 0.7fr) 1fr;
+  gap: 16px;
+  align-items: start;
+}
+
+.credits-item-value {
+  display: flex;
+  flex-direction: column;
+}
+
+a:focus-visible,
+button:focus-visible,
+[role="link"]:focus-visible {
+  outline: 2px solid var(--text-color);
+  outline-offset: 5px;
+}
+
 @media (max-width: 768px) {
   .media-row-text-offset {
     grid-template-columns: 1fr;
@@ -1260,6 +1328,21 @@ html.menu-open {
   .media-row-text-offset .offset-media-col {
     grid-column: 1;
     gap: 16px;
+  }
+
+  .media-row-character-design {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .character-design-text {
+    grid-row: 1;
+    text-align: left;
+  }
+
+  .credits-list li {
+    grid-template-columns: 1fr;
+    gap: 8px;
   }
   .subpage-credits-row {
     grid-template-columns: 1fr;
@@ -1530,6 +1613,53 @@ html.menu-open {
 
   .media-row-full-width {
     display: none !important; /* hide full-width middle */
+  }
+
+  /* Modular project pages keep their authored block order and full media sequence. */
+  .modular-project .subpage-nav-bar {
+    order: 1 !important;
+  }
+
+  .modular-project .subpage-media-container {
+    order: 2 !important;
+  }
+
+  .modular-project .subpage-media-row {
+    order: initial !important;
+  }
+
+  .modular-project .media-row-full-width {
+    display: block !important;
+  }
+
+  .modular-project #subpageCreditsContainer {
+    order: 3 !important;
+  }
+
+  .modular-project .subpage-footer {
+    order: 4 !important;
+  }
+
+  .modular-project .media-row-text-offset-grid,
+  .modular-project .media-row-four-grid,
+  .modular-project .media-row-four-cols {
+    grid-template-columns: 1fr !important;
+    gap: 40px !important;
+  }
+
+  .modular-project .media-row-text-offset-grid .offset-text-col,
+  .modular-project .media-row-text-offset-grid .offset-grid-col {
+    grid-column: 1;
+  }
+
+  .modular-project .media-row-text-offset-grid .offset-grid-col {
+    gap: 12px;
+  }
+
+  .project-perfect-hue .media-row-three-cols {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr 1fr !important;
+    gap: 12px !important;
   }
 
   .subpage-desc-row {
@@ -1845,6 +1975,25 @@ html.menu-open {
 .reveal-on-scroll {
   opacity: 0;
   will-change: opacity;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto !important;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .reveal-on-scroll {
+    opacity: 1 !important;
+    transform: none !important;
+  }
 }
 
 /* --- LEGAL DOCUMENTS STYLING (IMPRINT & PRIVACY POLICY) --- */

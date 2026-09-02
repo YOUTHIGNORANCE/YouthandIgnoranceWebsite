@@ -16,14 +16,14 @@ document.addEventListener('DOMContentLoaded', () => {
         // Block 1: Full-Width Eye
         {
           type: "full-width",
-          item: { type: "image", src: "assets/Projects/Birdshot/1.webp", alt: "Birdshot Eye Visual" }
+          item: { type: "image", src: "assets/Projects/26 Birdshot/1.webp", alt: "Close-up of a model's eye from Birdshot", eager: true }
         },
         // Block 2: 2-Cols (Back Torso & Runway Tunnel)
         {
           type: "2-cols",
           items: [
-            { type: "image", src: "assets/Projects/Birdshot/2.webp", alt: "Back Torso Model" },
-            { type: "image", src: "assets/Projects/Birdshot/3.webp", alt: "Runway Tunnel Perspective" }
+            { type: "image", src: "assets/Projects/26 Birdshot/2.webp", alt: "Model seen from behind on the Birdshot runway" },
+            { type: "image", src: "assets/Projects/26 Birdshot/3.webp", alt: "Long illuminated runway tunnel" }
           ]
         },
         // Block 3: Offset Text & Stacked Images (Blending Techniques + Red Wolf & White Dove)
@@ -34,28 +34,28 @@ document.addEventListener('DOMContentLoaded', () => {
             "THIS PROJECT SERVED AS A PLAYGROUND FOR EXPERIMENTATION AND THE MIXING OF DIFFERENT FILMMAKING TECHNIQUES. COMBINING THE USE OF ARTIFICIAL INTELLIGENCE AND TRADITIONAL 3D ANIMATION SERVED THE DIFFERENT LEVELS OF ABSTRACTION WITHIN THE STORY OF THE FILM."
           ],
           items: [
-            { type: "image", src: "assets/Projects/Birdshot/4.webp", alt: "Red Wolf Visual" },
-            { type: "image", src: "assets/Projects/Birdshot/5.webp", alt: "White Dove Flying" }
+            { type: "image", src: "assets/Projects/26 Birdshot/4.webp", alt: "Red wolf visual from Birdshot" },
+            { type: "image", src: "assets/Projects/26 Birdshot/5.webp", alt: "White dove in flight" }
           ]
         },
         // Block 4: Full-Width Image 6 (Knight Figure in Red Cloak)
         {
           type: "full-width",
-          item: { type: "image", src: "assets/Projects/Birdshot/6.webp", alt: "Knight Figure Visual" }
+          item: { type: "image", src: "assets/Projects/26 Birdshot/6.webp", alt: "Knight-like figure wearing a red cloak" }
         },
         // Block 5: 3-Cols (Model, Flower Mouth, Reaching Hand)
         {
           type: "3-cols",
           items: [
-            { type: "image", src: "assets/Projects/Birdshot/7.webp", alt: "Hallway Model" },
-            { type: "image", src: "assets/Projects/Birdshot/8.webp", alt: "Flower in Mouth" },
-            { type: "image", src: "assets/Projects/Birdshot/9.webp", alt: "Reaching Hand" }
+            { type: "image", src: "assets/Projects/26 Birdshot/7.webp", alt: "Model standing in a hallway" },
+            { type: "image", src: "assets/Projects/26 Birdshot/8.webp", alt: "Model holding a flower in her mouth" },
+            { type: "image", src: "assets/Projects/26 Birdshot/9.webp", alt: "Hand reaching toward the camera" }
           ]
         },
         // Block 6: Full-Width Image 10 (Veiled Statues Stand)
         {
           type: "full-width",
-          item: { type: "image", src: "assets/Projects/Birdshot/10.webp", alt: "Veiled Statues Stand" }
+          item: { type: "image", src: "assets/Projects/26 Birdshot/10.webp", alt: "Veiled statues standing together" }
         },
         // Block 7: 4-Grid (2x2 Grid of Videos 11, 12, 13, 14)
         {
@@ -75,7 +75,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Block 9: Full-Width Image 16 (Crowded Veiled Statues - Bottom Visual)
         {
           type: "full-width",
-          item: { type: "image", src: "assets/Projects/Birdshot/16.webp", alt: "Crowded Veiled Statues" }
+          item: { type: "image", src: "assets/Projects/26 Birdshot/16.webp", alt: "Crowd of veiled statues" }
         }
       ],
       credits: [
@@ -115,7 +115,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Block 1: Full-Width Hero Title Visual (Image 1)
         {
           type: "full-width",
-          item: { type: "image", src: "assets/Projects/25 Sentient Shore/1.png", alt: "Sentient Shore Hero Visual" }
+          item: { type: "image", src: "assets/Projects/25 Sentient Shore/1.png", alt: "Sentient Shore hero visual", eager: true }
         },
         // Block 2: 2-Cols (Images 2 & 3: Figure on Shore & Profile Silhouette)
         {
@@ -195,26 +195,81 @@ document.addEventListener('DOMContentLoaded', () => {
     {
       id: "perfect-hue",
       title: "PERFECT HUE",
-      category: ["COLOR RESEARCH", "MOTION DESIGN", "3D ANIMATION"],
-      year: "2025",
+      category: ["ANIMATION", "SHORT FILM", "CGI", "HAND DRAWN"],
+      year: "2024",
       about: [
-        "PERFECT HUE IS A METICULOUS EXPLORATION OF CHROMATIC SPECTRUMS, REFRACTION, AND LIGHT INTERPLAY ON VEILED SCULPTURES AND DETAILED RENDERINGS.",
-        "THE WORK COMBINES CLASSICAL COMPOSITIONS WITH CUTTING EDGE SIMULATION ALGORITHMS."
+        "PERFECT HUE IS AN ANIMATED SHORT FILM THAT DEALS WITH ATTENTION AND THE WARPING OF SENSE AND REALITY."
       ],
-      description: [
-        "PERFECT HUE IS A METICULOUS EXPLORATION OF CHROMATIC SPECTRUMS, REFRACTION, AND LIGHT INTERPLAY ON VEILED SCULPTURES AND DETAILED RENDERINGS.",
-        "THE WORK COMBINES CLASSICAL COMPOSITIONS WITH CUTTING EDGE SIMULATION ALGORITHMS, GENERATING COMPLEX REFRACTIVE PATTERNS THAT DANCE ACROSS SEMI-TRANSPARENT TEXTURED MEMBRANES.",
-        "OUR TEAM DEVOTED MONTHS TO OPTIMIZING THE PHYSICS RENDER ENGINE TO CAPTURE SUBTLE PHOTON EMISSIONS AND COLORED SHADOW BEHAVIOR."
+      blocks: [
+        {
+          type: "full-width",
+          item: { type: "image", src: "assets/Projects/24 Perfect Hue/1.png", alt: "Blindfolded animated character lit in red and green", eager: true }
+        },
+        {
+          type: "2-cols",
+          items: [
+            { type: "image", src: "assets/Projects/24 Perfect Hue/2.png", alt: "Colorful reflections rippling across dark water" },
+            { type: "image", src: "assets/Projects/24 Perfect Hue/3.png", alt: "Neon runway leading toward a bright white light" }
+          ]
+        },
+        {
+          type: "text-media-offset-grid",
+          heading: "HAND DRAWN FX",
+          paragraphs: ["WE USED HAND DRAWN OVERLAYS TO ACHIEVE A MIXED MEDIA LOOK AND COMIC FEEL."],
+          items: [
+            { type: "image", src: "assets/Projects/24 Perfect Hue/4.png", alt: "Character with a hand-drawn orange smoke overlay" },
+            { type: "image", src: "assets/Projects/24 Perfect Hue/5.png", alt: "Close-up of a character's tattooed hand and chest" },
+            { type: "image", src: "assets/Projects/24 Perfect Hue/6.png", alt: "Character dancing beneath magenta lights with hand-drawn color accents" },
+            { type: "image", src: "assets/Projects/24 Perfect Hue/7.png", alt: "White hand-drawn face and lettering over a red background" }
+          ]
+        },
+        {
+          type: "full-width",
+          item: { type: "image", src: "assets/Projects/24 Perfect Hue/8.png", alt: "Three colorful hand-painted character portrait studies" }
+        },
+        {
+          type: "character-design",
+          heading: "CHARACTER DESIGN",
+          paragraphs: ["TATTOOS, BRIGHTLY COLORED HAIR AND SPIKY ACCENTS SERVE THE CYBERPUNK AESTHETIC."],
+          items: [
+            { type: "image", src: "assets/Projects/24 Perfect Hue/9.png", alt: "Front-facing illustrated cyberpunk character portrait" },
+            { type: "image", src: "assets/Projects/24 Perfect Hue/10.png", alt: "Front and back turnaround of the cyberpunk character" }
+          ]
+        },
+        {
+          type: "3-cols",
+          items: [
+            { type: "image", src: "assets/Projects/24 Perfect Hue/11.png", alt: "Blindfolded character kneeling beneath red lights" },
+            { type: "image", src: "assets/Projects/24 Perfect Hue/12.png", alt: "Blindfolded character turning on a glowing platform" },
+            { type: "image", src: "assets/Projects/24 Perfect Hue/13.png", alt: "Dancing character traced with vivid hand-drawn accents" }
+          ]
+        },
+        {
+          type: "2-cols",
+          items: [
+            { type: "vimeo", vimeoId: "1219213870", alt: "Perfect Hue animation breakdown one" },
+            { type: "vimeo", vimeoId: "1219214561", alt: "Perfect Hue animation breakdown two" }
+          ]
+        },
+        {
+          type: "2-cols",
+          items: [
+            { type: "image", src: "assets/Projects/24 Perfect Hue/16.png", alt: "Blindfolded character restrained before a watching crowd" },
+            { type: "image", src: "assets/Projects/24 Perfect Hue/17.png", alt: "Character framed in a red-lit doorway" }
+          ]
+        },
+        {
+          type: "full-width",
+          item: { type: "image", src: "assets/Projects/24 Perfect Hue/18.png", alt: "Perfect Hue cast gathered in a nightclub setting" }
+        }
       ],
-      images: {
-        img1: "assets/Eye.png",
-        img2: "Statues.png",
-        imgFull: "assets/Cape.png",
-        img3: "assets/Cape.png",
-        img4: "assets/Eye.png",
-        img5: "assets/Background_Project_Hover.png",
-        imgBottom: "assets/Background_Project_Hover.png"
-      }
+      credits: [
+        { label: "DIRECTION, ART DIRECTION + DESIGN", value: ["LUKAS BÖTTNER", "MARC EISLER", "MARIA SEEMANN", "JAKOB WAGNER"] },
+        { label: "ANIMATION", value: ["MARC EISLER", "MARIA SEEMANN", "LUKAS BÖTTNER"] },
+        { label: "2D FX", value: ["LUKAS BÖTTNER", "MARIA SEEMANN"] },
+        { label: "SOUND + PICTURE POST", value: ["MARC EISLER"] }
+      ],
+      software: ["BLENDER", "REALLUSION SUITE", "HOUDINI", "PROCREATE", "SUBSTANCE PAINTER", "DAVINCI RESOLVE"]
     },
     {
       id: "prototype",
@@ -277,6 +332,10 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   
   const project = projects[projectIndex];
+  document.body.classList.add(`project-${project.id}`);
+  if (project.blocks && project.blocks.length > 0) {
+    document.body.classList.add('modular-project');
+  }
 
   // --- DYNAMICALLY POPULATE CONTENT ---
   
@@ -316,7 +375,14 @@ document.addEventListener('DOMContentLoaded', () => {
     if (item.type === 'vimeo') {
       const container = document.createElement('div');
       container.className = 'vimeo-embed-container';
-      container.innerHTML = `<iframe src="https://player.vimeo.com/video/${item.vimeoId}?autoplay=1&loop=1&muted=1&background=1&autopause=0&quality=1080p" frameborder="0" allow="autoplay; fullscreen" allowfullscreen title="${item.alt || ''}"></iframe>`;
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const iframe = document.createElement('iframe');
+      iframe.src = `https://player.vimeo.com/video/${item.vimeoId}?autoplay=${reduceMotion ? 0 : 1}&loop=1&muted=1&background=${reduceMotion ? 0 : 1}&autopause=0&quality=1080p`;
+      iframe.allow = 'autoplay; fullscreen; picture-in-picture';
+      iframe.allowFullscreen = true;
+      iframe.loading = 'lazy';
+      iframe.title = item.alt || 'Project video';
+      container.appendChild(iframe);
       return container;
     } else if (item.type === 'video') {
       const video = document.createElement('video');
@@ -325,6 +391,8 @@ document.addEventListener('DOMContentLoaded', () => {
       video.loop = true;
       video.muted = true;
       video.playsInline = true;
+      video.preload = 'none';
+      video.setAttribute('aria-label', item.alt || 'Project video');
       video.style.width = '100%';
       video.style.display = 'block';
       return video;
@@ -332,6 +400,9 @@ document.addEventListener('DOMContentLoaded', () => {
       const img = document.createElement('img');
       img.src = item.src;
       img.alt = item.alt || '';
+      img.loading = item.eager ? 'eager' : 'lazy';
+      img.decoding = 'async';
+      if (item.eager) img.fetchPriority = 'high';
       return img;
     }
   }
@@ -476,6 +547,14 @@ document.addEventListener('DOMContentLoaded', () => {
           sub.textContent = block.subtext;
           textCol.appendChild(sub);
         }
+        if (block.paragraphs) {
+          block.paragraphs.forEach(paragraph => {
+            const p = document.createElement('div');
+            p.className = 'about-text';
+            p.textContent = paragraph;
+            textCol.appendChild(p);
+          });
+        }
         row.appendChild(textCol);
 
         const gridCol = document.createElement('div');
@@ -488,6 +567,31 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         row.appendChild(gridCol);
 
+        mediaContainer.appendChild(row);
+      } else if (block.type === 'character-design') {
+        const row = document.createElement('div');
+        row.className = 'subpage-media-row media-row-character-design';
+
+        block.items.forEach(item => {
+          const col = document.createElement('div');
+          col.className = 'media-col reveal-on-scroll';
+          col.appendChild(createMediaNode(item));
+          row.appendChild(col);
+        });
+
+        const textCol = document.createElement('div');
+        textCol.className = 'character-design-text reveal-on-scroll';
+        const label = document.createElement('div');
+        label.className = 'row-label';
+        label.textContent = block.heading;
+        textCol.appendChild(label);
+        block.paragraphs.forEach(paragraph => {
+          const p = document.createElement('div');
+          p.className = 'about-text';
+          p.textContent = paragraph;
+          textCol.appendChild(p);
+        });
+        row.appendChild(textCol);
         mediaContainer.appendChild(row);
       } else if (block.type === '4-cols') {
         const row = document.createElement('div');
@@ -521,7 +625,18 @@ document.addEventListener('DOMContentLoaded', () => {
         list.className = 'credits-list';
         project.credits.forEach(c => {
           const li = document.createElement('li');
-          li.innerHTML = `<span class="credits-item-label">${c.label}</span> ${c.value}`;
+          const label = document.createElement('span');
+          label.className = 'credits-item-label';
+          label.textContent = c.label;
+          const value = document.createElement('span');
+          value.className = 'credits-item-value';
+          const values = Array.isArray(c.value) ? c.value : [c.value];
+          values.forEach(name => {
+            const line = document.createElement('span');
+            line.textContent = name;
+            value.appendChild(line);
+          });
+          li.append(label, value);
           list.appendChild(li);
         });
         creditsCol.appendChild(list);
@@ -606,6 +721,14 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
   });
+
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    document.querySelectorAll('.reveal-on-scroll').forEach(element => {
+      element.style.opacity = '1';
+      element.style.transform = 'none';
+    });
+    return;
+  }
 
   // --- SCROLL REVEAL ANIMATION (SMOOTH INTERPOLATED SCROLL-BOUND) ---
   let revealItems = [];

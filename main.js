@@ -3,43 +3,49 @@ document.addEventListener('DOMContentLoaded', () => {
   const menuClose = document.getElementById('menuClose');
   const mobileMenu = document.getElementById('mobileMenu');
   const keyvisualMask = document.getElementById('keyvisualMask');
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (menuTrigger) menuTrigger.setAttribute('aria-expanded', 'false');
+  if (mobileMenu) mobileMenu.setAttribute('aria-hidden', 'true');
+
+  function closeMobileMenu({ restoreFocus = true } = {}) {
+    if (!mobileMenu) return;
+    mobileMenu.classList.remove('active');
+    mobileMenu.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('menu-open');
+    document.documentElement.classList.remove('menu-open');
+    if (menuTrigger) menuTrigger.setAttribute('aria-expanded', 'false');
+    if (window.innerWidth <= 768 && typeof startMobileCycle === 'function') {
+      startMobileCycle();
+    }
+    if (restoreFocus && menuTrigger) menuTrigger.focus();
+  }
 
   // --- MOBILE BURGER MENU OVERLAY ---
   if (menuTrigger && mobileMenu) {
     menuTrigger.addEventListener('click', () => {
       mobileMenu.classList.add('active');
+      mobileMenu.setAttribute('aria-hidden', 'false');
+      menuTrigger.setAttribute('aria-expanded', 'true');
       document.body.classList.add('menu-open');
       document.documentElement.classList.add('menu-open');
       if (typeof stopMobileCycle === 'function') {
         stopMobileCycle();
       }
+      if (menuClose) menuClose.focus();
     });
   }
 
   if (menuClose && mobileMenu) {
     menuClose.addEventListener('click', () => {
-      mobileMenu.classList.remove('active');
-      document.body.classList.remove('menu-open');
-      document.documentElement.classList.remove('menu-open');
-      if (window.innerWidth <= 768) {
-        if (typeof startMobileCycle === 'function') {
-          startMobileCycle();
-        }
-      }
+      closeMobileMenu();
     });
   }
 
   // Handle ESC key to close mobile menu
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && mobileMenu && mobileMenu.classList.contains('active')) {
-      mobileMenu.classList.remove('active');
-      document.body.classList.remove('menu-open');
-      document.documentElement.classList.remove('menu-open');
-      if (window.innerWidth <= 768) {
-        if (typeof startMobileCycle === 'function') {
-          startMobileCycle();
-        }
-      }
+      closeMobileMenu();
     }
   });
 
@@ -57,6 +63,10 @@ document.addEventListener('DOMContentLoaded', () => {
   // --- 3D KEYVISUAL PARALLAX TILT EFFECT (DISABLED) ---
   if (keyvisualMask) {
     keyvisualMask.style.transform = 'rotateY(0deg) rotateX(0deg) translate3d(0, 0, 0)';
+    if (prefersReducedMotion) {
+      keyvisualMask.autoplay = false;
+      keyvisualMask.pause();
+    }
   }
 
   // --- BACKGROUND CROSSFADE TRANSITION ---
@@ -88,6 +98,11 @@ document.addEventListener('DOMContentLoaded', () => {
   const workRows = document.querySelectorAll('.work-row');
 
   workRows.forEach(row => {
+    const projectTitle = row.querySelector('.project-title')?.textContent?.trim() || 'project';
+    row.tabIndex = 0;
+    row.setAttribute('role', 'link');
+    row.setAttribute('aria-label', `View ${projectTitle}`);
+
     // Background Preview Hover Trigger
     row.addEventListener('mouseenter', () => {
       const bg = row.getAttribute('data-bg');
@@ -145,6 +160,13 @@ document.addEventListener('DOMContentLoaded', () => {
         setTimeout(() => {
           window.location.href = `project.html?id=${projectId}`;
         }, 150);
+      }
+    });
+
+    row.addEventListener('keydown', event => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        row.click();
       }
     });
   });
@@ -208,6 +230,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function startMobileCycle() {
     if (mobileRows.length === 0) return;
+    if (prefersReducedMotion) return;
     console.log("Starting mobile auto-cycling...");
     showMobileSlide();
   }
@@ -230,10 +253,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Add click handler to mobile rows
   mobileRows.forEach(row => {
+    const projectTitle = row.querySelector('.mob-project-title')?.textContent?.trim() || 'project';
+    row.tabIndex = 0;
+    row.setAttribute('role', 'link');
+    row.setAttribute('aria-label', `View ${projectTitle}`);
     row.addEventListener('click', () => {
       const projectId = row.getAttribute('data-id');
       if (projectId) {
         window.location.href = `project.html?id=${projectId}`;
+      }
+    });
+    row.addEventListener('keydown', event => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        row.click();
       }
     });
   });
