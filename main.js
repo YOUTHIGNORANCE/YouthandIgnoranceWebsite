@@ -85,7 +85,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // --- 3D KEYVISUAL PARALLAX TILT EFFECT (DISABLED) ---
   if (keyvisualMask) {
     keyvisualMask.style.transform = 'rotateY(0deg) rotateX(0deg) translate3d(0, 0, 0)';
-    if (prefersReducedMotion) {
+    if (prefersReducedMotion && keyvisualMask instanceof HTMLMediaElement) {
       keyvisualMask.autoplay = false;
       keyvisualMask.pause();
     }
@@ -135,9 +135,10 @@ document.addEventListener('DOMContentLoaded', () => {
       
       if (bg) {
         transitionToBackground(bg);
-      }
-      if (keyvisualMask) {
-        keyvisualMask.classList.add('hidden');
+        if (keyvisualMask) keyvisualMask.classList.add('hidden');
+      } else {
+        transitionToBackground('');
+        if (keyvisualMask) keyvisualMask.classList.remove('hidden');
       }
     });
 
@@ -163,9 +164,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const bg = row.getAttribute('data-bg');
         if (bg) {
           transitionToBackground(bg);
-        }
-        if (keyvisualMask) {
-          keyvisualMask.classList.add('hidden');
+          if (keyvisualMask) keyvisualMask.classList.add('hidden');
+        } else {
+          transitionToBackground('');
+          if (keyvisualMask) keyvisualMask.classList.remove('hidden');
         }
         console.log(`Navigating/Locking project: ${row.querySelector('.project-title').textContent}`);
       } else {
@@ -177,10 +179,11 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log(`Unlocking project: ${row.querySelector('.project-title').textContent}`);
       }
       
+      const destination = row.getAttribute('data-href');
       const projectId = row.getAttribute('data-id');
-      if (projectId) {
+      if (destination || projectId) {
         setTimeout(() => {
-          window.location.href = `project.html?id=${projectId}`;
+          window.location.href = destination || `project.html?id=${projectId}`;
         }, 150);
       }
     });
@@ -195,7 +198,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // --- MOBILE AUTO-CYCLING PREVIEW ---
   let mobileCycleTimeout = null;
-  let currentMobileIndex = -1; // -1 represents the initial keyvisual video play
+  let currentMobileIndex = -1; // -1 represents the initial keyvisual
   const mobileRows = document.querySelectorAll('.mobile-work-row');
 
   function showMobileSlide() {
@@ -205,21 +208,23 @@ document.addEventListener('DOMContentLoaded', () => {
       mobileCycleTimeout = null;
     }
 
-    // Wrap around to start if index overflows past the coin video slot
+    // Wrap around to start if index overflows past the keyvisual slot
     if (currentMobileIndex > mobileRows.length) {
       currentMobileIndex = 0;
     }
 
     if (currentMobileIndex === -1 || currentMobileIndex === mobileRows.length) {
-      // Show keyvisual coin video
+      // Show the landing-page keyvisual
       mobileRows.forEach(r => r.classList.remove('active-highlight'));
       transitionToBackground('');
       if (keyvisualMask) {
         keyvisualMask.classList.remove('hidden');
-        keyvisualMask.currentTime = 0;
-        keyvisualMask.play().catch(err => console.log("Video play interrupted or blocked:", err));
+        if (keyvisualMask instanceof HTMLMediaElement) {
+          keyvisualMask.currentTime = 0;
+          keyvisualMask.play().catch(err => console.log("Video play interrupted or blocked:", err));
+        }
       }
-      console.log("Mobile cycle: showing keyvisual coin video");
+      console.log("Mobile cycle: showing keyvisual");
     } else {
       // Show project at currentMobileIndex
       const activeRow = mobileRows[currentMobileIndex];
@@ -232,14 +237,15 @@ document.addEventListener('DOMContentLoaded', () => {
       const bg = activeRow.getAttribute('data-bg');
       if (bg) {
         transitionToBackground(bg);
-      }
-      if (keyvisualMask) {
-        keyvisualMask.classList.add('hidden');
+        if (keyvisualMask) keyvisualMask.classList.add('hidden');
+      } else {
+        transitionToBackground('');
+        if (keyvisualMask) keyvisualMask.classList.remove('hidden');
       }
       console.log(`Mobile cycle: showing project index ${currentMobileIndex}`);
     }
 
-    // Schedule next slide after exactly 4000ms for all states (including the coin video)
+    // Schedule the next slide after exactly 4000ms for every state.
     mobileCycleTimeout = setTimeout(() => {
       if (currentMobileIndex === -1) {
         currentMobileIndex = 0;
@@ -280,9 +286,10 @@ document.addEventListener('DOMContentLoaded', () => {
     row.setAttribute('role', 'link');
     row.setAttribute('aria-label', `View ${projectTitle}`);
     row.addEventListener('click', () => {
+      const destination = row.getAttribute('data-href');
       const projectId = row.getAttribute('data-id');
-      if (projectId) {
-        window.location.href = `project.html?id=${projectId}`;
+      if (destination || projectId) {
+        window.location.href = destination || `project.html?id=${projectId}`;
       }
     });
     row.addEventListener('keydown', event => {

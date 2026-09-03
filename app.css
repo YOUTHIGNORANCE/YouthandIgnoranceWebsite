@@ -2009,7 +2009,111 @@ button:focus-visible,
 /* --- SCROLL REVEAL ANIMATIONS (SUBPAGE) --- */
 .reveal-on-scroll {
   opacity: 0;
-  will-change: opacity;
+  transform: translateY(var(--reveal-distance, 60px));
+  transition:
+    opacity 1s cubic-bezier(0.16, 1, 0.3, 1) var(--reveal-delay, 0ms),
+    transform 1s cubic-bezier(0.16, 1, 0.3, 1) var(--reveal-delay, 0ms);
+}
+
+.reveal-on-scroll.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* --- EXPERIMENTS GRID --- */
+.experiments-page-content {
+  padding-bottom: 0;
+}
+
+.experiments-grid {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  column-gap: clamp(20px, 3.35vw, 64px);
+  row-gap: 26px;
+  align-items: start;
+  width: 100%;
+}
+
+.experiment-card {
+  min-width: 0;
+}
+
+.experiment-index {
+  margin-bottom: 18px;
+  color: rgba(211, 215, 218, 0.68);
+  font-size: 12px;
+  font-weight: 300;
+  line-height: 1;
+}
+
+.experiment-media {
+  display: block;
+  width: 100%;
+}
+
+.experiment-placeholder {
+  aspect-ratio: var(--media-ratio, 1 / 1);
+  background: #59636a;
+}
+
+.experiment-video {
+  position: relative;
+  aspect-ratio: var(--media-ratio, 1 / 1);
+  overflow: hidden;
+  background: #000;
+}
+
+.experiment-video iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.experiment-card img,
+.experiment-card video,
+.experiment-card iframe {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.experiment-card .experiment-video iframe {
+  height: 100%;
+}
+
+.experiments-page-content .subpage-footer {
+  margin-top: 96px;
+}
+
+@media (max-width: 1100px) {
+  .experiments-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    column-gap: 32px;
+    row-gap: 32px;
+  }
+}
+
+@media (max-width: 768px) {
+  .subpage-content.experiments-page-content {
+    padding-top: 180px !important;
+  }
+
+  .experiments-grid {
+    grid-template-columns: 1fr;
+    column-gap: 0;
+    row-gap: 24px;
+  }
+
+  .experiment-index {
+    margin-bottom: 10px;
+    font-size: 10px;
+  }
+
+  .experiments-page-content .subpage-footer {
+    margin-top: 72px !important;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -203,7 +203,7 @@ document.addEventListener('DOMContentLoaded', () => {
       blocks: [
         {
           type: "full-width",
-          item: { type: "image", src: "assets/Projects/24 Perfect Hue/1.webp", alt: "Blindfolded animated character lit in red and green", eager: true }
+          item: { type: "vimeo", vimeoId: "1219168675", alt: "Perfect Hue animated short film", eager: true, controls: true }
         },
         {
           type: "2-cols",
@@ -340,11 +340,28 @@ document.addEventListener('DOMContentLoaded', () => {
       const container = document.createElement('div');
       container.className = 'vimeo-embed-container';
       const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const showControls = item.controls || reduceMotion;
       const iframe = document.createElement('iframe');
-      iframe.src = `https://player.vimeo.com/video/${item.vimeoId}?autoplay=${reduceMotion ? 0 : 1}&loop=1&muted=1&background=${reduceMotion ? 0 : 1}&autopause=0&quality=1080p&dnt=1`;
+      const playerParams = new URLSearchParams({
+        autoplay: item.controls || reduceMotion ? '0' : '1',
+        loop: item.controls ? '0' : '1',
+        muted: item.controls ? '0' : '1',
+        background: showControls ? '0' : '1',
+        controls: showControls ? '1' : '0',
+        autopause: item.controls ? '1' : '0',
+        quality: '1080p',
+        dnt: '1'
+      });
+      if (item.controls) {
+        playerParams.set('title', '0');
+        playerParams.set('byline', '0');
+        playerParams.set('portrait', '0');
+        playerParams.set('badge', '0');
+      }
+      iframe.src = `https://player.vimeo.com/video/${item.vimeoId}?${playerParams}`;
       iframe.allow = 'autoplay; fullscreen; picture-in-picture';
       iframe.allowFullscreen = true;
-      iframe.loading = 'lazy';
+      iframe.loading = item.eager ? 'eager' : 'lazy';
       iframe.title = item.alt || 'Project video';
       container.appendChild(iframe);
       return container;
@@ -698,406 +715,76 @@ document.addEventListener('DOMContentLoaded', () => {
     return;
   }
 
-  // --- SCROLL REVEAL ANIMATION (SMOOTH INTERPOLATED SCROLL-BOUND) ---
-  let revealItems = [];
-  let revealGroups = [];
-  let isAnimating = false;
-  let introCompleted = false;
-  const staggerQueue = [];
-  let lastRevealTime = 0;
-
-  function measureRevealElements() {
-    revealItems = Array.from(document.querySelectorAll('.reveal-on-scroll')).map(el => {
-      let elTop = 0;
-      let elLeft = 0;
-      let tempEl = el;
-      while (tempEl) {
-        elTop += tempEl.offsetTop;
-        elLeft += tempEl.offsetLeft;
-        tempEl = tempEl.offsetParent;
-      }
-      return {
-        element: el,
-        offsetTop: elTop,
-        offsetLeft: elLeft,
-        height: el.offsetHeight,
-        targetOpacity: 0,
-        targetTranslateY: 60,
-        currentOpacity: 0,
-        currentTranslateY: 60,
-        revealed: false
-      };
-    });
-
-    // Group revealItems by vertical proximity (within 50px of offsetTop)
-    revealGroups = [];
-    const sorted = [...revealItems].sort((a, b) => a.offsetTop - b.offsetTop);
-    let currentGroup = [];
-
-    sorted.forEach(item => {
-      if (currentGroup.length === 0) {
-        currentGroup.push(item);
-      } else {
-        const first = currentGroup[0];
-        if (Math.abs(item.offsetTop - first.offsetTop) < 50) {
-          currentGroup.push(item);
-        } else {
-          revealGroups.push({
-            items: currentGroup,
-            revealed: false
-          });
-          currentGroup = [item];
-        }
-      }
-    });
-    if (currentGroup.length > 0) {
-      revealGroups.push({
-        items: currentGroup,
-        revealed: false
-      });
-    }
-
-    // Link each item back to its group reference
-    revealGroups.forEach(group => {
-      group.items.forEach(item => {
-        item.group = group;
-      });
-    });
-  }
-
-  // Easing functions for a organic, premium non-linear feel
-  function easeOutCubic(x) {
-    return 1 - Math.pow(1 - x, 3);
-  }
-  function easeOutQuad(x) {
-    return 1 - (1 - x) * (1 - x);
-  }
-
-  function updateTargetStates() {
-    const viewportHeight = window.innerHeight;
-    const header = document.querySelector('.site-header');
-    const headerHeight = header ? header.offsetHeight : 96;
-    
-    // Binary trigger limits
-    const bottomTrigger = viewportHeight - 120; // Triggers reveal when element enters screen by 120px
-    const topTrigger = headerHeight + 80;        // Triggers exit when element bottom is within 80px of header
-
-    const maxTranslateY = 60; // Symmetrical slide-up translation (60px)
-    const scrollY = window.scrollY;
-
-    // 1. Group trigger phase: reveal entire horizontal rows together in perfect left-to-right sequence
-    revealGroups.forEach(group => {
-      if (!group.revealed) {
-        const shouldTrigger = group.items.some(item => {
-          const relativeTop = item.offsetTop - scrollY;
-          return relativeTop < bottomTrigger;
-        });
-
-        if (shouldTrigger) {
-          group.revealed = true;
-          
-          // Sort items in this group left-to-right
-          const sortedItems = [...group.items].sort((a, b) => a.offsetLeft - b.offsetLeft);
-          
-          const now = Date.now();
-          sortedItems.forEach(item => {
-            item.revealed = true;
-            
-            let delay = 0;
-            if (now < lastRevealTime + 120) {
-              lastRevealTime = lastRevealTime + 120;
-              delay = lastRevealTime - now;
-            } else {
-              lastRevealTime = now;
-              delay = 0;
-            }
-
-            setTimeout(() => {
-              if (item.revealed) {
-                item.targetOpacity = 1;
-                item.targetTranslateY = 0;
-                if (!isAnimating) {
-                  isAnimating = true;
-                  requestAnimationFrame(animateLoop);
-                }
-              }
-            }, delay);
-          });
-        }
-      }
-    });
-
-    // 2. State assignment phase: set opacity & position targets based on current state
-    revealItems.forEach(item => {
-      // If we are still playing the onload stagger and the user hasn't scrolled,
-      // do not overwrite the target states of items that are queued to reveal later!
-      if (!introCompleted && !hasScrolled) {
-        const isInQueue = staggerQueue.some(entry => entry.type === 'reveal-el' && entry.element === item.element);
-        if (isInQueue && item.targetOpacity === 0) {
-          return;
-        }
-      }
-
-      // Calculate layout coordinates relative to the viewport top
-      const relativeTop = item.offsetTop - scrollY;
-      const relativeBottom = relativeTop + item.height;
-
-      if (relativeTop >= bottomTrigger) {
-        // Reset item and group states when scrolled back below trigger zone
-        item.targetOpacity = 0;
-        item.targetTranslateY = maxTranslateY;
-        item.revealed = false;
-        if (item.group) {
-          item.group.revealed = false;
-        }
-      } else if (relativeBottom <= topTrigger) {
-        // Hidden at the top (exited)
-        item.targetOpacity = 0;
-        item.targetTranslateY = -maxTranslateY;
-      } else {
-        // In the active viewport region
-        if (item.revealed) {
-          item.targetOpacity = 1;
-          item.targetTranslateY = 0;
-        }
-      }
-    });
-  }
-
-  function animateLoop() {
-    let needsMoreFrames = false;
-    const lerpFactor = 0.08; // Super smooth interpolation factor
-
-    revealItems.forEach(item => {
-      // Smoothly interpolate opacity
-      const diffOpacity = item.targetOpacity - item.currentOpacity;
-      if (Math.abs(diffOpacity) > 0.001) {
-        item.currentOpacity += diffOpacity * lerpFactor;
-        needsMoreFrames = true;
-      } else {
-        item.currentOpacity = item.targetOpacity;
-      }
-
-      // Smoothly interpolate transform
-      const diffTranslate = item.targetTranslateY - item.currentTranslateY;
-      if (Math.abs(diffTranslate) > 0.05) {
-        item.currentTranslateY += diffTranslate * lerpFactor;
-        needsMoreFrames = true;
-      } else {
-        item.currentTranslateY = item.targetTranslateY;
-      }
-
-      // Apply inline styles directly for high performance
-      item.element.style.opacity = item.currentOpacity;
-      item.element.style.transform = `translateY(${item.currentTranslateY}px)`;
-    });
-
-    if (needsMoreFrames) {
-      requestAnimationFrame(animateLoop);
-    } else {
-      isAnimating = false;
-    }
-  }
-
-  let hasScrolled = false;
-
-  function onScroll() {
-    hasScrolled = true;
-    updateTargetStates();
-    if (!isAnimating) {
-      isAnimating = true;
-      requestAnimationFrame(animateLoop);
-    }
-  }
-
-  // Measure once initially
-  measureRevealElements();
-  
-  // Set up staggered intro for elements initially in the viewport
-  const viewportHeight = window.innerHeight;
-  
-  // Prepare header elements initially hidden with CSS transitions
+  // --- ONE-TIME SCROLL REVEALS ---
+  // IntersectionObserver lets the browser schedule visibility checks efficiently.
+  // Revealed elements are unobserved and never reset when images finish loading.
+  const revealElements = Array.from(document.querySelectorAll('.reveal-on-scroll'));
   const headerLogo = document.querySelector('.logo');
   const headerContact = document.querySelector('.desktop-contact-link');
   const headerTrigger = document.querySelector('.mobile-menu-trigger');
+  const headerElements = [headerLogo, headerContact, headerTrigger].filter(Boolean);
 
-  if (headerLogo) {
-    headerLogo.style.opacity = '0';
-    headerLogo.style.transform = 'translateY(6px)';
-    headerLogo.style.transition = 'opacity 0.6s cubic-bezier(0.25, 1, 0.5, 1), transform 0.6s cubic-bezier(0.25, 1, 0.5, 1)';
-  }
-  if (headerContact) {
-    headerContact.style.opacity = '0';
-    headerContact.style.transform = 'translateY(6px)';
-    headerContact.style.transition = 'opacity 0.6s cubic-bezier(0.25, 1, 0.5, 1), transform 0.6s cubic-bezier(0.25, 1, 0.5, 1)';
-  }
-  if (headerTrigger) {
-    headerTrigger.style.opacity = '0';
-    headerTrigger.style.transform = 'translateY(6px)';
-    headerTrigger.style.transition = 'opacity 0.6s cubic-bezier(0.25, 1, 0.5, 1), transform 0.6s cubic-bezier(0.25, 1, 0.5, 1)';
-  }
-
-  // Build a manual layout sequence to bypass dynamic image loading offset shifts
-  staggerQueue.length = 0;
-
-  // 1. Logo
-  if (headerLogo) staggerQueue.push({ type: 'header', element: headerLogo });
-
-  // 2. Contact button / Burger trigger
-  if (headerContact || headerTrigger) {
-    staggerQueue.push({
-      type: 'header-group',
-      elements: [headerContact, headerTrigger].filter(Boolean)
-    });
-  }
-
-  // 3. Project title
-  const titleEl = document.querySelector('.subpage-title-col');
-  if (titleEl) staggerQueue.push({ type: 'reveal-el', element: titleEl });
-
-  // 4. Category column
-  const categoryEl = document.querySelector('.subpage-category-col');
-  if (categoryEl) staggerQueue.push({ type: 'reveal-el', element: categoryEl });
-
-  // 5. Year column
-  const yearEl = document.querySelector('.subpage-year-col');
-  if (yearEl) staggerQueue.push({ type: 'reveal-el', element: yearEl });
-
-  // 6. About column
-  const aboutEl = document.querySelector('.subpage-about-col');
-  if (aboutEl) staggerQueue.push({ type: 'reveal-el', element: aboutEl });
-
-  // 7. Navigation bar
-  const navEl = document.querySelector('.subpage-nav-bar');
-  if (navEl) staggerQueue.push({ type: 'reveal-el', element: navEl });
-
-  // 8 & 9. First row images
-  const mediaRows = document.querySelectorAll('.subpage-media-row');
-  if (mediaRows.length > 0) {
-    const firstRowCols = mediaRows[0].querySelectorAll('.media-col');
-    if (firstRowCols.length > 0) staggerQueue.push({ type: 'reveal-el', element: firstRowCols[0] });
-    if (firstRowCols.length > 1) staggerQueue.push({ type: 'reveal-el', element: firstRowCols[1] });
-  }
-
-  // Pre-set target & current states for all reveal items
-  revealItems.forEach(item => {
-    const isInQueue = staggerQueue.some(entry => entry.type === 'reveal-el' && entry.element === item.element);
-    
-    if (isInQueue) {
-      // Staggered intro items start at 0 opacity and 15px translation offset
-      item.targetOpacity = 0;
-      item.targetTranslateY = 15;
-      item.currentOpacity = 0;
-      item.currentTranslateY = 15;
-      item.revealed = false;
-    } else {
-      // Offscreen items start at standard scroll reveal target
-      const relativeTop = item.offsetTop;
-      const bottomTrigger = viewportHeight - 120;
-      
-      if (relativeTop >= bottomTrigger) {
-        item.targetOpacity = 0;
-        item.targetTranslateY = 60;
-        item.revealed = false;
-      } else {
-        item.targetOpacity = 1;
-        item.targetTranslateY = 0;
-        item.revealed = true;
-        if (item.group) {
-          item.group.revealed = true;
-        }
-      }
-      item.currentOpacity = item.targetOpacity;
-      item.currentTranslateY = item.targetTranslateY;
-    }
-    
-    // Apply initial styling to DOM to prevent flashes
-    item.element.style.opacity = item.currentOpacity;
-    item.element.style.transform = `translateY(${item.currentTranslateY}px)`;
-  });
-
-  // Stagger reveal of all queued elements, offsetting each step by exactly 120ms
-  staggerQueue.forEach((entry, index) => {
+  headerElements.forEach((element, index) => {
+    element.style.opacity = '0';
+    element.style.transform = 'translateY(6px)';
+    element.style.transition = 'opacity 0.6s cubic-bezier(0.25, 1, 0.5, 1), transform 0.6s cubic-bezier(0.25, 1, 0.5, 1)';
     setTimeout(() => {
-      if (hasScrolled) return;
+      element.style.opacity = '1';
+      element.style.transform = 'translateY(0)';
+    }, index === 0 ? 0 : 120);
+    setTimeout(() => {
+      element.style.opacity = '';
+      element.style.transform = '';
+      element.style.transition = '';
+    }, 900);
+  });
 
-      if (entry.type === 'header') {
-        entry.element.style.opacity = '1';
-        entry.element.style.transform = 'translateY(0)';
-      } else if (entry.type === 'header-group') {
-        entry.elements.forEach(el => {
-          el.style.opacity = '1';
-          el.style.transform = 'translateY(0)';
-        });
-      } else if (entry.type === 'reveal-el') {
-        const item = revealItems.find(x => x.element === entry.element);
-        if (item) {
-          item.revealed = true; // Mark as revealed so it does not trigger again
-          if (item.group) {
-            item.group.revealed = true;
-          }
-          item.targetOpacity = 1;
-          item.targetTranslateY = 0;
-          if (!isAnimating) {
-            isAnimating = true;
-            requestAnimationFrame(animateLoop);
-          }
-        }
+  // Preserve the short, deliberate stagger used for the initial viewport.
+  const introElements = [];
+  const titleEl = document.querySelector('.subpage-title-col');
+  const categoryEl = document.querySelector('.subpage-category-col');
+  const yearEl = document.querySelector('.subpage-year-col');
+  const aboutEl = document.querySelector('.subpage-about-col');
+  const navEl = document.querySelector('.subpage-nav-bar');
+  const mediaRows = document.querySelectorAll('.subpage-media-row');
+  introElements.push(titleEl, categoryEl, yearEl, aboutEl, navEl);
+  if (mediaRows.length > 0) {
+    introElements.push(...mediaRows[0].querySelectorAll('.media-col'));
+  }
+  introElements.filter(Boolean).forEach((element, index) => {
+    if (element.getBoundingClientRect().top < window.innerHeight - 120) {
+      element.style.setProperty('--reveal-delay', `${(index + 2) * 120}ms`);
+      element.style.setProperty('--reveal-distance', '15px');
+    }
+  });
+
+  if (!('IntersectionObserver' in window)) {
+    revealElements.forEach(element => element.classList.add('is-visible'));
+    return;
+  }
+
+  const revealObserver = new IntersectionObserver(entries => {
+    const entering = entries
+      .filter(entry => entry.isIntersecting)
+      .sort((a, b) => {
+        const topDifference = a.boundingClientRect.top - b.boundingClientRect.top;
+        return Math.abs(topDifference) < 50
+          ? a.boundingClientRect.left - b.boundingClientRect.left
+          : topDifference;
+      });
+
+    entering.forEach((entry, index) => {
+      const element = entry.target;
+      if (!element.style.getPropertyValue('--reveal-delay') && entering.length > 1) {
+        element.style.setProperty('--reveal-delay', `${index * 120}ms`);
       }
-
-      // Mark intro as completed once the final item is reached
-      if (index === staggerQueue.length - 1) {
-        introCompleted = true;
-      }
-    }, index * 120); // Snappy 120ms stagger step
-  });
-
-  // Clear transition/transform styles from header elements after animation finishes
-  // to avoid interfering with hover styles
-  setTimeout(() => {
-    if (headerLogo) {
-      headerLogo.style.opacity = '';
-      headerLogo.style.transform = '';
-      headerLogo.style.transition = '';
-    }
-    if (headerContact) {
-      headerContact.style.opacity = '';
-      headerContact.style.transform = '';
-      headerContact.style.transition = '';
-    }
-    if (headerTrigger) {
-      headerTrigger.style.opacity = '';
-      headerTrigger.style.transform = '';
-      headerTrigger.style.transition = '';
-    }
-  }, staggerQueue.length * 120 + 800);
-
-  // Attach event listeners
-  window.addEventListener('scroll', onScroll, { passive: true });
-
-  window.addEventListener('resize', () => {
-    measureRevealElements();
-    updateTargetStates();
-    if (!isAnimating) {
-      isAnimating = true;
-      requestAnimationFrame(animateLoop);
-    }
-  });
-
-  window.addEventListener('load', () => {
-    measureRevealElements();
-    updateTargetStates();
-    if (!isAnimating) {
-      isAnimating = true;
-      requestAnimationFrame(animateLoop);
-    }
-  });
-
-  // Re-measure after each project image successfully loads and updates layout flow
-  document.querySelectorAll('.subpage-media-container img').forEach(img => {
-    img.addEventListener('load', () => {
-      measureRevealElements();
-      updateTargetStates();
+      element.classList.add('is-visible');
+      revealObserver.unobserve(element);
     });
+  }, {
+    rootMargin: '0px 0px -120px 0px',
+    threshold: 0.01
   });
+
+  revealElements.forEach(element => revealObserver.observe(element));
 });
