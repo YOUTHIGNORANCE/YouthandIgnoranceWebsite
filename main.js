@@ -5,7 +5,10 @@ document.addEventListener('DOMContentLoaded', () => {
   const keyvisualMask = document.getElementById('keyvisualMask');
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  if (menuTrigger) menuTrigger.setAttribute('aria-expanded', 'false');
+  if (menuTrigger) {
+    menuTrigger.setAttribute('aria-expanded', 'false');
+    menuTrigger.setAttribute('aria-controls', 'mobileMenu');
+  }
   if (mobileMenu) mobileMenu.setAttribute('aria-hidden', 'true');
 
   function closeMobileMenu({ restoreFocus = true } = {}) {
@@ -46,6 +49,25 @@ document.addEventListener('DOMContentLoaded', () => {
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && mobileMenu && mobileMenu.classList.contains('active')) {
       closeMobileMenu();
+    }
+
+    if (e.key === 'Tab' && mobileMenu && mobileMenu.classList.contains('active')) {
+      const focusable = Array.from(mobileMenu.querySelectorAll('a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'))
+        .filter(element => element.getClientRects().length > 0);
+      if (focusable.length === 0) return;
+
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      } else if (!mobileMenu.contains(document.activeElement)) {
+        e.preventDefault();
+        first.focus();
+      }
     }
   });
 

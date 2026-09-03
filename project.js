@@ -115,80 +115,80 @@ document.addEventListener('DOMContentLoaded', () => {
         // Block 1: Full-Width Hero Title Visual (Image 1)
         {
           type: "full-width",
-          item: { type: "image", src: "assets/Projects/25 Sentient Shore/1.png", alt: "Sentient Shore hero visual", eager: true }
+          item: { type: "image", src: "assets/Projects/25 Sentient Shore/1.webp", alt: "Sentient Shore hero visual", eager: true }
         },
         // Block 2: 2-Cols (Images 2 & 3: Figure on Shore & Profile Silhouette)
         {
           type: "2-cols",
           items: [
-            { type: "image", src: "assets/Projects/25 Sentient Shore/2.png", alt: "Figure on Shore Dusk" },
-            { type: "image", src: "assets/Projects/25 Sentient Shore/3.png", alt: "Profile Silhouette" }
+            { type: "image", src: "assets/Projects/25 Sentient Shore/2.webp", alt: "Figure on Shore Dusk" },
+            { type: "image", src: "assets/Projects/25 Sentient Shore/3.webp", alt: "Profile Silhouette" }
           ]
         },
         // Block 3: Text + 2x2 Grid Offset (Images 4, 5, 6, 7: Abstract B-Roll)
         {
           type: "text-media-offset-grid",
           heading: "ABSTRACT B-ROLL",
-          subtext: "TOUCHDESIGNER JARE JARA",
+          subtext: "TOUCHDESIGNER",
           items: [
-            { type: "image", src: "assets/Projects/25 Sentient Shore/4.png", alt: "Abstract Light 1" },
-            { type: "image", src: "assets/Projects/25 Sentient Shore/5.png", alt: "Abstract Starburst" },
-            { type: "image", src: "assets/Projects/25 Sentient Shore/6.png", alt: "Abstract Ray Lines" },
-            { type: "image", src: "assets/Projects/25 Sentient Shore/7.png", alt: "Abstract Burst Motion" }
+            { type: "image", src: "assets/Projects/25 Sentient Shore/4.webp", alt: "Abstract Light 1" },
+            { type: "image", src: "assets/Projects/25 Sentient Shore/5.webp", alt: "Abstract Starburst" },
+            { type: "image", src: "assets/Projects/25 Sentient Shore/6.webp", alt: "Abstract Ray Lines" },
+            { type: "image", src: "assets/Projects/25 Sentient Shore/7.webp", alt: "Abstract Burst Motion" }
           ]
         },
         // Block 4: Centered Medium Image 8 (Glowing Visor Figure)
         {
           type: "centered-medium",
-          item: { type: "image", src: "assets/Projects/25 Sentient Shore/8.png", alt: "Glowing Visor Figure" }
+          item: { type: "image", src: "assets/Projects/25 Sentient Shore/8.webp", alt: "Glowing Visor Figure" }
         },
         // Block 5: Full-Width Image 9 (Dusk Water Figure)
         {
           type: "full-width",
-          item: { type: "image", src: "assets/Projects/25 Sentient Shore/9.png", alt: "Dusk Water Figure" }
+          item: { type: "image", src: "assets/Projects/25 Sentient Shore/9.webp", alt: "Dusk Water Figure" }
         },
         // Block 6: 2-Cols (Images 10 & 11: Spotlight Figure & Overhead Crowd)
         {
           type: "2-cols",
           items: [
-            { type: "image", src: "assets/Projects/25 Sentient Shore/10.png", alt: "Spotlight Figure" },
-            { type: "image", src: "assets/Projects/25 Sentient Shore/11.png", alt: "Overhead Crowd" }
+            { type: "image", src: "assets/Projects/25 Sentient Shore/10.webp", alt: "Spotlight Figure" },
+            { type: "image", src: "assets/Projects/25 Sentient Shore/11.webp", alt: "Overhead Crowd" }
           ]
         },
         // Block 7: Centered Medium Image 12 (Two Red Figures Facing)
         {
           type: "centered-medium",
-          item: { type: "image", src: "assets/Projects/25 Sentient Shore/12.png", alt: "Two Red Figures Facing" }
+          item: { type: "image", src: "assets/Projects/25 Sentient Shore/12.webp", alt: "Two Red Figures Facing" }
         },
         // Block 8: Offset Right Image 13 (Red Figure Right Column)
         {
           type: "offset-right",
-          item: { type: "image", src: "assets/Projects/25 Sentient Shore/13.png", alt: "Red Figure Right" }
+          item: { type: "image", src: "assets/Projects/25 Sentient Shore/13.webp", alt: "Red Figure Right" }
         },
         // Block 9: Offset Left Image 14 (Red Blurry Profile Left Column)
         {
           type: "offset-left",
-          item: { type: "image", src: "assets/Projects/25 Sentient Shore/14.png", alt: "Red Profile Left" }
+          item: { type: "image", src: "assets/Projects/25 Sentient Shore/14.webp", alt: "Red Profile Left" }
         },
         // Block 10: 4-Cols Row (Images 15, 16, 17, 18: 4 images next to each other in 1 row)
         {
           type: "4-cols",
           items: [
-            { type: "image", src: "assets/Projects/25 Sentient Shore/15.png", alt: "Red Abstract 1" },
-            { type: "image", src: "assets/Projects/25 Sentient Shore/16.png", alt: "Red Abstract 2" },
-            { type: "image", src: "assets/Projects/25 Sentient Shore/17.png", alt: "Red Abstract 3" },
-            { type: "image", src: "assets/Projects/25 Sentient Shore/18.png", alt: "Red Abstract 4" }
+            { type: "image", src: "assets/Projects/25 Sentient Shore/15.webp", alt: "Red Abstract 1" },
+            { type: "image", src: "assets/Projects/25 Sentient Shore/16.webp", alt: "Red Abstract 2" },
+            { type: "image", src: "assets/Projects/25 Sentient Shore/17.webp", alt: "Red Abstract 3" },
+            { type: "image", src: "assets/Projects/25 Sentient Shore/18.webp", alt: "Red Abstract 4" }
           ]
         },
         // Block 11: Centered Medium Image 19 (Blue Figure in Water at Dusk)
         {
           type: "centered-medium",
-          item: { type: "image", src: "assets/Projects/25 Sentient Shore/19.png", alt: "Blue Figure Water Dusk" }
+          item: { type: "image", src: "assets/Projects/25 Sentient Shore/19.webp", alt: "Blue Figure Water Dusk" }
         },
         // Block 12: Full-Width Image 20 (Shattered Crystal Figure Visual)
         {
           type: "full-width",
-          item: { type: "image", src: "assets/Projects/25 Sentient Shore/20.png", alt: "Shattered Crystal Figure Visual" }
+          item: { type: "image", src: "assets/Projects/25 Sentient Shore/20.webp", alt: "Shattered Crystal Figure Visual" }
         }
       ]
     },
@@ -203,13 +203,13 @@ document.addEventListener('DOMContentLoaded', () => {
       blocks: [
         {
           type: "full-width",
-          item: { type: "image", src: "assets/Projects/24 Perfect Hue/1.png", alt: "Blindfolded animated character lit in red and green", eager: true }
+          item: { type: "image", src: "assets/Projects/24 Perfect Hue/1.webp", alt: "Blindfolded animated character lit in red and green", eager: true }
         },
         {
           type: "2-cols",
           items: [
-            { type: "image", src: "assets/Projects/24 Perfect Hue/2.png", alt: "Colorful reflections rippling across dark water" },
-            { type: "image", src: "assets/Projects/24 Perfect Hue/3.png", alt: "Neon runway leading toward a bright white light" }
+            { type: "image", src: "assets/Projects/24 Perfect Hue/2.webp", alt: "Colorful reflections rippling across dark water" },
+            { type: "image", src: "assets/Projects/24 Perfect Hue/3.webp", alt: "Neon runway leading toward a bright white light" }
           ]
         },
         {
@@ -217,31 +217,31 @@ document.addEventListener('DOMContentLoaded', () => {
           heading: "HAND DRAWN FX",
           paragraphs: ["WE USED HAND DRAWN OVERLAYS TO ACHIEVE A MIXED MEDIA LOOK AND COMIC FEEL."],
           items: [
-            { type: "image", src: "assets/Projects/24 Perfect Hue/4.png", alt: "Character with a hand-drawn orange smoke overlay" },
-            { type: "image", src: "assets/Projects/24 Perfect Hue/5.png", alt: "Close-up of a character's tattooed hand and chest" },
-            { type: "image", src: "assets/Projects/24 Perfect Hue/6.png", alt: "Character dancing beneath magenta lights with hand-drawn color accents" },
-            { type: "image", src: "assets/Projects/24 Perfect Hue/7.png", alt: "White hand-drawn face and lettering over a red background" }
+            { type: "image", src: "assets/Projects/24 Perfect Hue/4.webp", alt: "Character with a hand-drawn orange smoke overlay" },
+            { type: "image", src: "assets/Projects/24 Perfect Hue/5.webp", alt: "Close-up of a character's tattooed hand and chest" },
+            { type: "image", src: "assets/Projects/24 Perfect Hue/6.webp", alt: "Character dancing beneath magenta lights with hand-drawn color accents" },
+            { type: "image", src: "assets/Projects/24 Perfect Hue/7.webp", alt: "White hand-drawn face and lettering over a red background" }
           ]
         },
         {
           type: "full-width",
-          item: { type: "image", src: "assets/Projects/24 Perfect Hue/8.png", alt: "Three colorful hand-painted character portrait studies" }
+          item: { type: "image", src: "assets/Projects/24 Perfect Hue/8.webp", alt: "Three colorful hand-painted character portrait studies" }
         },
         {
           type: "character-design",
           heading: "CHARACTER DESIGN",
           paragraphs: ["TATTOOS, BRIGHTLY COLORED HAIR AND SPIKY ACCENTS SERVE THE CYBERPUNK AESTHETIC."],
           items: [
-            { type: "image", src: "assets/Projects/24 Perfect Hue/9.png", alt: "Front-facing illustrated cyberpunk character portrait" },
-            { type: "image", src: "assets/Projects/24 Perfect Hue/10.png", alt: "Front and back turnaround of the cyberpunk character" }
+            { type: "image", src: "assets/Projects/24 Perfect Hue/9.webp", alt: "Front-facing illustrated cyberpunk character portrait" },
+            { type: "image", src: "assets/Projects/24 Perfect Hue/10.webp", alt: "Front and back turnaround of the cyberpunk character" }
           ]
         },
         {
           type: "3-cols",
           items: [
-            { type: "image", src: "assets/Projects/24 Perfect Hue/11.png", alt: "Blindfolded character kneeling beneath red lights" },
-            { type: "image", src: "assets/Projects/24 Perfect Hue/12.png", alt: "Blindfolded character turning on a glowing platform" },
-            { type: "image", src: "assets/Projects/24 Perfect Hue/13.png", alt: "Dancing character traced with vivid hand-drawn accents" }
+            { type: "image", src: "assets/Projects/24 Perfect Hue/11.webp", alt: "Blindfolded character kneeling beneath red lights" },
+            { type: "image", src: "assets/Projects/24 Perfect Hue/12.webp", alt: "Blindfolded character turning on a glowing platform" },
+            { type: "image", src: "assets/Projects/24 Perfect Hue/13.webp", alt: "Dancing character traced with vivid hand-drawn accents" }
           ]
         },
         {
@@ -254,70 +254,22 @@ document.addEventListener('DOMContentLoaded', () => {
         {
           type: "2-cols",
           items: [
-            { type: "image", src: "assets/Projects/24 Perfect Hue/16.png", alt: "Blindfolded character restrained before a watching crowd" },
-            { type: "image", src: "assets/Projects/24 Perfect Hue/17.png", alt: "Character framed in a red-lit doorway" }
+            { type: "image", src: "assets/Projects/24 Perfect Hue/16.webp", alt: "Blindfolded character restrained before a watching crowd" },
+            { type: "image", src: "assets/Projects/24 Perfect Hue/17.webp", alt: "Character framed in a red-lit doorway" }
           ]
         },
         {
           type: "full-width",
-          item: { type: "image", src: "assets/Projects/24 Perfect Hue/18.png", alt: "Perfect Hue cast gathered in a nightclub setting" }
+          item: { type: "image", src: "assets/Projects/24 Perfect Hue/18.webp", alt: "Perfect Hue cast gathered in a nightclub setting" }
         }
       ],
       credits: [
-        { label: "DIRECTION, ART DIRECTION + DESIGN", value: ["LUKAS BÖTTNER", "MARC EISLER", "MARIA SEEMANN", "JAKOB WAGNER"] },
+        { label: "DIRECTION,\nART DIRECTION\n+ DESIGN", value: ["LUKAS BÖTTNER", "MARC EISLER", "MARIA SEEMANN", "JAKOB WAGNER"] },
         { label: "ANIMATION", value: ["MARC EISLER", "MARIA SEEMANN", "LUKAS BÖTTNER"] },
         { label: "2D FX", value: ["LUKAS BÖTTNER", "MARIA SEEMANN"] },
-        { label: "SOUND + PICTURE POST", value: ["MARC EISLER"] }
+        { label: "SOUND\n+ PICTURE POST", value: ["MARC EISLER"] }
       ],
       software: ["BLENDER", "REALLUSION SUITE", "HOUDINI", "PROCREATE", "SUBSTANCE PAINTER", "DAVINCI RESOLVE"]
-    },
-    {
-      id: "prototype",
-      title: "PROTOTYPE",
-      category: ["CREATIVE DIRECTION", "SYSTEMS DESIGN", "CGI"],
-      year: "2025",
-      about: [
-        "A RAW INTERACTIVE BLUEPRINT DEMONSTRATING REALTIME RIGGING AND VOLUMETRIC SPACE MAPPING FOR THE STUTTGART DESIGN EXHIBIT.",
-        "A TACTILE METALLIC EXPERIMENT INTEGRATING GEOMETRY WITH HUMAN ANATOMY."
-      ],
-      description: [
-        "A RAW INTERACTIVE BLUEPRINT DEMONSTRATING REALTIME RIGGING AND VOLUMETRIC SPACE MAPPING FOR THE STUTTGART DESIGN EXHIBIT.",
-        "A TACTILE METALLIC EXPERIMENT INTEGRATING GEOMETRY WITH HUMAN ANATOMY, EXAMINING HOW STRUCTURAL RIGIDITY CAN EMULATE MUSCULATURE.",
-        "THE EXHIBIT FEATURES DYNAMIC VOLUMETRIC SCATTERING AND PHYSICAL CONTROLLERS THAT LET VIEWERS MANIPULATE THE LIGHT FIELDS LIVE."
-      ],
-      images: {
-        img1: "Statues.png",
-        img2: "assets/Cape.png",
-        imgFull: "assets/Background_Project_Hover.png",
-        img3: "assets/Eye.png",
-        img4: "Statues.png",
-        img5: "assets/Cape.png",
-        imgBottom: "assets/Eye.png"
-      }
-    },
-    {
-      id: "lorem-ipsum-dolor",
-      title: "LOREM IPSUM",
-      category: ["MOTION SIMULATION", "BRUTALISM", "DIRECTION"],
-      year: "2025",
-      about: [
-        "LOREM IPSUM DOLOR SIT AMET, CONSETETUR SADIPSCING ELITR, SED DIAM NONUMY EIRMOD TEMPOR INVIDUNT UT LABORE ET DOLORE MAGNA ALIQUAM ERAT, SED DIAM VOLUPTUA.",
-        "STET CLITA KASD GUBERGEN, NO SEA TAKIMATA SANCTUS EST. RENDERED FOR THE YOUTH & IGNORANCE CORE BRAND IDENTITY PORTFOLIO."
-      ],
-      description: [
-        "LOREM IPSUM DOLOR SIT AMET, CONSETETUR SADIPSCING ELITR, SED DIAM NONUMY EIRMOD TEMPOR INVIDUNT UT LABORE ET DOLORE MAGNA ALIQUAM ERAT, SED DIAM VOLUPTUA.",
-        "STET CLITA KASD GUBERGEN, NO SEA TAKIMATA SANCTUS EST. RENDERED FOR THE YOUTH & IGNORANCE CORE BRAND IDENTITY PORTFOLIO.",
-        "DUIS AUTEM VEL EUM IRIURE DOLOR IN HENDRERIT IN VULPUTATE VELIT ESSE MOLESTIE CONSEQUAT, VEL ILLUM DOLORE EU FEUGIAT NULLA FACILISIS AT VERO EROS ET ACCUMSAN."
-      ],
-      images: {
-        img1: "assets/Cape.png",
-        img2: "assets/Eye.png",
-        imgFull: "Statues.png",
-        img3: "Statues.png",
-        img4: "assets/Cape.png",
-        img5: "assets/Eye.png",
-        imgBottom: "assets/Background_Project_Hover.png"
-      }
     }
   ];
 
@@ -370,6 +322,18 @@ document.addEventListener('DOMContentLoaded', () => {
     aboutContainer.appendChild(p1);
   });
 
+  // Preserve each image's aspect ratio before it loads to prevent layout shifts.
+  const imageDimensions = {
+    "24 Perfect Hue": { 1: [1856, 838], 2: [916, 387], 3: [916, 387], 4: [446, 335], 5: [447, 335], 6: [602, 257], 7: [447, 335], 8: [1856, 947], 9: [613, 701], 10: [551, 701], 11: [603, 257], 12: [602, 255], 13: [602, 257], 16: [916, 387], 17: [916, 387], 18: [1856, 1045] },
+    "25 Sentient Shore": { 1: [1856, 1044], 2: [916, 687], 3: [916, 687], 4: [446, 335], 5: [447, 335], 6: [446, 335], 7: [447, 335], 8: [916, 687], 9: [1856, 1392], 10: [916, 687], 11: [916, 687], 12: [916, 687], 13: [916, 687], 14: [916, 687], 15: [447, 335], 16: [446, 335], 17: [446, 335], 18: [447, 335], 19: [916, 687], 20: [1856, 1392] },
+    "26 Birdshot": { 1: [1856, 838], 2: [916, 387], 3: [916, 387], 4: [916, 387], 5: [916, 387], 6: [1856, 838], 7: [603, 257], 8: [602, 255], 9: [602, 257], 10: [1856, 881], 16: [1856, 769] }
+  };
+
+  function getImageDimensions(src) {
+    const match = src.match(/assets\/Projects\/([^/]+)\/(\d+)\.(?:png|webp)$/);
+    return match ? imageDimensions[match[1]]?.[match[2]] : null;
+  }
+
   // --- MEDIA NODE CREATOR HELPER ---
   function createMediaNode(item) {
     if (item.type === 'vimeo') {
@@ -377,7 +341,7 @@ document.addEventListener('DOMContentLoaded', () => {
       container.className = 'vimeo-embed-container';
       const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       const iframe = document.createElement('iframe');
-      iframe.src = `https://player.vimeo.com/video/${item.vimeoId}?autoplay=${reduceMotion ? 0 : 1}&loop=1&muted=1&background=${reduceMotion ? 0 : 1}&autopause=0&quality=1080p`;
+      iframe.src = `https://player.vimeo.com/video/${item.vimeoId}?autoplay=${reduceMotion ? 0 : 1}&loop=1&muted=1&background=${reduceMotion ? 0 : 1}&autopause=0&quality=1080p&dnt=1`;
       iframe.allow = 'autoplay; fullscreen; picture-in-picture';
       iframe.allowFullscreen = true;
       iframe.loading = 'lazy';
@@ -403,6 +367,10 @@ document.addEventListener('DOMContentLoaded', () => {
       img.loading = item.eager ? 'eager' : 'lazy';
       img.decoding = 'async';
       if (item.eager) img.fetchPriority = 'high';
+      const dimensions = getImageDimensions(item.src);
+      if (dimensions) {
+        [img.width, img.height] = dimensions;
+      }
       return img;
     }
   }

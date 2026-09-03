@@ -1,5 +1,11 @@
-/* Import Google Fonts - Outfit for clean geometric sans-serif */
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
+/* Self-hosted Outfit variable font avoids third-party font requests. */
+@font-face {
+  font-family: 'Outfit';
+  src: url('assets/fonts/Outfit-Variable.ttf') format('truetype');
+  font-style: normal;
+  font-weight: 300 700;
+  font-display: swap;
+}
 
 /* Reset and Base Styles */
 *, *::before, *::after {
@@ -1286,27 +1292,51 @@ html.menu-open {
   margin: 0;
   display: flex;
   flex-direction: column;
-  gap: 8px;
   font-size: clamp(14px, 0.85rem + 0.15vw, 16px);
   font-weight: 300;
   color: var(--text-color);
 }
 
 .credits-item-label {
-  color: rgba(211, 215, 218, 0.5);
+  color: var(--text-color);
   margin-right: 8px;
+  white-space: pre-line;
+  line-height: 1.15;
 }
 
 .credits-list li {
   display: grid;
-  grid-template-columns: minmax(150px, 0.7fr) 1fr;
-  gap: 16px;
+  grid-template-columns: 180px 1fr;
+  gap: 20px;
   align-items: start;
+}
+
+.credits-list {
+  gap: 36px;
 }
 
 .credits-item-value {
   display: flex;
   flex-direction: column;
+  gap: 0;
+  color: rgba(211, 215, 218, 0.5);
+  line-height: 1.15;
+}
+
+.software-list {
+  gap: 0;
+  line-height: 1.15;
+}
+
+.project-perfect-hue .subpage-credits-row {
+  grid-template-columns: 420px max-content;
+  gap: 64px;
+  margin-bottom: 14vh;
+}
+
+.project-perfect-hue .credits-col,
+.project-perfect-hue .software-col {
+  gap: 64px;
 }
 
 a:focus-visible,
@@ -1343,6 +1373,11 @@ button:focus-visible,
   .credits-list li {
     grid-template-columns: 1fr;
     gap: 8px;
+  }
+  .project-perfect-hue .subpage-credits-row {
+    grid-template-columns: 1fr;
+    gap: 32px;
+    margin-bottom: 96px;
   }
   .subpage-credits-row {
     grid-template-columns: 1fr;
