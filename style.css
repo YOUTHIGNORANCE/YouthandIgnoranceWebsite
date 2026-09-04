@@ -1237,6 +1237,19 @@ html.menu-open {
   gap: 8px;
 }
 
+/* Keep all supporting project-page copy at one consistent size and weight. */
+.subpage-content .row-label,
+.subpage-content .about-text,
+.subpage-content .subpage-detail-value,
+.subpage-content .subpage-about-text,
+.subpage-content .subpage-about-text p,
+.subpage-content .subpage-nav-link,
+.subpage-content .credits-list,
+.subpage-content .software-list {
+  font-size: clamp(14px, 0.85rem + 0.15vw, 16px);
+  font-weight: 300;
+}
+
 .media-row-text-offset-grid .offset-text-col .about-text {
   max-width: 580px;
   line-height: 1.18;
@@ -1688,7 +1701,7 @@ button:focus-visible,
 
   /* Modular project pages keep their authored block order and full media sequence. */
   .modular-project .subpage-nav-bar {
-    order: 1 !important;
+    order: 4 !important;
   }
 
   .modular-project .subpage-media-container {
@@ -1708,7 +1721,7 @@ button:focus-visible,
   }
 
   .modular-project .subpage-footer {
-    order: 4 !important;
+    order: 5 !important;
   }
 
   .modular-project .media-row-text-offset-grid,
@@ -2006,6 +2019,55 @@ button:focus-visible,
 
   .footer-cohesive-group {
     display: contents !important;
+  }
+
+  /* Match media-section headings to their body copy on mobile. */
+  .subpage-media-container .row-label,
+  .subpage-media-container .about-text,
+  .subpage-media-container .about-text p {
+    font-size: 16px !important;
+    font-weight: 300 !important;
+  }
+
+  /* Keep one vertical rhythm across rows, nested media, and text sections. */
+  .modular-project {
+    --mobile-project-spacing: 40px;
+  }
+
+  .modular-project .subpage-media-container,
+  .modular-project .media-row-two-cols,
+  .modular-project:not(.project-perfect-hue) .media-row-three-cols,
+  .modular-project .media-row-text-offset,
+  .modular-project .media-row-text-offset .offset-media-col,
+  .modular-project .media-row-text-offset-grid,
+  .modular-project .media-row-text-offset-grid .offset-grid-col,
+  .modular-project .media-row-character-design,
+  .modular-project .media-row-four-grid,
+  .modular-project .media-row-four-cols {
+    gap: var(--mobile-project-spacing) !important;
+  }
+
+  /* Fade without shifting mobile rows, so unrevealed items keep their true spacing. */
+  .modular-project .reveal-on-scroll {
+    transform: none;
+    transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1) var(--reveal-delay, 0ms);
+  }
+
+  /* Extend the 16px project typography through the header, navigation and main footer. */
+  .subpage-info-grid .row-label,
+  .subpage-info-grid .subpage-detail-value,
+  .subpage-info-grid .subpage-about-text,
+  .subpage-info-grid .subpage-about-text p,
+  .subpage-nav-link,
+  .subpage-footer .footer-hdr,
+  .subpage-footer .footer-about-text,
+  .subpage-footer .footer-socials-list,
+  .subpage-footer .footer-socials-list li,
+  .subpage-footer .footer-socials-list a,
+  .subpage-footer .overlay-contact-studio,
+  .subpage-footer .footer-contact-link {
+    font-size: 16px !important;
+    font-weight: 300 !important;
   }
 }
 
