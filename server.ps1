@@ -1,10 +1,13 @@
-$port = 8080
+param(
+    [int]$Port = 8080
+)
+
 $listener = New-Object System.Net.HttpListener
-$listener.Prefixes.Add("http://127.0.0.1:$port/")
-$listener.Prefixes.Add("http://localhost:$port/")
+$listener.Prefixes.Add("http://127.0.0.1:$Port/")
+$listener.Prefixes.Add("http://localhost:$Port/")
 $listener.Start()
-Write-Host "Server started on port $port..."
-Write-Host "Access the site at: http://localhost:$port/"
+Write-Host "Server started on port $Port..."
+Write-Host "Access the site at: http://localhost:$Port/"
 
 try {
     while ($listener.IsListening) {
@@ -46,6 +49,7 @@ try {
                     ".svg" { "image/svg+xml" }
                     ".ico" { "image/x-icon" }
                     ".webp" { "image/webp" }
+                    ".webm" { "video/webm" }
                     ".mp4" { "video/mp4" }
                     default { "application/octet-stream" }
                 }

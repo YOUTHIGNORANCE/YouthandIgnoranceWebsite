@@ -15,7 +15,7 @@
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="assets/apple-icon.png">
 
-  <link rel="stylesheet" href="app.css?v=136">
+  <link rel="stylesheet" href="app.css?v=138">
 
   <script type="application/ld+json">
     {
@@ -83,7 +83,13 @@
 
   <!-- Keyvisual Background Container -->
   <div class="keyvisual-container" id="keyvisualContainer">
-    <iframe src="https://player.vimeo.com/video/1223770173?autoplay=1&amp;loop=1&amp;muted=1&amp;background=1&amp;autopause=0&amp;dnt=1" class="keyvisual-mask keyvisual-mask-video" id="keyvisualMask" title="Youth + Ignorance key visual" width="720" height="960" allow="autoplay; fullscreen; picture-in-picture" tabindex="-1" aria-hidden="true"></iframe>
+    <div class="keyvisual-mask keyvisual-mask-video" id="keyvisualMask" aria-hidden="true">
+      <img src="assets/Rotating_Mask_Frame_1.webp" alt="" class="keyvisual-poster" id="keyvisualPoster" width="1080" height="1440" decoding="async" fetchpriority="high">
+      <video class="keyvisual-video" id="keyvisualVideo" width="1080" height="1440" poster="assets/Rotating_Mask_Frame_1.webp" autoplay muted playsinline preload="auto" tabindex="-1">
+        <source src="assets/Rotating_Mask_YI.webm" type="video/webm">
+        <source src="assets/Rotating_Mask_YI.mp4" type="video/mp4">
+      </video>
+    </div>
   </div>
 
   <!-- Desktop Main Content Grid -->
@@ -146,8 +152,8 @@
 
             <div class="work-row" data-href="experiments.html">
               <span class="project-title">EXPERIMENTS</span>
-              <span class="project-category"></span>
-              <span class="project-year"></span>
+              <span class="project-category">EVERYTHING</span>
+              <span class="project-year">2026</span>
             </div>
             
           </div>
@@ -195,9 +201,9 @@
         </div>
 
         <div class="mobile-work-row" data-href="experiments.html">
-          <span class="mob-project-year"></span>
+          <span class="mob-project-year">2026</span>
           <span class="mob-project-title">EXPERIMENTS</span>
-          <span class="mob-project-category"></span>
+          <span class="mob-project-category">EVERYTHING</span>
         </div>
         
       </div>
@@ -289,6 +295,6 @@
     </footer>
   </div>
 
-  <script src="main.js?v=130"></script>
+  <script src="main.js?v=133"></script>
 </body>
 </html>

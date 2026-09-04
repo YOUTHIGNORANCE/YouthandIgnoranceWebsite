@@ -3,7 +3,30 @@ document.addEventListener('DOMContentLoaded', () => {
   const menuClose = document.getElementById('menuClose');
   const mobileMenu = document.getElementById('mobileMenu');
   const keyvisualMask = document.getElementById('keyvisualMask');
+  const keyvisualVideo = document.getElementById('keyvisualVideo');
+  const keyvisualPoster = document.getElementById('keyvisualPoster');
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (keyvisualVideo instanceof HTMLVideoElement) {
+    keyvisualVideo.addEventListener('playing', () => {
+      keyvisualPoster?.classList.add('hidden');
+    });
+
+    ['loadstart', 'waiting', 'stalled'].forEach(eventName => {
+      keyvisualVideo.addEventListener(eventName, () => {
+        keyvisualPoster?.classList.remove('hidden');
+      });
+    });
+
+    keyvisualVideo.addEventListener('error', () => {
+      keyvisualPoster?.classList.remove('hidden');
+    });
+
+    if (prefersReducedMotion) {
+      keyvisualVideo.autoplay = false;
+      keyvisualVideo.pause();
+    }
+  }
 
   if (menuTrigger) {
     menuTrigger.setAttribute('aria-expanded', 'false');
@@ -85,10 +108,6 @@ document.addEventListener('DOMContentLoaded', () => {
   // --- 3D KEYVISUAL PARALLAX TILT EFFECT (DISABLED) ---
   if (keyvisualMask) {
     keyvisualMask.style.transform = 'rotateY(0deg) rotateX(0deg) translate3d(0, 0, 0)';
-    if (prefersReducedMotion && keyvisualMask instanceof HTMLMediaElement) {
-      keyvisualMask.autoplay = false;
-      keyvisualMask.pause();
-    }
   }
 
   // --- BACKGROUND CROSSFADE TRANSITION ---
@@ -198,6 +217,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // --- MOBILE AUTO-CYCLING PREVIEW ---
   let mobileCycleTimeout = null;
+  let mobileKeyvisualEndedHandler = null;
+  let mobileCycleActive = false;
   let currentMobileIndex = -1; // -1 represents the initial keyvisual
   const mobileRows = document.querySelectorAll('.mobile-work-row');
 
@@ -207,21 +228,29 @@ document.addEventListener('DOMContentLoaded', () => {
       clearTimeout(mobileCycleTimeout);
       mobileCycleTimeout = null;
     }
+    if (mobileKeyvisualEndedHandler && keyvisualVideo instanceof HTMLVideoElement) {
+      keyvisualVideo.removeEventListener('ended', mobileKeyvisualEndedHandler);
+      mobileKeyvisualEndedHandler = null;
+    }
 
     // Wrap around to start if index overflows past the keyvisual slot
     if (currentMobileIndex > mobileRows.length) {
       currentMobileIndex = 0;
     }
 
-    if (currentMobileIndex === -1 || currentMobileIndex === mobileRows.length) {
+    const isKeyvisualSlide = currentMobileIndex === -1 || currentMobileIndex === mobileRows.length;
+
+    if (isKeyvisualSlide) {
       // Show the landing-page keyvisual
       mobileRows.forEach(r => r.classList.remove('active-highlight'));
       transitionToBackground('');
       if (keyvisualMask) {
         keyvisualMask.classList.remove('hidden');
-        if (keyvisualMask instanceof HTMLMediaElement) {
-          keyvisualMask.currentTime = 0;
-          keyvisualMask.play().catch(err => console.log("Video play interrupted or blocked:", err));
+        if (keyvisualVideo instanceof HTMLVideoElement) {
+          keyvisualPoster?.classList.remove('hidden');
+          keyvisualVideo.loop = false;
+          keyvisualVideo.currentTime = 0;
+          keyvisualVideo.play().catch(() => {});
         }
       }
       console.log("Mobile cycle: showing keyvisual");
@@ -245,37 +274,56 @@ document.addEventListener('DOMContentLoaded', () => {
       console.log(`Mobile cycle: showing project index ${currentMobileIndex}`);
     }
 
-    // Schedule the next slide after exactly 4000ms for every state.
-    mobileCycleTimeout = setTimeout(() => {
+    const advanceMobileSlide = () => {
       if (currentMobileIndex === -1) {
         currentMobileIndex = 0;
       } else {
         currentMobileIndex++;
       }
       showMobileSlide();
-    }, 4000);
+    };
+
+    if (isKeyvisualSlide && keyvisualVideo instanceof HTMLVideoElement) {
+      // Advance only when the actual video finishes, so loading and buffering never shorten it.
+      mobileKeyvisualEndedHandler = advanceMobileSlide;
+      keyvisualVideo.addEventListener('ended', mobileKeyvisualEndedHandler, { once: true });
+    } else {
+      mobileCycleTimeout = setTimeout(advanceMobileSlide, 4000);
+    }
   }
 
   function startMobileCycle() {
     if (mobileRows.length === 0) return;
     if (prefersReducedMotion) return;
+    if (mobileCycleActive) return;
+    mobileCycleActive = true;
     console.log("Starting mobile auto-cycling...");
     showMobileSlide();
   }
 
   function stopMobileCycle() {
+    mobileCycleActive = false;
     if (mobileCycleTimeout) {
       clearTimeout(mobileCycleTimeout);
       mobileCycleTimeout = null;
+    }
+    if (mobileKeyvisualEndedHandler && keyvisualVideo instanceof HTMLVideoElement) {
+      keyvisualVideo.removeEventListener('ended', mobileKeyvisualEndedHandler);
+      mobileKeyvisualEndedHandler = null;
     }
   }
 
   function checkViewportForCycle() {
     if (mobileRows.length === 0) return;
     if (window.innerWidth <= 768) {
+      if (keyvisualVideo instanceof HTMLVideoElement) keyvisualVideo.loop = false;
       startMobileCycle();
     } else {
       stopMobileCycle();
+      if (keyvisualVideo instanceof HTMLVideoElement && !prefersReducedMotion) {
+        keyvisualVideo.loop = true;
+        keyvisualVideo.play().catch(() => {});
+      }
     }
   }
 
