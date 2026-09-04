@@ -28,6 +28,50 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+  // Load and play experiment loops only while they are near the viewport.
+  const experimentVideos = Array.from(document.querySelectorAll('.experiment-video video'));
+  if (experimentVideos.length > 0 && !prefersReducedMotion) {
+    const loadExperimentVideo = video => {
+      if (video.dataset.loaded === 'true') return;
+      video.querySelectorAll('source[data-src]').forEach(source => {
+        source.src = source.dataset.src;
+        source.removeAttribute('data-src');
+      });
+      video.load();
+      video.dataset.loaded = 'true';
+    };
+
+    const updateExperimentVideo = (video, inView) => {
+      video.dataset.inView = inView ? 'true' : 'false';
+      if (inView && !document.hidden) {
+        loadExperimentVideo(video);
+        video.play().catch(() => {});
+      } else {
+        video.pause();
+      }
+    };
+
+    if ('IntersectionObserver' in window) {
+      const experimentVideoObserver = new IntersectionObserver(entries => {
+        entries.forEach(entry => updateExperimentVideo(entry.target, entry.isIntersecting));
+      }, { rootMargin: '200px 0px', threshold: 0.01 });
+      experimentVideos.forEach(video => experimentVideoObserver.observe(video));
+    } else {
+      experimentVideos.forEach(video => updateExperimentVideo(video, true));
+    }
+
+    document.addEventListener('visibilitychange', () => {
+      experimentVideos.forEach(video => {
+        if (document.hidden) {
+          video.pause();
+        } else if (video.dataset.inView === 'true') {
+          loadExperimentVideo(video);
+          video.play().catch(() => {});
+        }
+      });
+    });
+  }
+
   if (menuTrigger) {
     menuTrigger.setAttribute('aria-expanded', 'false');
     menuTrigger.setAttribute('aria-controls', 'mobileMenu');

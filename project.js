@@ -61,10 +61,10 @@ document.addEventListener('DOMContentLoaded', () => {
         {
           type: "4-grid",
           items: [
-            { type: "vimeo", vimeoId: "1215410702", alt: "Video 11 Motion" },
-            { type: "vimeo", vimeoId: "1215410700", alt: "Video 12 Motion" },
-            { type: "vimeo", vimeoId: "1215410704", alt: "Video 13 Motion" },
-            { type: "vimeo", vimeoId: "1215410701", alt: "Video 14 Motion" }
+            { type: "vimeo", vimeoId: "1215410702", alt: "Video 11 Motion", aspectRatio: "2048 / 858" },
+            { type: "vimeo", vimeoId: "1215410700", alt: "Video 12 Motion", aspectRatio: "2048 / 858" },
+            { type: "vimeo", vimeoId: "1215410704", alt: "Video 13 Motion", aspectRatio: "2048 / 858" },
+            { type: "vimeo", vimeoId: "1215410701", alt: "Video 14 Motion", aspectRatio: "2048 / 858" }
           ]
         },
         // Block 8: Full-Width Video 15 Container (Large container under 4 smaller videos)
@@ -339,6 +339,10 @@ document.addEventListener('DOMContentLoaded', () => {
     if (item.type === 'vimeo') {
       const container = document.createElement('div');
       container.className = 'vimeo-embed-container';
+      if (item.aspectRatio) {
+        container.classList.add('has-custom-ratio');
+        container.style.setProperty('--vimeo-aspect-ratio', item.aspectRatio);
+      }
       const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       const showControls = item.controls || reduceMotion;
       const iframe = document.createElement('iframe');
@@ -387,6 +391,11 @@ document.addEventListener('DOMContentLoaded', () => {
       const dimensions = getImageDimensions(item.src);
       if (dimensions) {
         [img.width, img.height] = dimensions;
+        if (dimensions[0] > 1200 && item.src.endsWith('.webp')) {
+          const mobileSrc = item.src.replace(/\.webp$/, '-720.webp');
+          img.srcset = `${mobileSrc} 720w, ${item.src} ${dimensions[0]}w`;
+          img.sizes = '(max-width: 768px) calc(100vw - 40px), 100vw';
+        }
       }
       return img;
     }

@@ -1904,7 +1904,7 @@ button:focus-visible,
 
   .subpage-footer-col.contact-col {
     order: 4 !important;
-    display: grid !important;
+    display: none !important;
     grid-template-columns: 80px 1fr !important;
     gap: 16px !important;
     margin-bottom: 0 !important;
@@ -2053,6 +2053,13 @@ button:focus-visible,
     transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1) var(--reveal-delay, 0ms);
   }
 
+  /* Match cinematic Vimeo wrappers to the picture itself instead of letterboxing them. */
+  .modular-project .vimeo-embed-container.has-custom-ratio {
+    height: auto;
+    padding-bottom: 0;
+    aspect-ratio: var(--vimeo-aspect-ratio);
+  }
+
   /* Extend the 16px project typography through the header, navigation and main footer. */
   .subpage-info-grid .row-label,
   .subpage-info-grid .subpage-detail-value,
@@ -2179,6 +2186,14 @@ button:focus-visible,
 
 .experiment-card .experiment-video iframe {
   height: 100%;
+}
+
+.experiment-card .experiment-video video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .experiments-page-content .subpage-footer {
