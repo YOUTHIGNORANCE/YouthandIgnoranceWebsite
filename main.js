@@ -1,4 +1,80 @@
+// One site-wide preference controls every Vimeo embed. No Vimeo request is made
+// before the visitor has actively allowed it.
+(() => {
+  const storageKey = 'yi-vimeo-consent';
+  let memoryValue = null;
+
+  const read = () => {
+    try {
+      return window.localStorage.getItem(storageKey);
+    } catch (_error) {
+      return memoryValue;
+    }
+  };
+
+  const write = value => {
+    memoryValue = value;
+    try {
+      if (value === null) window.localStorage.removeItem(storageKey);
+      else window.localStorage.setItem(storageKey, value);
+    } catch (_error) {
+      // The choice still works for this page when browser storage is unavailable.
+    }
+    window.dispatchEvent(new CustomEvent('yi:vimeo-consent-changed', { detail: { value } }));
+  };
+
+  window.YIPrivacy = {
+    getVimeoConsent: read,
+    hasVimeoConsent: () => read() === 'granted',
+    setVimeoConsent: granted => write(granted ? 'granted' : 'denied'),
+    openSettings: () => window.dispatchEvent(new CustomEvent('yi:open-privacy-settings'))
+  };
+})();
+
 document.addEventListener('DOMContentLoaded', () => {
+  const consentBanner = document.createElement('section');
+  consentBanner.className = 'privacy-consent-banner';
+  consentBanner.setAttribute('role', 'dialog');
+  consentBanner.setAttribute('aria-labelledby', 'privacyConsentTitle');
+  consentBanner.innerHTML = `
+    <div class="privacy-consent-copy">
+      <div class="privacy-consent-title" id="privacyConsentTitle">VIDEO PRIVACY</div>
+      <p>VIMEO VIDEOS CONNECT TO VIMEO AND MAY SET COOKIES. CHOOSE WHETHER TO ALLOW THEM. YOUR CHOICE IS SAVED IN THIS BROWSER. <a href="privacy-policy.html">PRIVACY POLICY</a></p>
+    </div>
+    <div class="privacy-consent-actions">
+      <button type="button" data-consent="denied">CONTINUE WITHOUT VIMEO</button>
+      <button type="button" data-consent="granted">ALLOW VIMEO VIDEOS</button>
+    </div>`;
+  document.body.appendChild(consentBanner);
+
+  const showConsentBanner = () => {
+    consentBanner.classList.add('is-visible');
+    consentBanner.removeAttribute('aria-hidden');
+  };
+  const hideConsentBanner = () => {
+    consentBanner.classList.remove('is-visible');
+    consentBanner.setAttribute('aria-hidden', 'true');
+  };
+
+  consentBanner.addEventListener('click', event => {
+    const choice = event.target.closest('[data-consent]')?.dataset.consent;
+    if (!choice) return;
+    window.YIPrivacy.setVimeoConsent(choice === 'granted');
+    hideConsentBanner();
+  });
+
+  document.addEventListener('click', event => {
+    if (!event.target.closest('[data-vimeo-consent-settings]')) return;
+    event.preventDefault();
+    showConsentBanner();
+    consentBanner.querySelector('button')?.focus();
+  });
+  window.addEventListener('yi:open-privacy-settings', showConsentBanner);
+  window.addEventListener('yi:vimeo-consent-changed', hideConsentBanner);
+
+  if (window.YIPrivacy.getVimeoConsent() === null) showConsentBanner();
+  else hideConsentBanner();
+
   const menuTrigger = document.getElementById('menuTrigger');
   const mobileMenu = document.getElementById('mobileMenu');
   if (mobileMenu) {

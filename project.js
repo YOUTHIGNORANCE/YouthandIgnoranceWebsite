@@ -121,7 +121,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Block 1: Full-Width Hero Film
         {
           type: "full-width",
-          item: { type: "vimeo", vimeoId: "1228775984", alt: "Sentient Shore hero film", eager: true, controls: true, aspectRatio: "4 / 3" }
+          item: { type: "vimeo", vimeoId: "1228775984", alt: "Sentient Shore hero film", eager: true, controls: true, aspectRatio: "4 / 3", poster: "assets/Projects/Covers/Sentient Shore Cover.webp" }
         },
         // Block 2: 2-Cols (Images 2 & 3: Figure on Shore & Profile Silhouette)
         {
@@ -209,7 +209,7 @@ document.addEventListener('DOMContentLoaded', () => {
       blocks: [
         {
           type: "full-width",
-          item: { type: "vimeo", vimeoId: "1219168675", alt: "Perfect Hue animated short film", eager: true, controls: true }
+          item: { type: "vimeo", vimeoId: "1219168675", alt: "Perfect Hue animated short film", eager: true, controls: true, poster: "assets/Projects/Covers/Perfect Hue Cover.webp" }
         },
         {
           type: "2-cols",
@@ -349,31 +349,58 @@ document.addEventListener('DOMContentLoaded', () => {
         container.classList.add('has-custom-ratio');
         container.style.setProperty('--vimeo-aspect-ratio', item.aspectRatio);
       }
-      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      const showControls = item.controls || reduceMotion;
-      const iframe = document.createElement('iframe');
-      const playerParams = new URLSearchParams({
-        autoplay: item.controls || reduceMotion ? '0' : '1',
-        loop: item.controls ? '0' : '1',
-        muted: item.controls ? '0' : '1',
-        background: showControls ? '0' : '1',
-        controls: showControls ? '1' : '0',
-        autopause: item.controls ? '1' : '0',
-        quality: '1080p',
-        dnt: '1'
+      const mountPlayer = () => {
+        if (container.querySelector('iframe')) return;
+        const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const showControls = item.controls || reduceMotion;
+        const iframe = document.createElement('iframe');
+        const playerParams = new URLSearchParams({
+          autoplay: item.controls || reduceMotion ? '0' : '1',
+          loop: item.controls ? '0' : '1',
+          muted: item.controls ? '0' : '1',
+          background: showControls ? '0' : '1',
+          controls: showControls ? '1' : '0',
+          autopause: item.controls ? '1' : '0',
+          quality: '1080p',
+          dnt: '1'
+        });
+        if (item.controls) {
+          playerParams.set('title', '0');
+          playerParams.set('byline', '0');
+          playerParams.set('portrait', '0');
+          playerParams.set('badge', '0');
+        }
+        iframe.src = `https://player.vimeo.com/video/${item.vimeoId}?${playerParams}`;
+        iframe.allow = 'autoplay; fullscreen; picture-in-picture';
+        iframe.allowFullscreen = true;
+        iframe.loading = item.eager ? 'eager' : 'lazy';
+        iframe.title = item.alt || 'Project video';
+        container.replaceChildren(iframe);
+        container.classList.remove('awaiting-vimeo-consent');
+      };
+
+      const showConsentPlaceholder = () => {
+        container.classList.add('awaiting-vimeo-consent');
+        const placeholder = document.createElement('div');
+        placeholder.className = 'vimeo-consent-placeholder';
+        if (item.poster) {
+          placeholder.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, .28), rgba(0, 0, 0, .28)), url('${item.poster}')`;
+        }
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.textContent = 'ALLOW VIMEO VIDEOS';
+        button.addEventListener('click', () => window.YIPrivacy?.setVimeoConsent(true));
+        placeholder.appendChild(button);
+        container.replaceChildren(placeholder);
+      };
+
+      if (window.YIPrivacy?.hasVimeoConsent()) mountPlayer();
+      else showConsentPlaceholder();
+
+      window.addEventListener('yi:vimeo-consent-changed', event => {
+        if (event.detail?.value === 'granted') mountPlayer();
+        else if (event.detail?.value === 'denied') showConsentPlaceholder();
       });
-      if (item.controls) {
-        playerParams.set('title', '0');
-        playerParams.set('byline', '0');
-        playerParams.set('portrait', '0');
-        playerParams.set('badge', '0');
-      }
-      iframe.src = `https://player.vimeo.com/video/${item.vimeoId}?${playerParams}`;
-      iframe.allow = 'autoplay; fullscreen; picture-in-picture';
-      iframe.allowFullscreen = true;
-      iframe.loading = item.eager ? 'eager' : 'lazy';
-      iframe.title = item.alt || 'Project video';
-      container.appendChild(iframe);
       return container;
     } else if (item.type === 'video') {
       const video = document.createElement('video');

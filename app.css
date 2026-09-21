@@ -1131,6 +1131,123 @@ body.menu-open {
   aspect-ratio: var(--vimeo-aspect-ratio);
 }
 
+.vimeo-consent-placeholder {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #111111;
+  background-position: center;
+  background-size: cover;
+}
+
+.vimeo-consent-placeholder button,
+.privacy-consent-actions button,
+.legal-privacy-settings {
+  appearance: none;
+  border: 1px solid rgba(211, 215, 218, 0.55);
+  border-radius: 0;
+  background: rgba(0, 0, 0, 0.72);
+  color: var(--text-color);
+  font: inherit;
+  font-size: 12px;
+  font-weight: 300;
+  line-height: 1;
+  letter-spacing: 0;
+  padding: 13px 16px;
+  cursor: pointer;
+}
+
+.vimeo-consent-placeholder button:hover,
+.privacy-consent-actions button:hover,
+.legal-privacy-settings:hover {
+  border-color: var(--hover-green);
+  color: var(--hover-green);
+}
+
+.privacy-consent-banner {
+  position: fixed;
+  right: 24px;
+  bottom: max(24px, env(safe-area-inset-bottom));
+  left: 24px;
+  z-index: 2000;
+  display: none;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 32px;
+  align-items: end;
+  padding: 20px;
+  border: 1px solid rgba(211, 215, 218, 0.3);
+  background: rgba(10, 10, 10, 0.96);
+  color: var(--text-color);
+  box-shadow: 0 16px 50px rgba(0, 0, 0, 0.35);
+}
+
+.privacy-consent-banner.is-visible {
+  display: grid;
+}
+
+.privacy-consent-copy {
+  max-width: 720px;
+}
+
+.privacy-consent-title {
+  margin-bottom: 10px;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 300;
+}
+
+.privacy-consent-copy p {
+  margin: 0;
+  color: var(--text-color);
+  font-size: 12px;
+  font-weight: 300;
+  line-height: 1.35;
+}
+
+.privacy-consent-copy a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.privacy-consent-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: flex-end;
+}
+
+.privacy-consent-actions button {
+  min-height: 42px;
+  background: transparent;
+}
+
+@media (max-width: 768px) {
+  .privacy-consent-banner,
+  .privacy-consent-banner.is-visible {
+    right: 12px;
+    bottom: max(12px, env(safe-area-inset-bottom));
+    left: 12px;
+    grid-template-columns: 1fr;
+    gap: 18px;
+    padding: 18px;
+  }
+
+  .privacy-consent-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-content: stretch;
+  }
+
+  .privacy-consent-actions button {
+    min-height: 52px;
+    padding: 10px 12px;
+    line-height: 1.15;
+  }
+}
+
 /* Offset Text & Stacked Media Layout Block */
 .media-row-text-offset {
   display: grid;
@@ -2344,6 +2461,11 @@ body.legal-doc {
 .legal-wrapper a:hover {
   color: #ffffff !important;
   border-bottom-color: #ffffff !important;
+}
+
+.legal-wrapper .legal-privacy-settings {
+  color: var(--text-color);
+  margin-top: 2px;
 }
 
 @media (max-width: 768px) {
