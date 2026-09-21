@@ -701,14 +701,18 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // --- NAVIGATION LINKS SETUP ---
-  const prevIndex = (projectIndex - 1 + projects.length) % projects.length;
-  const nextIndex = (projectIndex + 1) % projects.length;
+  const navigationItems = [
+    ...projects.map(item => `project.html?id=${item.id}`),
+    'experiments.html'
+  ];
+  const prevIndex = (projectIndex - 1 + navigationItems.length) % navigationItems.length;
+  const nextIndex = (projectIndex + 1) % navigationItems.length;
 
   const prevBtn = document.getElementById('prevProjectBtn');
   const nextBtn = document.getElementById('nextProjectBtn');
 
-  prevBtn.href = `project.html?id=${projects[prevIndex].id}`;
-  nextBtn.href = `project.html?id=${projects[nextIndex].id}`;
+  prevBtn.href = navigationItems[prevIndex];
+  nextBtn.href = navigationItems[nextIndex];
 
   // --- STICKY HEADER SCROLL LOGIC ---
   window.addEventListener('scroll', () => {
