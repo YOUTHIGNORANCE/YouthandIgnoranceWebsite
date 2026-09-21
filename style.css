@@ -674,6 +674,7 @@ body.menu-open,
 html.menu-open {
   overflow: hidden !important;
   height: 100vh !important;
+  height: 100dvh !important;
   position: fixed !important;
   width: 100% !important;
 }
@@ -685,6 +686,7 @@ html.menu-open {
   left: 0;
   width: 100vw;
   height: 100vh;
+  height: 100dvh;
   background-color: rgba(10, 10, 10, 0.65) !important; /* transparent dark overlay */
   backdrop-filter: blur(25px) !important; /* frosted glass blur */
   -webkit-backdrop-filter: blur(25px) !important;
@@ -692,7 +694,7 @@ html.menu-open {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 80px 6% 40px 6%;
+  padding: max(80px, calc(env(safe-area-inset-top) + 56px)) 6% max(48px, calc(env(safe-area-inset-bottom) + 36px)) 6%;
   opacity: 0;
   visibility: hidden;
   transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.5s cubic-bezier(0.16, 1, 0.3, 1);
@@ -985,6 +987,7 @@ html.menu-open {
   font-size: clamp(14px, 0.85rem + 0.15vw, 16px);
   font-weight: 300;
   color: var(--text-color);
+  flex-shrink: 0;
   line-height: 1.5;
 }
 
@@ -1813,7 +1816,7 @@ button:focus-visible,
     flex-direction: column !important;
     gap: 0 !important;
     margin: 32px 0 0 0 !important; /* exactly 32px gap below separating line */
-    padding: 0 0 24px 0 !important; /* 24px padding at the bottom of the screen */
+    padding: 0 0 max(48px, calc(env(safe-area-inset-bottom) + 36px)) 0 !important;
     border-top: none !important;
   }
 
@@ -2087,7 +2090,7 @@ button:focus-visible,
   .mobile-homepage-footer {
     display: flex;
     position: fixed;
-    bottom: 24px;
+    bottom: max(48px, calc(env(safe-area-inset-bottom) + 36px));
     right: 6%;
     flex-direction: column;
     align-items: flex-end;

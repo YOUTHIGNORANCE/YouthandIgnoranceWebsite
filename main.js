@@ -8,19 +8,39 @@ document.addEventListener('DOMContentLoaded', () => {
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   if (keyvisualVideo instanceof HTMLVideoElement) {
+    let keyvisualRecoveryAttempts = 0;
+
+    const resumeKeyvisual = () => {
+      if (prefersReducedMotion || document.hidden) return;
+      keyvisualVideo.muted = true;
+      keyvisualVideo.defaultMuted = true;
+      keyvisualVideo.play().catch(() => {
+        keyvisualPoster?.classList.remove('hidden');
+      });
+    };
+
     keyvisualVideo.addEventListener('playing', () => {
       keyvisualPoster?.classList.add('hidden');
+      keyvisualRecoveryAttempts = 0;
     });
 
-    ['loadstart', 'waiting', 'stalled'].forEach(eventName => {
+    ['loadstart', 'waiting'].forEach(eventName => {
       keyvisualVideo.addEventListener(eventName, () => {
         keyvisualPoster?.classList.remove('hidden');
       });
     });
 
-    keyvisualVideo.addEventListener('error', () => {
+    ['stalled', 'error'].forEach(eventName => keyvisualVideo.addEventListener(eventName, () => {
       keyvisualPoster?.classList.remove('hidden');
-    });
+      if (keyvisualRecoveryAttempts < 1) {
+        keyvisualRecoveryAttempts += 1;
+        keyvisualVideo.load();
+        resumeKeyvisual();
+      }
+    }));
+
+    keyvisualVideo.addEventListener('canplay', resumeKeyvisual);
+    window.addEventListener('pageshow', resumeKeyvisual);
 
     if (prefersReducedMotion) {
       keyvisualVideo.autoplay = false;
@@ -33,6 +53,8 @@ document.addEventListener('DOMContentLoaded', () => {
   if (experimentVideos.length > 0 && !prefersReducedMotion) {
     const loadExperimentVideo = video => {
       if (video.dataset.loaded === 'true') return;
+      video.muted = true;
+      video.defaultMuted = true;
       video.querySelectorAll('source[data-src]').forEach(source => {
         source.src = source.dataset.src;
         source.removeAttribute('data-src');
@@ -54,7 +76,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if ('IntersectionObserver' in window) {
       const experimentVideoObserver = new IntersectionObserver(entries => {
         entries.forEach(entry => updateExperimentVideo(entry.target, entry.isIntersecting));
-      }, { rootMargin: '200px 0px', threshold: 0.01 });
+      }, { rootMargin: '60px 0px', threshold: 0.05 });
       experimentVideos.forEach(video => experimentVideoObserver.observe(video));
     } else {
       experimentVideos.forEach(video => updateExperimentVideo(video, true));
