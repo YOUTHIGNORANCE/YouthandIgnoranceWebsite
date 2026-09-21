@@ -79,7 +79,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       ],
       credits: [
-        { label: "DIRECTION, DESIGN, ANIMATION + SOUND", value: "YOUTH + IGNORANCE" }
+        { label: "DIRECTION,\nART DIRECTION\n+ DESIGN", value: ["LUKAS BÖTTNER", "MARC EISLER", "MARIA SEEMANN", "JAKOB WAGNER"] },
+        { label: "ANIMATION", value: ["MARC EISLER", "MARIA SEEMANN"] },
+        { label: "CFX + VFX", value: ["LUKAS BÖTTNER", "JAKOB WAGNER"] },
+        { label: "SOUND\n+ PICTURE POST", value: ["MARC EISLER"] }
       ],
       software: [
         "UNREAL ENGINE 5",
@@ -101,7 +104,10 @@ document.addEventListener('DOMContentLoaded', () => {
         "SENTIENT SHORE IS AN EXPERIMENTAL ANIMATED SHORT FILM THAT EXPLORES ALIENATION AND DECAY"
       ],
       credits: [
-        { label: "DIRECTION, DESIGN, ANIMATION + SOUND", value: "YOUTH + IGNORANCE" }
+        { label: "DIRECTION,\nART DIRECTION\n+ DESIGN", value: ["MARC EISLER"] },
+        { label: "ANIMATION", value: ["MARC EISLER"] },
+        { label: "CHARACTER FX", value: ["LUKAS BÖTTNER"] },
+        { label: "SOUND\n+ PICTURE POST", value: ["MARC EISLER"] }
       ],
       software: [
         "UNREAL ENGINE 5",
