@@ -1604,6 +1604,16 @@ button:focus-visible,
     gap: 0 !important;
   }
 
+  /* Align mobile copy with the 32px header/logo inset while media stays full-width. */
+  .subpage-info-grid,
+  .subpage-media-container .offset-text-col,
+  .subpage-media-container .character-design-text,
+  .subpage-media-container .subpage-desc-row,
+  #subpageCreditsContainer {
+    margin-left: 20px !important;
+    width: calc(100% - 20px) !important;
+  }
+
   .subpage-info-grid {
     display: flex !important;
     flex-direction: column !important;
@@ -1802,7 +1812,7 @@ button:focus-visible,
     border-bottom: 1px solid var(--text-color) !important;
     margin-left: -12px !important; /* 12px negative margins for full width border line */
     margin-right: -12px !important;
-    padding: 40px 12px !important; /* exactly 40px vertical padding, 12px horizontal padding */
+    padding: 40px 32px !important;
     width: calc(100% + 24px) !important; /* stretch full width */
   }
 
@@ -1822,7 +1832,7 @@ button:focus-visible,
     flex-direction: column !important;
     gap: 0 !important;
     margin: 32px 0 0 0 !important; /* exactly 32px gap below separating line */
-    padding: 0 0 max(48px, calc(env(safe-area-inset-bottom) + 36px)) 0 !important;
+    padding: 0 20px max(48px, calc(env(safe-area-inset-bottom) + 36px)) 20px !important;
     border-top: none !important;
   }
 
@@ -2243,6 +2253,7 @@ button:focus-visible,
 
   .experiment-index {
     margin-bottom: 10px;
+    margin-left: 20px;
     font-size: 10px;
   }
 
@@ -2336,7 +2347,7 @@ body.legal-doc {
 
 @media (max-width: 768px) {
   body.legal-doc { 
-    padding: 110px 20px 80px 20px !important; /* Clears mobile header */
+    padding: 110px 32px 80px 32px !important; /* Align legal copy with the mobile logo */
   }
   .legal-wrapper { 
     margin-top: 0 !important; 
