@@ -565,6 +565,13 @@ a {
     overflow: hidden; /* Prevent scrolling on mobile, lock to 100vh viewport */
   }
 
+  body:not(.subpage-body):not(.legal-doc) {
+    position: relative;
+    height: 100vh;
+    height: 100svh;
+    min-height: 100svh;
+  }
+
   .desktop-content {
     display: none;
   }
@@ -589,8 +596,8 @@ a {
 
   .mobile-content {
     display: block;
-    position: fixed;
-    bottom: 88px; /* Move text up so there is exactly 88px gap to the bottom edge */
+    position: absolute;
+    bottom: max(124px, calc(env(safe-area-inset-bottom) + 112px));
     left: 0;
     z-index: 2;
     padding: 0 6%;
@@ -1392,17 +1399,6 @@ body.menu-open {
   line-height: 1.15;
 }
 
-.project-perfect-hue .subpage-credits-row {
-  grid-template-columns: 420px max-content;
-  gap: 64px;
-  margin-bottom: 14vh;
-}
-
-.project-perfect-hue .credits-col,
-.project-perfect-hue .software-col {
-  gap: 64px;
-}
-
 a:focus-visible,
 button:focus-visible,
 [role="link"]:focus-visible {
@@ -1438,14 +1434,16 @@ button:focus-visible,
     grid-template-columns: 1fr;
     gap: 8px;
   }
-  .project-perfect-hue .subpage-credits-row {
-    grid-template-columns: 1fr;
-    gap: 32px;
-    margin-bottom: 96px;
-  }
   .subpage-credits-row {
-    grid-template-columns: 1fr;
-    gap: 32px;
+    grid-template-columns: minmax(0, 150px) max-content;
+    gap: 16px;
+    align-items: start;
+    justify-content: start;
+  }
+  .subpage-credits-row .software-col {
+    justify-self: start;
+    align-items: flex-start;
+    text-align: left;
   }
 }
 
@@ -2122,7 +2120,7 @@ button:focus-visible,
 @media (max-width: 768px) {
   .mobile-homepage-footer {
     display: flex;
-    position: fixed;
+    position: absolute;
     bottom: max(48px, calc(env(safe-area-inset-bottom) + 36px));
     right: 6%;
     flex-direction: column;
