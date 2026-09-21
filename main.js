@@ -1,7 +1,59 @@
 document.addEventListener('DOMContentLoaded', () => {
   const menuTrigger = document.getElementById('menuTrigger');
-  const menuClose = document.getElementById('menuClose');
   const mobileMenu = document.getElementById('mobileMenu');
+  if (mobileMenu) {
+    mobileMenu.innerHTML = `
+      <button class="mobile-menu-close" id="menuClose" aria-label="Close menu">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+      <div class="menu-overlay-grid">
+        <div class="menu-overlay-row overlay-about-row">
+          <div class="overlay-label">ABOUT</div>
+          <div class="overlay-value">
+            <p class="overlay-paragraph highlight-text">YOUTH + IGNORANCE IS A<br>CREATIVE STUDIO FOCUSED<br>ON DIRECTION, CGI + MOTION.</p>
+            <p class="overlay-paragraph subtitle-text">BASED IN STUTTGART, GERMANY.</p>
+          </div>
+        </div>
+        <div class="menu-overlay-row overlay-services-row">
+          <div class="overlay-label">SERVICES</div>
+          <div class="overlay-value">
+            <ul class="overlay-list">
+              <li>CGI</li>
+              <li>MOTION DESIGN</li>
+              <li>AI IMAGE + VIDEO</li>
+              <li>CREATIVE DIRECTION</li>
+            </ul>
+          </div>
+        </div>
+        <div class="menu-overlay-row overlay-socials-row">
+          <div class="overlay-label">SOCIALS</div>
+          <div class="overlay-value">
+            <ul class="overlay-list links-list">
+              <li><a href="https://www.instagram.com/youthandignorance/" target="_blank" rel="noopener">INSTAGRAM<img src="assets/Arrow.png" alt="" class="arrow-icon"></a></li>
+              <li><a href="https://www.linkedin.com/company/youthandignorance/" target="_blank" rel="noopener">LINKEDIN<img src="assets/Arrow.png" alt="" class="arrow-icon"></a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="menu-overlay-row overlay-contact-row">
+          <div class="overlay-label">CONTACT</div>
+          <div class="overlay-value">
+            <p class="overlay-contact-studio">STUDIO</p>
+            <p><a href="mailto:studio@youthandignorance.com" class="overlay-email">@YOUTHANDIGNORANCE.COM<img src="assets/Arrow.png" alt="" class="arrow-icon"></a></p>
+          </div>
+        </div>
+      </div>
+      <footer class="menu-overlay-footer">
+        <div class="menu-footer-left"><span class="copyright-sign">&copy;</span> YOUTH + IGNORANCE, 2026</div>
+        <div class="menu-footer-right">
+          <a href="imprint.html" class="overlay-footer-link">IMPRINT</a>
+          <a href="privacy-policy.html" class="overlay-footer-link">PRIVACY POLICY</a>
+        </div>
+      </footer>`;
+  }
+  const menuClose = document.getElementById('menuClose');
   const keyvisualMask = document.getElementById('keyvisualMask');
   const keyvisualVideo = document.getElementById('keyvisualVideo');
   const keyvisualPoster = document.getElementById('keyvisualPoster');
@@ -100,22 +152,28 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   if (mobileMenu) mobileMenu.setAttribute('aria-hidden', 'true');
 
+  let menuScrollPosition = 0;
+
   function closeMobileMenu({ restoreFocus = true } = {}) {
     if (!mobileMenu) return;
     mobileMenu.classList.remove('active');
     mobileMenu.setAttribute('aria-hidden', 'true');
     document.body.classList.remove('menu-open');
     document.documentElement.classList.remove('menu-open');
+    document.body.style.top = '';
     if (menuTrigger) menuTrigger.setAttribute('aria-expanded', 'false');
     if (window.innerWidth <= 768 && typeof startMobileCycle === 'function') {
       startMobileCycle();
     }
-    if (restoreFocus && menuTrigger) menuTrigger.focus();
+    window.scrollTo(0, menuScrollPosition);
+    if (restoreFocus && menuTrigger) menuTrigger.focus({ preventScroll: true });
   }
 
   // --- MOBILE BURGER MENU OVERLAY ---
   if (menuTrigger && mobileMenu) {
     menuTrigger.addEventListener('click', () => {
+      menuScrollPosition = window.scrollY;
+      document.body.style.top = `-${menuScrollPosition}px`;
       mobileMenu.classList.add('active');
       mobileMenu.setAttribute('aria-hidden', 'false');
       menuTrigger.setAttribute('aria-expanded', 'true');

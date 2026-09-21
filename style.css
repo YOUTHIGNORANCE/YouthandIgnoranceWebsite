@@ -237,17 +237,20 @@ a {
   background: none;
   border: none;
   cursor: pointer;
-  width: 32px;
-  height: 20px;
+  width: 44px;
+  height: 44px;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 6px;
   padding: 0;
+  margin-right: -6px;
   z-index: 101;
 }
 
 .mobile-menu-trigger .bar {
   display: block;
-  width: 100%;
+  width: 32px;
   height: 2px;
   background-color: var(--text-color);
   transition: transform 0.3s ease, opacity 0.3s ease;
@@ -670,8 +673,11 @@ a {
 }
 
 /* Scroll lock when mobile menu is active */
-body.menu-open,
 html.menu-open {
+  overflow: hidden !important;
+}
+
+body.menu-open {
   overflow: hidden !important;
   height: 100vh !important;
   height: 100dvh !important;
@@ -1793,7 +1799,7 @@ button:focus-visible,
     margin-top: 40px !important; /* exactly 40px spacing above nav */
     margin-bottom: 0 !important;
     border-top: none !important; /* Remove line above buttons */
-    border-bottom: 2px solid var(--text-color) !important; /* Thicker full-width line below buttons matching text color */
+    border-bottom: 1px solid var(--text-color) !important;
     margin-left: -12px !important; /* 12px negative margins for full width border line */
     margin-right: -12px !important;
     padding: 40px 12px !important; /* exactly 40px vertical padding, 12px horizontal padding */
@@ -2079,6 +2085,19 @@ button:focus-visible,
     font-size: 16px !important;
     font-weight: 300 !important;
   }
+
+  /* Increase the legal-link tap targets without making the small text look larger. */
+  .overlay-footer-link,
+  .footer-imprint-list .imprint-link {
+    position: relative;
+  }
+
+  .overlay-footer-link::before,
+  .footer-imprint-list .imprint-link::before {
+    content: '';
+    position: absolute;
+    inset: -7px -10px;
+  }
 }
 
 /* --- MOBILE HOMEPAGE FOOTER (IMPRINT / PRIVACY) --- */
@@ -2199,7 +2218,7 @@ button:focus-visible,
   object-fit: cover;
 }
 
-.experiments-page-content .subpage-footer {
+.experiments-page-content .subpage-nav-bar {
   margin-top: 96px;
 }
 
@@ -2227,7 +2246,7 @@ button:focus-visible,
     font-size: 10px;
   }
 
-  .experiments-page-content .subpage-footer {
+  .experiments-page-content .subpage-nav-bar {
     margin-top: 72px !important;
   }
 }
