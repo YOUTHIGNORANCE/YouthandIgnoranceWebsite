@@ -118,10 +118,10 @@ document.addEventListener('DOMContentLoaded', () => {
         "DAVINCI RESOLVE"
       ],
       blocks: [
-        // Block 1: Full-Width Hero Title Visual (Image 1)
+        // Block 1: Full-Width Hero Film
         {
           type: "full-width",
-          item: { type: "image", src: "assets/Projects/25 Sentient Shore/1.webp", alt: "Sentient Shore hero visual", eager: true }
+          item: { type: "vimeo", vimeoId: "1228775984", alt: "Sentient Shore hero film", eager: true, controls: true, aspectRatio: "4 / 3" }
         },
         // Block 2: 2-Cols (Images 2 & 3: Figure on Shore & Profile Silhouette)
         {

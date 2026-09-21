@@ -1118,6 +1118,12 @@ body.menu-open {
   pointer-events: auto;
 }
 
+.vimeo-embed-container.has-custom-ratio {
+  height: auto;
+  padding-bottom: 0;
+  aspect-ratio: var(--vimeo-aspect-ratio);
+}
+
 /* Offset Text & Stacked Media Layout Block */
 .media-row-text-offset {
   display: grid;
@@ -2075,13 +2081,6 @@ button:focus-visible,
   .modular-project .reveal-on-scroll {
     transform: none;
     transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1) var(--reveal-delay, 0ms);
-  }
-
-  /* Match cinematic Vimeo wrappers to the picture itself instead of letterboxing them. */
-  .modular-project .vimeo-embed-container.has-custom-ratio {
-    height: auto;
-    padding-bottom: 0;
-    aspect-ratio: var(--vimeo-aspect-ratio);
   }
 
   /* Use the same 12px scale as the burger menu across mobile subpage UI. */
