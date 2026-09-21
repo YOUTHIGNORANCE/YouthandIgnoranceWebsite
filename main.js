@@ -32,6 +32,17 @@
 })();
 
 document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('[data-shared-subpage-footer]').forEach(footer => {
+    footer.innerHTML = `
+      <div class="footer-cohesive-group">
+        <div class="subpage-footer-col about-col"><div class="footer-hdr">ABOUT</div><p class="footer-about-text">CREATIVE STUDIO FOCUSED<br>ON DIRECTION, CGI + MOTION.<br>BASED IN STUTTGART.</p></div>
+        <div class="subpage-footer-col services-col"><div class="footer-hdr">SERVICES</div><ul class="footer-socials-list"><li>CGI</li><li>MOTION DESIGN</li><li>AI IMAGE + VIDEO</li><li>CREATIVE DIRECTION</li></ul></div>
+        <div class="subpage-footer-col socials-col"><div class="footer-hdr">SOCIALS</div><ul class="footer-socials-list"><li><a href="https://www.instagram.com/youthandignorance/" target="_blank" rel="noopener">INSTAGRAM<img src="assets/Arrow.png" alt="" class="arrow-icon"></a></li><li><a href="https://www.linkedin.com/company/youthandignorance/" target="_blank" rel="noopener">LINKEDIN<img src="assets/Arrow.png" alt="" class="arrow-icon"></a></li></ul></div>
+      </div>
+      <div class="subpage-footer-col contact-col"><div class="footer-hdr">CONTACT</div><div class="footer-contact-value"><p class="overlay-contact-studio">STUDIO</p><p><a href="mailto:studio@youthandignorance.com" class="footer-contact-link">@YOUTHANDIGNORANCE.COM<img src="assets/Arrow.png" alt="" class="arrow-icon"></a></p></div></div>
+      <div class="subpage-footer-bottom"><div class="subpage-footer-col copyright-col"><span class="copyright-sign">&copy;</span> YOUTH + IGNORANCE, 2026</div><div class="subpage-footer-col imprint-col"><ul class="footer-imprint-list"><li><a href="imprint.html" class="imprint-link">IMPRINT</a></li><li><a href="privacy-policy.html" class="imprint-link">PRIVACY POLICY</a></li></ul></div></div>`;
+  });
+
   const consentBanner = document.createElement('section');
   consentBanner.className = 'privacy-consent-banner';
   consentBanner.setAttribute('role', 'dialog');

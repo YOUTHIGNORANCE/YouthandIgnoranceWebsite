@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
       title: "BIRDSHOT",
       category: ["ANIMATION", "SHORT FILM", "CGI", "AI"],
       year: "2026",
+      shareImage: "assets/Projects/Covers/Birdshot Cover.webp",
       about: [
         "WHEN WE ARE CONSTANTLY EXPOSED TO NEWS OF CRISES AND VIOLENCE, WE BEGIN TO LOSE OUR ABILITY TO CARE.",
         "BIRDSHOT IS AN ANIMATED SHORT FILM THAT EXPLORES THIS GROWING NUMBNESS, SHOWN THROUGH THE TRAGIC AND MYSTERIOUS DEATH OF A FASHION MODEL RIGHT ON THE RUNWAY.",
@@ -100,6 +101,7 @@ document.addEventListener('DOMContentLoaded', () => {
       title: "SENTIENT SHORE",
       category: ["ANIMATION", "SHORT FILM", "CGI", "AI"],
       year: "2026",
+      shareImage: "assets/Projects/Covers/Sentient Shore Cover.webp",
       about: [
         "SENTIENT SHORE IS AN EXPERIMENTAL ANIMATED SHORT FILM THAT EXPLORES ALIENATION AND DECAY"
       ],
@@ -203,6 +205,7 @@ document.addEventListener('DOMContentLoaded', () => {
       title: "PERFECT HUE",
       category: ["ANIMATION", "SHORT FILM", "CGI", "HAND DRAWN"],
       year: "2024",
+      shareImage: "assets/Projects/Covers/Perfect Hue Cover.webp",
       about: [
         "PERFECT HUE IS AN ANIMATED SHORT FILM THAT DEALS WITH ATTENTION AND THE WARPING OF SENSE AND REALITY."
       ],
@@ -247,7 +250,7 @@ document.addEventListener('DOMContentLoaded', () => {
           items: [
             { type: "image", src: "assets/Projects/24 Perfect Hue/11.webp", alt: "Blindfolded character kneeling beneath red lights" },
             { type: "image", src: "assets/Projects/24 Perfect Hue/12.webp", alt: "Blindfolded character turning on a glowing platform" },
-            { type: "image", src: "assets/Projects/24 Perfect Hue/13.webp", alt: "Dancing character traced with vivid hand-drawn accents" }
+            { type: "image", src: "assets/Projects/24 Perfect Hue/6.webp", alt: "Dancing character traced with vivid hand-drawn accents" }
           ]
         },
         {
@@ -281,7 +284,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // --- PARSE URL SEARCH PARAMS ---
   const urlParams = new URLSearchParams(window.location.search);
-  const projectId = urlParams.get('id') || 'birdshot';
+  const projectId = document.body.dataset.projectId || urlParams.get('id') || 'birdshot';
 
   // Find Project Index
   let projectIndex = projects.findIndex(p => p.id === projectId);
@@ -300,6 +303,26 @@ document.addEventListener('DOMContentLoaded', () => {
   // Set Title
   document.getElementById('projTitle').textContent = project.title;
   document.title = `Y+I | ${project.title}`;
+
+  const publicUrl = `https://www.youthandignorance.com/projects/${encodeURIComponent(project.id)}.html`;
+  const description = project.about?.[0] || `${project.title} by Youth + Ignorance.`;
+  const shareImage = new URL(project.shareImage, 'https://www.youthandignorance.com/').href;
+  const setMeta = (selector, value) => {
+    const element = document.querySelector(selector);
+    if (element) element.setAttribute('content', value);
+  };
+  setMeta('meta[name="description"]', description);
+  setMeta('meta[property="og:title"]', `YOUTH + IGNORANCE | ${project.title}`);
+  setMeta('meta[property="og:description"]', description);
+  setMeta('meta[property="og:image"]', shareImage);
+  setMeta('meta[property="og:url"]', publicUrl);
+  setMeta('meta[name="twitter:title"]', `YOUTH + IGNORANCE | ${project.title}`);
+  setMeta('meta[name="twitter:description"]', description);
+  setMeta('meta[name="twitter:image"]', shareImage);
+  const canonical = document.querySelector('link[rel="canonical"]') || document.createElement('link');
+  canonical.rel = 'canonical';
+  canonical.href = publicUrl;
+  if (!canonical.parentNode) document.head.appendChild(canonical);
 
   // Set Category Stack
   const categoryContainer = document.getElementById('projCategory');
@@ -729,7 +752,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // --- NAVIGATION LINKS SETUP ---
   const navigationItems = [
-    ...projects.map(item => `project.html?id=${item.id}`),
+    ...projects.map(item => `projects/${item.id}.html`),
     'experiments.html'
   ];
   const prevIndex = (projectIndex - 1 + navigationItems.length) % navigationItems.length;
