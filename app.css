@@ -2040,11 +2040,16 @@ button:focus-visible,
     display: contents !important;
   }
 
-  /* Match media-section headings to their body copy on mobile. */
+  /* Match project supporting copy to the 12px mobile-menu typography. */
   .subpage-media-container .row-label,
   .subpage-media-container .about-text,
-  .subpage-media-container .about-text p {
-    font-size: 16px !important;
+  .subpage-media-container .about-text p,
+  #subpageCreditsContainer .row-label,
+  #subpageCreditsContainer .credits-list,
+  #subpageCreditsContainer .software-list,
+  #subpageCreditsContainer .credits-item-label,
+  #subpageCreditsContainer .credits-item-value {
+    font-size: 12px !important;
     font-weight: 300 !important;
   }
 
@@ -2079,7 +2084,7 @@ button:focus-visible,
     aspect-ratio: var(--vimeo-aspect-ratio);
   }
 
-  /* Extend the 16px project typography through the header, navigation and main footer. */
+  /* Use the same 12px scale as the burger menu across mobile subpage UI. */
   .subpage-info-grid .row-label,
   .subpage-info-grid .subpage-detail-value,
   .subpage-info-grid .subpage-about-text,
@@ -2092,7 +2097,7 @@ button:focus-visible,
   .subpage-footer .footer-socials-list a,
   .subpage-footer .overlay-contact-studio,
   .subpage-footer .footer-contact-link {
-    font-size: 16px !important;
+    font-size: 12px !important;
     font-weight: 300 !important;
   }
 
@@ -2254,7 +2259,7 @@ button:focus-visible,
   .experiment-index {
     margin-bottom: 10px;
     margin-left: 20px;
-    font-size: 10px;
+    font-size: 12px;
   }
 
   .experiments-page-content .subpage-nav-bar {
