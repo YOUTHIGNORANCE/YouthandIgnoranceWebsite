@@ -1460,8 +1460,9 @@ body.menu-open {
 .subpage-credits-row {
   width: 100%;
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 64px;
+  grid-template-columns: max-content max-content;
+  gap: 40px;
+  justify-content: start;
   margin-top: 6vh;
   margin-bottom: 6vh;
   padding-top: 0;

@@ -133,11 +133,14 @@ document.addEventListener('DOMContentLoaded', () => {
             { type: "image", src: "assets/Projects/25 Sentient Shore/3.webp", alt: "Profile Silhouette" }
           ]
         },
-        // Block 3: Text + 2x2 Grid Offset (Images 4, 5, 6, 7: Abstract B-Roll)
+        // Block 3: Process copy + 2x2 Grid Offset (Images 4, 5, 6, 7)
         {
           type: "text-media-offset-grid",
-          heading: "ABSTRACT B-ROLL",
-          subtext: "TOUCHDESIGNER",
+          heading: "EXPERIMENTATION + PROCESS",
+          paragraphs: [
+            "THIS PROJECT WAS BORN OUT OF THE EXPLORATION OF TWO DIFFERENT TOOLS: UNREAL ENGINE 5 AND TOUCHDESIGNER. THE CRYPTIC STORY AND SETTING OF THE FILM SERVE AS A PLAYFIELD TO MERGE THESE TWO VISUAL WORLDS INTO ONE NARRATIVE WHILE MAINTAINING A FREE AND EXPERIMENTAL WORKFLOW THROUGHOUT THE MAKING OF THE PROJECT.",
+            "ALL OF THE PARTICLE EFFECTS AND INTERCUTTINGS WERE MADE WITH TOUCHDESIGNER, AND ALL CHARACTER ANIMATIONS WERE MADE WITH REALLUSION’S CHARACTER CREATION AND ANIMATION SUITE. THOSE WERE THEN IMPORTED INTO UNREAL ENGINE 5, AND THE FOOTAGE WAS EDITED IN DAVINCI RESOLVE."
+          ],
           items: [
             { type: "image", src: "assets/Projects/25 Sentient Shore/4.webp", alt: "Abstract Light 1" },
             { type: "image", src: "assets/Projects/25 Sentient Shore/5.webp", alt: "Abstract Starburst" },
